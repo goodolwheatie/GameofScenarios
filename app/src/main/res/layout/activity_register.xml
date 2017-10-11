@@ -12,55 +12,53 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ethnicity"
-        android:textSize="18sp"
         android:layout_marginStart="39dp"
+        android:text="@string/ethnicity"
+        android:textAlignment="viewStart"
+        android:layout_gravity="start"
+        android:textSize="18sp"
         tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="@+id/btnRegNow"
-        android:layout_marginTop="103dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvwGender"
+        android:layout_marginTop="33dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="104dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="39dp" />
 
     <Spinner
         android:id="@+id/spnAge"
-        android:layout_width="218dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="@+id/spnEthn"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/spnEthn" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
         android:text="@string/age"
         android:textSize="18sp"
-        android:layout_marginEnd="13dp"
-        app:layout_constraintRight_toLeftOf="@+id/spnGender"
-        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="28dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvwGender"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/spnGender"
-        android:layout_marginRight="13dp" />
+        app:layout_constraintRight_toRightOf="@+id/textView2"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/tvwGender" />
 
     <Spinner
         android:id="@+id/spnEthn"
-        android:layout_width="218dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/spnAge"
+        app:layout_constraintRight_toRightOf="@+id/spnGender"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="13dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginBottom="29dp"
+        app:layout_constraintLeft_toLeftOf="@+id/spnGender" />
 
     <EditText
         android:id="@+id/txtCreateUser"
@@ -102,7 +100,8 @@
         android:layout_marginTop="19dp"
         app:layout_constraintTop_toBottomOf="@+id/txtCreateUser"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/txtCreateUser" />
+        app:layout_constraintLeft_toLeftOf="@+id/txtCreateUser"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/tvwRegisterTitle"
@@ -123,32 +122,32 @@
         android:id="@+id/spnGender"
         android:layout_width="218dp"
         android:layout_height="23dp"
-        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/spnEthn"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="33dp"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="32dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvwGender" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/tvwGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gender"
-        android:textSize="18sp"
-        android:layout_marginStart="23dp"
         android:layout_marginEnd="23dp"
+        android:layout_marginStart="23dp"
+        android:text="@string/gender"
+        android:textAlignment="viewStart"
+        android:layout_gravity="start"
+        android:textSize="18sp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="@+id/tvwPW"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtCreatePW"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/tvwRegisterTitle"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="23dp"
         android:layout_marginRight="23dp" />
 
@@ -170,13 +169,13 @@
         android:id="@+id/btnRegNow"
         android:layout_width="140dp"
         android:layout_height="48dp"
-        android:text="Register"
+        android:text="@string/register"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="44dp"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
@@ -184,17 +183,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/optional"
+        android:textAllCaps="false"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginStart="81dp"
-        android:layout_marginEnd="81dp"
-        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/spnGender"
-        android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtCreatePW"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/spnGender"
+        app:layout_constraintRight_toRightOf="@+id/txtCreatePW"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/txtCreatePW"
-        android:layout_marginLeft="81dp"
-        android:layout_marginRight="81dp" />
+        android:layout_marginBottom="21dp"
+        app:layout_constraintLeft_toLeftOf="@+id/txtCreatePW" />
 
 </android.support.constraint.ConstraintLayout>
