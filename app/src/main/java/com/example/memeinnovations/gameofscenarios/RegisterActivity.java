@@ -16,6 +16,22 @@ public class RegisterActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
     }
+    private void handleEthnicitySpinner(){
+        // create spinner or dropdown box class
+        Spinner spinnerGender = (Spinner) findViewById(R.id.spnEthn);
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(this, R.array.ethnicity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(adapter);
+    }
+    private void handleAgeSpinner(){
+        // create spinner or dropdown box class
+        Spinner spinnerGender = (Spinner) findViewById(R.id.spnAge);
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(this, R.array.age, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(adapter);
+    }
     private void actionBarSetup() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle("Register");
@@ -31,5 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // initialize drop box for gender
         handleGenderSpinner();
+        handleAgeSpinner();
+        handleEthnicitySpinner();
     }
 }

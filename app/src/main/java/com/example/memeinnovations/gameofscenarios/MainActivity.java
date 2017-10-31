@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    public void init() {
+    public void initReg() {
         Button btnReg = (Button) findViewById(R.id.btnRegister);
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -18,12 +18,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void initAnon() {
+        Button btnAnon = (Button) findViewById(R.id.btnAnonymously);
+        btnAnon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openMainMenu = new Intent(MainActivity.this, MainMenuActivity.class);
+                startActivity(openMainMenu);
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init();
+        // initialize button listeners
+        initReg();
+        initAnon();
     }
 }
