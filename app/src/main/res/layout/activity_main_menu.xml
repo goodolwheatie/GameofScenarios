@@ -29,7 +29,7 @@
 
     <Button
         android:id="@+id/btnProfile"
-        android:layout_width="128"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"
         android:text="Profile"
@@ -40,7 +40,7 @@
 
     <Button
         android:id="@+id/btnStats"
-        android:layout_width="128"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:text="Statistics"
@@ -61,5 +61,6 @@
         app:layout_constraintBottom_toTopOf="@+id/btnPlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 </android.support.constraint.ConstraintLayout>

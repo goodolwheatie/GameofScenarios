@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "477083894550-2mu60fhn1jsi79l4kr77sov45oq7i3mg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.memeinnovations.gameofscenarios",
+            "certificate_hash": "7ff2e834963376266723eb7e20f631c62f1317ee"
+          }
+        },
+        {
           "client_id": "477083894550-1d085lo1233dshmplj7029vm0prksvfg.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477083894550-1d085lo1233dshmplj7029vm0prksvfg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
