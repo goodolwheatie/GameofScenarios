@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "477083894550",
+    "firebase_url": "https://gameofscenarios.firebaseio.com",
+    "project_id": "gameofscenarios",
+    "storage_bucket": "gameofscenarios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:477083894550:android:74a7b31183076215",
+        "android_client_info": {
+          "package_name": "com.example.memeinnovations.gameofscenarios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "477083894550-1d085lo1233dshmplj7029vm0prksvfg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWDw2VyvDWlEAXNU-4oHkmRnbr1uqsSjU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
