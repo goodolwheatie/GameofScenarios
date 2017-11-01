@@ -7,60 +7,76 @@
     tools:context="com.example.memeinnovations.gameofscenarios.MainMenuActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/glRightMainMenuInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glLeftMainMenuInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
     <Button
         android:id="@+id/btnPlay"
-        android:layout_width="128dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Play"
+        android:text="@string/play"
         app:layout_constraintBottom_toTopOf="@+id/btnRules"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/glRightMainMenuInner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeftMainMenuInner"
         app:layout_constraintTop_toBottomOf="@+id/tvwGame" />
 
     <Button
         android:id="@+id/btnRules"
-        android:layout_width="128dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Rules"
+        android:text="@string/rules"
         app:layout_constraintBottom_toTopOf="@+id/btnProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnPlay"
+        app:layout_constraintStart_toStartOf="@+id/btnPlay"
         app:layout_constraintTop_toBottomOf="@+id/btnPlay" />
 
     <Button
         android:id="@+id/btnProfile"
-        android:layout_width="128dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"
         android:text="Profile"
         app:layout_constraintBottom_toTopOf="@+id/btnStats"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnRules"
+        app:layout_constraintStart_toStartOf="@+id/btnRules"
         app:layout_constraintTop_toBottomOf="@+id/btnRules" />
 
     <Button
         android:id="@+id/btnStats"
-        android:layout_width="128dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="Statistics"
+        android:layout_marginBottom="32dp"
+        android:text="@string/statistics"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnProfile"
+        app:layout_constraintStart_toStartOf="@+id/btnProfile"
         app:layout_constraintTop_toBottomOf="@+id/btnProfile" />
 
     <TextView
         android:id="@+id/tvwGame"
-        android:layout_width="202dp"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="68dp"
         android:layout_marginTop="113dp"
-        android:text="GAME OF SCENARIOS"
+        android:text="@string/game_of_scenarios"
         android:textAlignment="center"
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@+id/btnPlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintVertical_chainStyle="packed" />
+
 </android.support.constraint.ConstraintLayout>

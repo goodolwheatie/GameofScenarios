@@ -9,6 +9,11 @@
     <string name="register">Register</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
+    <string name="play">Play</string>
+    <string name="rules">Rules</string>
+    <string name="profile">Profile</string>
+    <string name="statistics">Statistics</string>
+    <string name="game_of_scenarios">GAME OF SCENARIOS</string>
 
     <string-array name="gender">
         <item>Select Option..</item>
