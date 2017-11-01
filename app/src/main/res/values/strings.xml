@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Game of Scenarios</string>
-    <string name="gender_prompt">Choose a gender</string>
     <string name="ethnicity">Ethnicity</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
@@ -35,10 +34,10 @@
     <string-array name="age">
         <item>Select Option..</item>
         <item>Below 18</item>
-        <item>18-24</item>
-        <item>25-34</item>
-        <item>35-44</item>
-        <item>45-54</item>
+        <item>18–24</item>
+        <item>25–34</item>
+        <item>35–44</item>
+        <item>45–54</item>
         <item>65 or more</item>
     </string-array>
 
