@@ -13,9 +13,14 @@
     <string name="profile">Profile</string>
     <string name="statistics">Statistics</string>
     <string name="game_of_scenarios">GAME OF SCENARIOS</string>
+<<<<<<< HEAD
     <string name="ready">Ready</string>
     <string name="reroll">Reroll</string>
     <string name="prisoners">Prisoner\'s Dilemma</string>
+=======
+    <string name="login">Login</string>
+    <string name="anonymously">Anonymously</string>
+>>>>>>> 10f5dd3d8b3b3ac43b0dfaab44e25878cd52f24a
 
     <string-array name="gender">
         <item>Select Option..</item>
