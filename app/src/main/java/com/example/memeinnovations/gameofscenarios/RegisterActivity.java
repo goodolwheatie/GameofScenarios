@@ -1,5 +1,6 @@
 package com.example.memeinnovations.gameofscenarios;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
     }
+
     private void handleEthnicitySpinner(){
         // create spinner or dropdown box class
         Spinner spinnerGender = (Spinner) findViewById(R.id.spnEthn);
@@ -39,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
     }
+
     private void handleAgeSpinner(){
         // create spinner or dropdown box class
         Spinner spinnerGender = (Spinner) findViewById(R.id.spnAge);
@@ -47,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
     }
+
     private void actionBarSetup() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle("Register");
@@ -60,19 +65,23 @@ public class RegisterActivity extends AppCompatActivity {
         if (email.isEmpty()) {
             editTextEmail.setError("Username is required");
             editTextEmail.requestFocus();
+            return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             editTextEmail.setError("Please enter a valid email");
             editTextEmail.requestFocus();
+            return;
         }
         if (password.isEmpty())
         {
             editTextPassword.setError("Password is required");
             editTextPassword.requestFocus();
+            return;
         }
         if (password.length() < 6){
             editTextPassword.setError("Minimum length of password should be 6");
             editTextPassword.requestFocus();
+            return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
@@ -83,14 +92,22 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "User Registration Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Some error has occurred", Toast.LENGTH_SHORT).show();
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException)
+                    {
+                        Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
-    public void initSignUp() {
+
+    private void initSignUp() {
         Button btnReg = (Button) findViewById(R.id.btnRegNow);
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -4,18 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.memeinnovations.gameofscenarios.MainActivity">
+    tools:context="com.example.memeinnovations.gameofscenarios.MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glRightMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
 
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress|textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/etPass"
+        app:layout_constraintEnd_toStartOf="@+id/glRightMain"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/glLeftMain"
         app:layout_constraintTop_toBottomOf="@+id/tvwGoS"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -24,12 +33,13 @@
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="11dp"
-        android:text="Login"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
-        app:layout_constraintLeft_toLeftOf="@+id/btnRegister"
-        app:layout_constraintRight_toRightOf="@+id/btnRegister"
+        app:layout_constraintDimensionRatio="w,19:4"
+        app:layout_constraintEnd_toEndOf="@+id/etPass"
+        app:layout_constraintStart_toStartOf="@+id/etPass"
+        app:layout_constraintTop_toBottomOf="@+id/etPass"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1" />
@@ -37,37 +47,39 @@
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="14dp"
+        android:layout_height="wrap_content"
         android:text="@string/register"
         app:layout_constraintBottom_toTopOf="@+id/btnAnonymously"
-        app:layout_constraintLeft_toLeftOf="@+id/btnAnonymously"
-        app:layout_constraintRight_toRightOf="@+id/btnAnonymously"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+        app:layout_constraintStart_toStartOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1" />
 
     <Button
         android:id="@+id/btnAnonymously"
-        android:layout_width="156dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="36dp"
-        android:text="Anonymously"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/anonymously"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+        app:layout_constraintStart_toStartOf="@+id/btnRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1" />
 
     <EditText
         android:id="@+id/etPass"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="@+id/etEmail"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/etEmail"
         app:layout_constraintTop_toBottomOf="@+id/etEmail"
         tools:layout_constraintLeft_creator="1"
@@ -78,28 +90,34 @@
         android:id="@+id/tvwGoS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="GAME OF SCENARIOS"
+        android:text="@string/game_of_scenarios"
         android:textSize="30sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/etEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/glLeftMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_percent="0.15" />
+
+    <ProgressBar
+        android:id="@+id/pbMain"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

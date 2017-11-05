@@ -13,6 +13,8 @@
     <string name="profile">Profile</string>
     <string name="statistics">Statistics</string>
     <string name="game_of_scenarios">GAME OF SCENARIOS</string>
+    <string name="login">Login</string>
+    <string name="anonymously">Anonymously</string>
 
     <string-array name="gender">
         <item>Select Option..</item>
