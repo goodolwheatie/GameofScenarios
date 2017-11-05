@@ -13,6 +13,9 @@
     <string name="profile">Profile</string>
     <string name="statistics">Statistics</string>
     <string name="game_of_scenarios">GAME OF SCENARIOS</string>
+    <string name="ready">Ready</string>
+    <string name="reroll">Reroll</string>
+    <string name="prisoners">Prisoner\'s Dilemma</string>
 
     <string-array name="gender">
         <item>Select Option..</item>
