@@ -45,5 +45,6 @@
         <item>45–54</item>
         <item>65 or more</item>
     </string-array>
+    <string name="title_activity_game_finish">GameFinishActivity</string>
 
 </resources>
