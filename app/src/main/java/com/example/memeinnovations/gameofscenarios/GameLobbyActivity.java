@@ -1,5 +1,6 @@
 package com.example.memeinnovations.gameofscenarios;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -24,9 +25,6 @@ public class GameLobbyActivity extends AppCompatActivity{
 
     public void popupRules(View view) {
 
-        // get a reference to the already created layout
-        LinearLayout gameLobby = (LinearLayout) findViewById(R.id.activity_game_lobby);
-
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.activity_prisoners_dilemma_rules, null);
@@ -38,7 +36,7 @@ public class GameLobbyActivity extends AppCompatActivity{
         final PopupWindow popupRules = new PopupWindow(popupView, width, height, focusable);
 
         // show the popup window
-        popupRules.showAtLocation(gameLobby, Gravity.CENTER, 0, 0);
+        popupRules.showAtLocation(findViewById(R.id.activity_game_lobby).getRootView(), Gravity.CENTER, 0, 0);
 
         // dismiss the popup window when touched
         popupView.setOnTouchListener(new View.OnTouchListener() {
