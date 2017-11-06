@@ -18,16 +18,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    ProgressBar progressBar;
-    EditText editTextEmail, editTextPassword;
+    private ProgressBar progressBar;
+    private Spinner spinnerGender, spinnerEthnicity, spinnerAge;
+    private EditText editTextEmail, editTextPassword, editUsername;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     private void handleGenderSpinner(){
         // create spinner or dropdown box class
-        Spinner spinnerGender = (Spinner) findViewById(R.id.spnGender);
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -36,20 +39,18 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void handleEthnicitySpinner(){
         // create spinner or dropdown box class
-        Spinner spinnerGender = (Spinner) findViewById(R.id.spnEthn);
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(this, R.array.ethnicity, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGender.setAdapter(adapter);
+        spinnerEthnicity.setAdapter(adapter);
     }
 
     private void handleAgeSpinner(){
         // create spinner or dropdown box class
-        Spinner spinnerGender = (Spinner) findViewById(R.id.spnAge);
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(this, R.array.age, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGender.setAdapter(adapter);
+        spinnerAge.setAdapter(adapter);
     }
 
     private void actionBarSetup() {
@@ -58,12 +59,31 @@ public class RegisterActivity extends AppCompatActivity {
         ab.setSubtitle("Create your profile");
     }
 
-    private void registerUser() {
+    private void writeOptionalProfile(String username){
+        String textGender = spinnerGender.getSelectedItem().toString();
+        String textAge = spinnerAge.getSelectedItem().toString();
+        String textEthnicity = spinnerEthnicity.getSelectedItem().toString();
+
+        if (textGender.equals("Select Option..")){
+            textGender = "";
+        }
+        if (textAge.equals("Select Option..")){
+            textAge = "";
+        }
+        if (textEthnicity.equals("Select Option..")){
+            textEthnicity = "";
+        }
+
+        User currentUser = new User(username, textGender, textAge, textEthnicity);
+    }
+
+    public void registerUser(View v) {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String username = editUsername.getText().toString().trim();
 
         if (email.isEmpty()) {
-            editTextEmail.setError("Username is required");
+            editTextEmail.setError("Email is required");
             editTextEmail.requestFocus();
             return;
         }
@@ -83,6 +103,11 @@ public class RegisterActivity extends AppCompatActivity {
             editTextPassword.requestFocus();
             return;
         }
+        if (username.isEmpty()){
+            editUsername.setError("Username is required");
+            editUsername.requestFocus();
+            return;
+        }
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -93,43 +118,31 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "User Registration Successful", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
-                }
-                else {
-                    if (task.getException() instanceof FirebaseAuthUserCollisionException)
-                    {
+                } else {
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
     }
-
-    private void initSignUp() {
-        Button btnReg = (Button) findViewById(R.id.btnRegNow);
-        btnReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerUser();
-            }
-        });
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
+    private void init()
+    {
         editTextEmail = findViewById(R.id.etCreateEmail);
         editTextPassword = findViewById(R.id.etCreatePW);
+        editUsername = findViewById(R.id.etCreateUser);
+
+        spinnerGender = findViewById(R.id.spnGender);
+        spinnerEthnicity = findViewById(R.id.spnEthn);
+        spinnerAge = findViewById(R.id.spnAge);
+
         progressBar = (ProgressBar) findViewById(R.id.pbRegister);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        // initialize buttons
-        initSignUp();
 
         // initialize actionbar title
         actionBarSetup();
@@ -138,5 +151,15 @@ public class RegisterActivity extends AppCompatActivity {
         handleGenderSpinner();
         handleAgeSpinner();
         handleEthnicitySpinner();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+
+        // initialize activity
+        init();
+
     }
 }
