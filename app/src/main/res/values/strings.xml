@@ -5,6 +5,7 @@
     <string name="gender">Gender</string>
     <string name="optional">Optional</string>
     <string name="password">Password</string>
+    <string name="passwordHint">Password (min. 6 char)</string>
     <string name="register">Register</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
@@ -45,5 +46,9 @@
         <item>45–54</item>
         <item>65 or more</item>
     </string-array>
+    <string name="title_activity_game_finish">GameFinishActivity</string>
+    <string name="lockIn">Lock In</string>
+    <string name="betray">Betray</string>
+    <string name="keepQuiet">Keep Quiet</string>
 
 </resources>

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_game_lobby"
+    android:id="@+id/activity_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.memeinnovations.gameofscenarios.GameLobbyActivity"
-    tools:layout_editor_absoluteY="81dp">
+    tools:context="com.example.memeinnovations.gameofscenarios.GameActivity">
+
 
     <android.support.constraint.Guideline
         android:id="@+id/glRightGameInner"
@@ -16,15 +15,14 @@
         android:layout_marginEnd="56dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.85"
-        app:layout_constraintStart_toEndOf="@+id/btnReroll" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <android.support.constraint.Guideline
         android:id="@+id/glLeftGameInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.15104167" />
 
     <android.support.constraint.Guideline
         android:id="@+id/glBottomGameInner"
@@ -40,51 +38,48 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="8dp"
-        android:onClick="ready"
-        android:text="@string/ready"
+        android:onClick="lockIn"
+        android:text="@string/lockIn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-        app:layout_constraintTop_toBottomOf="@+id/btnReroll"
         app:layout_constraintVertical_bias="1.0" />
 
-
     <Button
-        android:id="@+id/btnReroll"
+        android:id="@+id/btnKeepQuiet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/reroll"
+        android:onClick="keepQuiet"
+        android:text="@string/keepQuiet"
+        app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
+        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner" />
+
+    <Button
+        android:id="@+id/btnBetray"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="betray"
+        android:text="@string/betray"
         app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner" />
 
-    <Button
-        android:id="@+id/btnRules"
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="popupRules"
-        android:text="@string/rules"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-    <TextView
-        android:id="@+id/prisonersDilemma"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
-        android:layout_marginTop="113dp"
-        android:text="@string/prisoners"
-        android:textAlignment="center"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+
+
+
 </android.support.constraint.ConstraintLayout>

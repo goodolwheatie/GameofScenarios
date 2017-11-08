@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
     EditText editTextEmail, editTextPassword;
@@ -58,44 +58,27 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-            }else{
+            }else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
         }
         });
     }
 
-    private void initReg() {
-        Button btnReg = (Button) findViewById(R.id.btnRegister);
-        btnReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent openRegister = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(openRegister);
-            }
-        });
-    }
+    private void init() {
+        editTextEmail = (EditText) findViewById(R.id.etEmail);
+        editTextPassword = (EditText) findViewById(R.id.etPass);
+        progressBar = (ProgressBar) findViewById(R.id.pbMain);
+        mAuth = FirebaseAuth.getInstance();
 
-    private void initAnon() {
-        Button btnAnon = (Button) findViewById(R.id.btnAnonymously);
-        btnAnon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent openMainMenu = new Intent(MainActivity.this, MainMenuActivity.class);
-                startActivity(openMainMenu);
-            }
-        });
-    }
-
-    private void initLogin()
-    {
-        Button btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userLogin();
-            }
-        });
+        Button btnLogin, btnAnon, btnReg;
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnAnon = (Button) findViewById(R.id.btnAnonymously);
+        btnReg = (Button) findViewById(R.id.btnRegister);
+        btnAnon.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
+        btnReg.setOnClickListener(this);
     }
 
     @Override
@@ -103,15 +86,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextEmail = (EditText) findViewById(R.id.etEmail);
-        editTextPassword = (EditText) findViewById(R.id.etPass);
-        progressBar = (ProgressBar) findViewById(R.id.pbRegister);
-
-        mAuth = FirebaseAuth.getInstance();
-
         // initialize button listeners
-        initLogin();
-        initReg();
-        initAnon();
+        init();
+
+    }
+
+    public void onClick(View v){
+        switch (v.getId()) {
+            case R.id.btnRegister:
+                Intent openRegister = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(openRegister);
+                break;
+            case R.id.btnAnonymously:
+                Intent openMainMenu = new Intent(MainActivity.this, MainMenuActivity.class);
+                startActivity(openMainMenu);
+                break;
+            case R.id.btnLogin:
+                userLogin();
+                break;
+        }
     }
 }
