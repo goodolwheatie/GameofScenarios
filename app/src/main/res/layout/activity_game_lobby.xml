@@ -10,7 +10,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <android.support.constraint.Guideline
-        android:id="@+id/glRightGameLobbyInner"
+        android:id="@+id/glRightGameInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
@@ -20,14 +20,14 @@
         app:layout_constraintStart_toEndOf="@+id/btnReroll" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/glLeftGameLobbyInner"
+        android:id="@+id/glLeftGameInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.15" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/glBottomGameLobbyInner"
+        android:id="@+id/glBottomGameInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -35,16 +35,17 @@
 
 
     <Button
-        android:id="@+id/btnReady"
+        android:id="@+id/btnLockIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="8dp"
+        android:onClick="ready"
         android:text="@string/ready"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameLobbyInner"
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameLobbyInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
         app:layout_constraintTop_toBottomOf="@+id/btnReroll"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -55,11 +56,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/reroll"
-        app:layout_constraintBottom_toTopOf="@+id/btnReady"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameLobbyInner"
+        app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameLobbyInner"
-        app:layout_constraintTop_toTopOf="@+id/glBottomGameLobbyInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
+        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
@@ -82,7 +83,6 @@
         android:text="@string/prisoners"
         android:textAlignment="center"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnPlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

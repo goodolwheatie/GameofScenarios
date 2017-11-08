@@ -23,10 +23,7 @@
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".GameLobbyActivity" />
         <activity android:name=".GameActivity" />
-        <activity
-            android:name=".GameFinishActivity"
-            android:label="@string/title_activity_game_finish"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".GameFinishActivity"></activity>
     </application>
 
 </manifest>

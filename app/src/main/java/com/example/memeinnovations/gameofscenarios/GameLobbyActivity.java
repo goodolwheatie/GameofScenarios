@@ -1,5 +1,6 @@
 package com.example.memeinnovations.gameofscenarios;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,6 +56,12 @@ public class GameLobbyActivity extends AppCompatActivity{
                 popupRules.dismiss();
                 return true;            }
         });
+    }
+
+    public void ready(View view){
+        Intent ready = new Intent(GameLobbyActivity.this, GameActivity.class);
+        startActivity(ready);
+        finish();
     }
 
 }

@@ -47,5 +47,8 @@
         <item>65 or more</item>
     </string-array>
     <string name="title_activity_game_finish">GameFinishActivity</string>
+    <string name="lockIn">Lock In</string>
+    <string name="betray">Betray</string>
+    <string name="keepQuiet">Keep Quiet</string>
 
 </resources>
