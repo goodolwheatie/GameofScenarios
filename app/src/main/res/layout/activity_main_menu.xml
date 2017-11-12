@@ -48,6 +48,7 @@
         android:id="@+id/btnProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="profile"
         android:text="@string/profile"
         app:layout_constraintBottom_toTopOf="@+id/btnStats"
         app:layout_constraintEnd_toEndOf="@+id/btnRules"

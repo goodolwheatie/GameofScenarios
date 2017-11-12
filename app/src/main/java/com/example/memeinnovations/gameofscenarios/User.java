@@ -5,6 +5,7 @@ package com.example.memeinnovations.gameofscenarios;
  */
 
 public class User {
+    private String userId;
     private String userName;
     private String gender;
     private String age;
@@ -12,11 +13,14 @@ public class User {
     private int reRolls;
     private int wins;
     private int losses;
+    private int totalGamesPlayed;
 
-    public User(String userName, String gender, String age, String ethnicity) {
+    public User(String userId, String userName, String gender, String age, String ethnicity) {
         reRolls = 0;
         wins = 0;
         losses = 0;
+        totalGamesPlayed = 0;
+        this.userId = userId;
         this.userName = userName;
         this.gender = gender;
         this.age = age;
@@ -27,6 +31,8 @@ public class User {
         reRolls = 0;
         wins = 0;
         losses = 0;
+        totalGamesPlayed = 0;
+        userId = "";
         userName = "";
         gender = "";
         age = "";
@@ -56,7 +62,6 @@ public class User {
     public int getReRolls() {
         return reRolls;
     }
-
     public void setReRolls(int reRolls) {
         this.reRolls = reRolls;
     }
@@ -64,7 +69,6 @@ public class User {
     public int getWins() {
         return wins;
     }
-
     public void setWins(int wins) {
         this.wins = wins;
     }
@@ -72,8 +76,21 @@ public class User {
     public int getLosses() {
         return losses;
     }
-
     public void setLosses(int losses) {
         this.losses = losses;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getTotalGamesPlayed() {
+        return totalGamesPlayed;
+    }
+    public void setTotalGamesPlayed(int totalGamesPlayed) {
+        this.totalGamesPlayed = totalGamesPlayed;
     }
 }

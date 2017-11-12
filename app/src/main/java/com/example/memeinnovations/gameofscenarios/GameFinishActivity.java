@@ -7,13 +7,14 @@ import android.widget.TextView;
 public class GameFinishActivity extends AppCompatActivity {
 
     private boolean betrayed = false;
-    TextView choice = (TextView)findViewById(R.id.txtChoice);
+    TextView choice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_finish);
 
+        choice = (TextView)findViewById(R.id.txtChoice);
         Bundle bundles= getIntent().getExtras();
         betrayed = bundles.getBoolean("Betrayal");
         if(betrayed){

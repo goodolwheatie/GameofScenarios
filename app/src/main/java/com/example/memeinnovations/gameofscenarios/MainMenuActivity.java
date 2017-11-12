@@ -18,4 +18,9 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent openGameLobby = new Intent(MainMenuActivity.this, GameLobbyActivity.class);
         startActivity(openGameLobby);
     }
+
+    public void profile(View view){
+        Intent openProfile = new Intent(MainMenuActivity.this, ProfileActivity.class);
+        startActivity(openProfile);
+    }
 }

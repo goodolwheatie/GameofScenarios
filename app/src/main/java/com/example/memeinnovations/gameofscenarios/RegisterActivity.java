@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -63,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         String textGender = spinnerGender.getSelectedItem().toString();
         String textAge = spinnerAge.getSelectedItem().toString();
         String textEthnicity = spinnerEthnicity.getSelectedItem().toString();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if (textGender.equals("Select Option..")){
             textGender = "";
@@ -74,13 +74,14 @@ public class RegisterActivity extends AppCompatActivity {
             textEthnicity = "";
         }
 
-        User currentUser = new User(username, textGender, textAge, textEthnicity);
+        User currentUser = new User(userId, username, textGender, textAge, textEthnicity);
+        mDatabase.child("users").child(userId).setValue(currentUser);
     }
 
     public void registerUser(View v) {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String username = editUsername.getText().toString().trim();
+        final String username = editUsername.getText().toString().trim();
 
         if (email.isEmpty()) {
             editTextEmail.setError("Email is required");
@@ -116,8 +117,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()){
+                    writeOptionalProfile(username);
                     Toast.makeText(getApplicationContext(), "User Registration Successful", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
+                    finish();
                 } else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();

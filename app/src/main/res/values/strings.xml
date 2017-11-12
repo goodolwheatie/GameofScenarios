@@ -5,6 +5,8 @@
     <string name="gender">Gender</string>
     <string name="optional">Optional</string>
     <string name="password">Password</string>
+    <string name="old_password">Old\nPassword</string>
+    <string name="new_password">New\nPassword</string>
     <string name="passwordHint">Password (min. 6 char)</string>
     <string name="register">Register</string>
     <string name="username">Username</string>
@@ -19,6 +21,11 @@
     <string name="prisoners">Prisoner\'s Dilemma</string>
     <string name="login">Login</string>
     <string name="anonymously">Anonymously</string>
+    <string name="wins">Wins</string>
+    <string name="losses">Losses</string>
+    <string name="total_games">Total Games</string>
+    <string name="scenario_profile">Your Game Statistics</string>
+    <string name="update">Update Profile</string>
 
     <string-array name="gender">
         <item>Select Option..</item>

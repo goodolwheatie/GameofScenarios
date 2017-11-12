@@ -81,16 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnReg.setOnClickListener(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // initialize button listeners
-        init();
-
-    }
-
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.btnRegister:
@@ -106,4 +96,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // initialize button listeners
+        init();
+
+    }
+
+
 }
