@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
 
@@ -48,10 +49,26 @@ public class GameActivity extends AppCompatActivity {
 
     public void betray(View view) {
         betrayed = true;
+        //disable this button
+        Button btnBetray = (Button) findViewById(R.id.btnBetray);
+        btnBetray.setEnabled(false);
+        btnBetray.setBackgroundColor(Color.parseColor("#9E9E9E"));
+        //enable other button
+        Button btnKeepQuiet = (Button) findViewById(R.id.btnKeepQuiet);
+        btnKeepQuiet.setEnabled(true);
+        btnKeepQuiet.setBackgroundColor(Color.parseColor("#BDBDBD"));
     }
 
     public void keepQuiet(View view) {
         betrayed = false;
+        //disable this button
+        Button btnKeepQuiet = (Button) findViewById(R.id.btnKeepQuiet);
+        btnKeepQuiet.setEnabled(false);
+        btnKeepQuiet.setBackgroundColor(Color.parseColor("#9E9E9E"));
+        //enable other button
+        Button btnBetray = (Button) findViewById(R.id.btnBetray);
+        btnBetray.setEnabled(false);
+        btnBetray.setBackgroundColor(Color.parseColor("#BDBDBD"));
     }
 
     public void lockIn(View view) {
