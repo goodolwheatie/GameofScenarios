@@ -7,4 +7,5 @@ package com.example.memeinnovations.gameofscenarios;
 public final class Validator {
 
 
+
 }
