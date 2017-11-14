@@ -42,6 +42,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Spinner spnGender, spnAge, spnEthnicity;
     private EditText etUser, etPass, etNewPass;
     private Button btnUpdateClick;
+    // store spinner position
+    int genPos, agePos, ethnPos;
+
+    // store old user name
+    String oldUser;
+
     AuthCredential credential;
 
     @Override
@@ -57,23 +63,59 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    private void findSpinnerEntry(Spinner spn, String compareValue, @ArrayRes int entries) {
+    private int findSpinnerEntry(Spinner spn, String compareValue, @ArrayRes int entries) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
                 (getContext(), entries, android.R.layout.simple_spinner_item);
         spn.setAdapter(adapter);
+        int spinnerPosition = 0;
         if (!compareValue.equals(null)) {
-            int spinnerPosition = adapter.getPosition(compareValue);
+            spinnerPosition = adapter.getPosition(compareValue);
             spn.setSelection(spinnerPosition);
         }
+        return spinnerPosition;
     }
 
     private void updateProfile() {
-        String currGen = spnGender.getSelectedItem().toString();
-        String currAge = spnAge.getSelectedItem().toString();
-        String currEthn = spnEthnicity.getSelectedItem().toString();
         String username = etUser.getText().toString().trim();
         final String newPass = etNewPass.getText().toString().trim();
+        boolean profileChanged = false;
 
+        if (!(oldUser.equals(username))){
+            if (username.isEmpty()) {
+                etUser.setError("Username is required");
+                etUser.requestFocus();
+                return;
+            }
+            mDatabase.child("username").setValue(username);
+            profileChanged = true;
+        }
+        if (spnGender.getSelectedItemPosition() != genPos){
+            String currGen = spnGender.getSelectedItem().toString();
+            if (currGen.equals("Select Option..")) {
+                currGen = "";
+            }
+            mDatabase.child("gender").setValue(currGen);
+            genPos = spnGender.getSelectedItemPosition();
+            profileChanged = true;
+        }
+        if (spnAge.getSelectedItemPosition() != agePos){
+            String currAge = spnAge.getSelectedItem().toString();
+            if (currAge.equals("Select Option..")) {
+                currAge = "";
+            }
+            mDatabase.child("age").setValue(currAge);
+            agePos = spnAge.getSelectedItemPosition();
+            profileChanged = true;
+        }
+        if (spnEthnicity.getSelectedItemPosition() != ethnPos){
+            String currEthn = spnEthnicity.getSelectedItem().toString();
+            if (currEthn.equals("Select Option..")) {
+                currEthn = "";
+            }
+            mDatabase.child("ethnicity").setValue(currEthn);
+            ethnPos = spnEthnicity.getSelectedItemPosition();
+            profileChanged = true;
+        }
         if (!(newPass.equals("")))
         {
             if (newPass.length() < 6) {
@@ -82,8 +124,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 return;
             }
             // get user authentication
-            String Email = mUser.getEmail();
-            String oldPass = etPass.toString();
             credential = EmailAuthProvider.getCredential(mUser.getEmail(), etPass.getText().toString());
 
             // prompt user to re-authenticate
@@ -107,26 +147,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 }
             });
         }
-
-        if (username.isEmpty()) {
-            etUser.setError("Username is required");
-            etUser.requestFocus();
-            return;
+        if (profileChanged){
+            Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
         }
-        if (currGen.equals("Select Option..")) {
-            currGen = "";
-        }
-        if (currAge.equals("Select Option..")) {
-            currAge = "";
-        }
-        if (currEthn.equals("Select Option..")) {
-            currEthn = "";
-        }
-
-        mDatabase.child("username").setValue(username);
-        mDatabase.child("gender").setValue(currGen);
-        mDatabase.child("age").setValue(currAge);
-        mDatabase.child("ethnicity").setValue(currEthn);
     }
 
     @Override
@@ -162,13 +185,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 // retrieve user from database
                 User currentUser = dataSnapshot.getValue(User.class);
 
-                // initialize spinners to user profile
-                findSpinnerEntry(spnGender, currentUser.getGender(), R.array.gender);
-                findSpinnerEntry(spnAge, currentUser.getAge(), R.array.age);
-                findSpinnerEntry(spnEthnicity, currentUser.getEthnicity(), R.array.ethnicity);
+                // initialize spinners to user profile and save positions
+                genPos = findSpinnerEntry(spnGender, currentUser.getGender(), R.array.gender);
+                agePos = findSpinnerEntry(spnAge, currentUser.getAge(), R.array.age);
+                ethnPos = findSpinnerEntry(spnEthnicity, currentUser.getEthnicity(), R.array.ethnicity);
+                oldUser = currentUser.getUsername();
 
                 // set to user's username
-                etUser.setText(currentUser.getUsername());
+                etUser.setText(oldUser);
             }
 
             @Override
