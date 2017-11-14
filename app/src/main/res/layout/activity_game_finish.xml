@@ -10,7 +10,47 @@
         android:id="@+id/txtChoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="274dp" />
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glRightGameFinishInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glLeftGameFinishInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <Button
+        android:id="@+id/btnPlayAgain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="playAgain"
+        android:text="@string/playAgain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner" />
+
+    <Button
+        android:id="@+id/btnMainMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="mainMenu"
+        android:text="@string/mainMenu"
+        app:layout_constraintBottom_toTopOf="@+id/btnPlayAgain"
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner" />
 </android.support.constraint.ConstraintLayout>

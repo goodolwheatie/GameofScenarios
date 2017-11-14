@@ -57,5 +57,7 @@
     <string name="lockIn">Lock In</string>
     <string name="betray">Betray</string>
     <string name="keepQuiet">Keep Quiet</string>
+    <string name="playAgain">Play Again?</string>
+    <string name="mainMenu">Main Menu</string>
 
 </resources>
