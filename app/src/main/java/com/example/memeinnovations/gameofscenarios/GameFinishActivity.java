@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class GameFinishActivity extends AppCompatActivity {
 
-    private static double PROBABILITY_OF_BETRAY = 0.7; //Time to launch the another activity
+    private static double PROBABILITY_OF_BETRAY = 60; //Time to launch the another activity
     private boolean betrayed = false;
     private boolean compBetrayed = false;
     TextView choice;
@@ -22,10 +22,19 @@ public class GameFinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_finish);
 
+        try
+        {
+            //disables the actionBar
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
+
         choice = (TextView)findViewById(R.id.txtChoice);
         Bundle bundles= getIntent().getExtras();
         betrayed = bundles.getBoolean("Betrayal");
         compBetrayed = singlePlayerCalcs();
+
+        //determine the results of the match
         if(betrayed && compBetrayed) {
             choice.setText("You both chose to betray your partner");
         }else{
@@ -42,8 +51,9 @@ public class GameFinishActivity extends AppCompatActivity {
     }
 
     public boolean singlePlayerCalcs(){
+        //generate a random decision for the computer to make
         Random r = new Random();
-        int compChoiceInt = r.nextInt(1);
+        int compChoiceInt = r.nextInt(100);
         if(compChoiceInt > PROBABILITY_OF_BETRAY){
             //computer chooses to keep quiet
             return false;
@@ -54,12 +64,14 @@ public class GameFinishActivity extends AppCompatActivity {
     }
 
     public void mainMenu(View view){
+        //return to the main menu
         Intent mainMenu = new Intent(GameFinishActivity.this, MainMenuActivity.class);
         startActivity(mainMenu);
         finish();
     }
 
     public void playAgain(View view){
+        //returns to the game lobby page
         Intent playAgain = new Intent(GameFinishActivity.this, GameLobbyActivity.class);
         startActivity(playAgain);
         finish();

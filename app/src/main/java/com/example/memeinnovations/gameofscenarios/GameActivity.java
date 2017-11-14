@@ -23,24 +23,32 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        try
+        {
+            //disables the actionBar
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
+
         activity_game = (ConstraintLayout) findViewById(R.id.activity_game);
         timer = (TextView) findViewById(R.id.gameTimer);
+        //creates and starts the timer for the game
         gTimer = new CountDownTimer(TIME_OUT, 1000) {
-
             public void onTick(long millisUntilFinished) {
                 int seconds = (int) (millisUntilFinished / 1000);
                 timer.setText(String.format("%02d", seconds));
-
                 if (millisUntilFinished < 5000) {
                     timer.setTextColor(Color.RED);
                 }
             }
-
             public void onFinish() {
                 lockIn(activity_game);
             }
         };
         gameTimer();
+
+        //have the game initialize with the keeping quiet option
+        keepQuiet(findViewById(R.id.activity_game));
     }
 
     public void gameTimer() {
@@ -52,11 +60,11 @@ public class GameActivity extends AppCompatActivity {
         //disable this button
         Button btnBetray = (Button) findViewById(R.id.btnBetray);
         btnBetray.setEnabled(false);
-        btnBetray.setBackgroundColor(Color.parseColor("#9E9E9E"));
+        btnBetray.setBackgroundColor(Color.parseColor("#BDBDBD"));
         //enable other button
         Button btnKeepQuiet = (Button) findViewById(R.id.btnKeepQuiet);
         btnKeepQuiet.setEnabled(true);
-        btnKeepQuiet.setBackgroundColor(Color.parseColor("#BDBDBD"));
+        btnKeepQuiet.setBackgroundColor(Color.parseColor("#E0E0E0"));
     }
 
     public void keepQuiet(View view) {
@@ -64,18 +72,19 @@ public class GameActivity extends AppCompatActivity {
         //disable this button
         Button btnKeepQuiet = (Button) findViewById(R.id.btnKeepQuiet);
         btnKeepQuiet.setEnabled(false);
-        btnKeepQuiet.setBackgroundColor(Color.parseColor("#9E9E9E"));
+        btnKeepQuiet.setBackgroundColor(Color.parseColor("#BDBDBD"));
         //enable other button
         Button btnBetray = (Button) findViewById(R.id.btnBetray);
-        btnBetray.setEnabled(false);
-        btnBetray.setBackgroundColor(Color.parseColor("#BDBDBD"));
+        btnBetray.setEnabled(true);
+        btnBetray.setBackgroundColor(Color.parseColor("#E0E0E0"));
     }
 
     public void lockIn(View view) {
         Intent lockIn = new Intent(GameActivity.this, GameFinishActivity.class);
-        lockIn.putExtra("Betrayal", betrayed);
+        lockIn.putExtra("Betrayal", betrayed); //send the decision made to the next activity
         startActivity(lockIn);
         if (gTimer != null) {
+            //close the timer
             gTimer.cancel();
         }
         finish();
@@ -83,6 +92,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //disables the back button in-game
     }
 
 }

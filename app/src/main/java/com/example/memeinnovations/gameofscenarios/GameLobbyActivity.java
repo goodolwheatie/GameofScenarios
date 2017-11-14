@@ -23,6 +23,7 @@ public class GameLobbyActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         try
         {
+            //disables the actionBar
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
@@ -32,6 +33,7 @@ public class GameLobbyActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
+        //disables the back button
     }
 
     public void popupRules(View view) {
