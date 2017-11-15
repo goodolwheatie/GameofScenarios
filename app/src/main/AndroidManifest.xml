@@ -25,7 +25,9 @@
         <activity android:name=".GameLobbyActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".GameFinishActivity" />
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".RulesActivity" />
+        <activity android:name=".StatisticsActivity"></activity>
     </application>
 
 </manifest>

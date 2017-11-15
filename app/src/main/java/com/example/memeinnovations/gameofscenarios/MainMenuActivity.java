@@ -69,6 +69,11 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(openGameLobby);
     }
 
+    public void rules(View view){
+        Intent openRules = new Intent(MainMenuActivity.this, RulesActivity.class);
+        startActivity(openRules);
+    }
+
     public void profile(View view){
         Intent openActivity;
         if (anonymousUser){
@@ -80,5 +85,10 @@ public class MainMenuActivity extends AppCompatActivity {
             openActivity = new Intent(MainMenuActivity.this, ProfileActivity.class);
         }
         startActivity(openActivity);
+    }
+
+    public void statistics(View view){
+        Intent openStatistics = new Intent(MainMenuActivity.this, RulesActivity.class);
+        startActivity(openStatistics);
     }
 }

@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 /**
@@ -58,6 +59,10 @@ public class GameLobbyActivity extends AppCompatActivity{
                 popupRules.dismiss();
                 return true;            }
         });
+    }
+
+    public void reroll(View view){
+        Toast.makeText(getApplicationContext(), "No Reroll Functionality Currently", Toast.LENGTH_SHORT).show();
     }
 
     public void ready(View view){
