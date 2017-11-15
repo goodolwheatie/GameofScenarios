@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Spinner spnGender, spnAge, spnEthnicity;
     private EditText etUser, etPass, etNewPass;
     private Button btnUpdateClick;
+
     // store spinner position
     int genPos, agePos, ethnPos;
 

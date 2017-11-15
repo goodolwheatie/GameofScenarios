@@ -21,6 +21,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
     EditText editTextEmail, editTextPassword;
     ProgressBar progressBar;
+    private boolean anonymousUser;
+
+    private void anonLogin(){
+        mAuth.signInAnonymously().
+                addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 
     private void userLogin()
     {
@@ -88,7 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(openRegister);
                 break;
             case R.id.btnAnonymously:
+                anonymousUser = true;
                 Intent openMainMenu = new Intent(MainActivity.this, MainMenuActivity.class);
+                openMainMenu.putExtra("anonymousUser", anonymousUser);
                 startActivity(openMainMenu);
                 break;
             case R.id.btnLogin:

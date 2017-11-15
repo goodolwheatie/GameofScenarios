@@ -163,6 +163,5 @@ public class RegisterActivity extends AppCompatActivity {
 
         // initialize activity
         init();
-
     }
 }

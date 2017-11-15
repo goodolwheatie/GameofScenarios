@@ -66,7 +66,8 @@ public class GameFinishActivity extends AppCompatActivity {
     public void mainMenu(View view){
         //return to the main menu
         Intent mainMenu = new Intent(GameFinishActivity.this, MainMenuActivity.class);
-        startActivity(mainMenu);
+        mainMenu.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityIfNeeded(mainMenu,0);
         finish();
     }
 
