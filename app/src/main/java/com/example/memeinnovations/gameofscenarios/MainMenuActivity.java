@@ -88,7 +88,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void statistics(View view){
-        Intent openStatistics = new Intent(MainMenuActivity.this, RulesActivity.class);
+        Intent openStatistics = new Intent(MainMenuActivity.this, StatisticsActivity.class);
         startActivity(openStatistics);
     }
 }
