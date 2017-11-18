@@ -4,17 +4,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/activity_prisoners_dilemma_rules"
-    android:background="#62def8">
+    android:background="#FF3F51B5">
 
     <TextView
+        android:id="@+id/prisonersRules"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="30dp"
-        android:gravity = "center"
-        android:textSize="22dp"
+        android:gravity="center"
         android:text="Put the rules for prisoner's dilemma here"
-        android:id="@+id/prisonersRules" />
+        android:textAlignment="center"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

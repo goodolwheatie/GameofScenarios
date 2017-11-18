@@ -47,27 +47,30 @@
         app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
+
+    <ToggleButton
         android:id="@+id/btnKeepQuiet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:onClick="keepQuiet"
-        android:text="@string/keepQuiet"
+        android:textOff="@string/keepQuiet"
+        android:textOn="@string/keepQuiet"
         app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
         app:layout_constraintTop_toTopOf="@+id/glBottomGameInner" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/btnBetray"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:onClick="betray"
-        android:text="@string/betray"
+        android:textOff="@string/betray"
+        android:textOn="@string/betray"
         app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -88,9 +91,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
         app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
 </android.support.constraint.ConstraintLayout>

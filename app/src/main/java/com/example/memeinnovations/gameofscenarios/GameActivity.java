@@ -7,15 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
+import android.widget.ToggleButton;
 import android.widget.TextView;
 import android.view.View;
 
 public class GameActivity extends AppCompatActivity {
-    private static int TIME_OUT = 15000; //Time to launch the another activity
+    private static int TIME_OUT = 17000; //Time to launch the another activity
     private boolean betrayed = false;
     private View activity_game;
     private TextView timer;
     private CountDownTimer gTimer;
+    private ToggleButton btnBetray;
+    private ToggleButton btnKeepQuiet;
 
 
     @Override
@@ -36,8 +39,9 @@ public class GameActivity extends AppCompatActivity {
         gTimer = new CountDownTimer(TIME_OUT, 1000) {
             public void onTick(long millisUntilFinished) {
                 int seconds = (int) (millisUntilFinished / 1000);
+                seconds--;
                 timer.setText(String.format("%02d", seconds));
-                if (millisUntilFinished < 5000) {
+                if (seconds < 6) {
                     timer.setTextColor(Color.RED);
                 }
             }
@@ -48,6 +52,8 @@ public class GameActivity extends AppCompatActivity {
         gameTimer();
 
         //have the game initialize with the keeping quiet option
+        btnBetray = (ToggleButton) findViewById(R.id.btnBetray);
+        btnKeepQuiet = (ToggleButton) findViewById(R.id.btnKeepQuiet);
         keepQuiet(findViewById(R.id.activity_game));
     }
 
@@ -57,26 +63,18 @@ public class GameActivity extends AppCompatActivity {
 
     public void betray(View view) {
         betrayed = true;
-        //disable this button
-        Button btnBetray = (Button) findViewById(R.id.btnBetray);
-        btnBetray.setEnabled(false);
-        btnBetray.setBackgroundColor(Color.parseColor("#BDBDBD"));
-        //enable other button
-        Button btnKeepQuiet = (Button) findViewById(R.id.btnKeepQuiet);
-        btnKeepQuiet.setEnabled(true);
-        btnKeepQuiet.setBackgroundColor(Color.parseColor("#E0E0E0"));
+        //check this button
+        btnBetray.setChecked(true);
+        //uncheck other button
+        btnKeepQuiet.setChecked(false);
     }
 
     public void keepQuiet(View view) {
         betrayed = false;
-        //disable this button
-        Button btnKeepQuiet = (Button) findViewById(R.id.btnKeepQuiet);
-        btnKeepQuiet.setEnabled(false);
-        btnKeepQuiet.setBackgroundColor(Color.parseColor("#BDBDBD"));
-        //enable other button
-        Button btnBetray = (Button) findViewById(R.id.btnBetray);
-        btnBetray.setEnabled(true);
-        btnBetray.setBackgroundColor(Color.parseColor("#E0E0E0"));
+        //check this button
+        btnKeepQuiet.setChecked(true);
+        //uncheck other button
+        btnBetray.setChecked(false);
     }
 
     public void lockIn(View view) {
