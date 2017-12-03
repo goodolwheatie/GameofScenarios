@@ -12,6 +12,7 @@ public class MApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // allows the user data to be cached on user device for faster loading.
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,6 +29,27 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword, editUsername;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    // watch changes in text to test password length
+    private final TextWatcher mTextEditorWather = new TextWatcher() {
+        int passLength = 0;
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            passLength = charSequence.length();
+            if (passLength > 0 && passLength < 6) {
+                editTextPassword.setError("Minimum length of password should be 6");
+                editTextPassword.requestFocus();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+    };
 
     private void handleGenderSpinner(){
         // create spinner or dropdown box class
@@ -70,7 +93,8 @@ public class RegisterActivity extends AppCompatActivity {
         if (textAge.equals("Select Option..")){
             textAge = "";
         }
-        if (textEthnicity.equals("Select Option..")){
+        if (textEthnicity.equals("Select Option..") ||
+                textEthnicity.equals("Decline to State")){
             textEthnicity = "";
         }
 
@@ -119,6 +143,9 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     writeOptionalProfile(username);
                     Toast.makeText(getApplicationContext(), "User Registration Successful", Toast.LENGTH_SHORT).show();
+                    Intent mainMenu = new Intent(RegisterActivity.this, MainActivity.class);
+                    mainMenu.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(new Intent(RegisterActivity.this, MainMenuActivity.class));
                     finish();
                 } else {
@@ -134,7 +161,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void init()
     {
         editTextEmail = findViewById(R.id.etCreateEmail);
+        editTextEmail.requestFocus();
+
         editTextPassword = findViewById(R.id.etCreatePW);
+        editTextPassword.addTextChangedListener(mTextEditorWather);
         editUsername = findViewById(R.id.etCreateUser);
 
         spinnerGender = findViewById(R.id.spnGender);

@@ -120,9 +120,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // initialize button listeners
+        // check if user already logged in
+        if (mAuth.getCurrentUser() != null) {
+            Intent openRegister = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(openRegister);
+            finish();
+        }
         init();
-
     }
 
 

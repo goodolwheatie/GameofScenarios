@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="@string/username"
+        android:text="@string/display_name"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etCurrentUser" />
@@ -113,6 +113,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="88dp"
         android:ems="10"
+        android:hint="@string/display_name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

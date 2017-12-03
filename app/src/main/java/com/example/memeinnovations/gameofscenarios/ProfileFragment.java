@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +53,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     String oldUser;
 
     AuthCredential credential;
+
+    private final TextWatcher mTextEditorWather = new TextWatcher() {
+        int passLength = 0;
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            passLength = charSequence.length();
+            if (passLength > 0 && passLength < 6) {
+                etNewPass.setError("Minimum length of password should be 6");
+                etNewPass.requestFocus();
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+    };
 
     @Override
     public void onClick(View view) {
@@ -111,7 +134,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         if (spnEthnicity.getSelectedItemPosition() != ethnPos){
             String currEthn = spnEthnicity.getSelectedItem().toString();
-            if (currEthn.equals("Select Option..")) {
+            if (currEthn.equals("Select Option..") ||
+                    currEthn.equals("Decline to State")) {
                 currEthn = "";
             }
             mDatabase.child("ethnicity").setValue(currEthn);
@@ -163,7 +187,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // initialize database and authentication
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(mAuth.getInstance().getCurrentUser().getUid());
+                .child(mAuth.getCurrentUser().getUid());
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // initialize Spinner

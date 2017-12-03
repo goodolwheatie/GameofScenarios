@@ -44,26 +44,6 @@ public class MainMenuActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void connect(){
-        String userID = mAuth.getCurrentUser().getUid();
-        String player1;
-
-        // setting data from database
-        // mDatabase.child("gender").setValue(currGen);
-
-        // reading data from database
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean temp = (boolean) dataSnapshot.child("in_use").getValue();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        });
-    }
     public void play(View view){
         Intent openGameLobby = new Intent(MainMenuActivity.this, GameLobbyActivity.class);
         startActivity(openGameLobby);

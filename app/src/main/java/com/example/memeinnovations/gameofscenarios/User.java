@@ -1,5 +1,12 @@
 package com.example.memeinnovations.gameofscenarios;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 /**
  * Created by Vincent xD on 10/11/2017.
  */
@@ -14,6 +21,18 @@ public class User {
     private int wins;
     private int losses;
     private int totalGamesPlayed;
+
+    public User (User rightUser) {
+        this.userId = rightUser.userId;
+        this.userName = rightUser.userName;
+        this.gender = rightUser.gender;
+        this.age = rightUser.age;
+        this.ethnicity = rightUser.ethnicity;
+        this.reRolls = rightUser.reRolls;
+        this.wins = rightUser.wins;
+        this.losses = rightUser.losses;
+        this.totalGamesPlayed = rightUser.totalGamesPlayed;
+    }
 
     public User(String userId, String userName, String gender, String age, String ethnicity) {
         reRolls = 0;
@@ -39,22 +58,34 @@ public class User {
         ethnicity = "";
     }
 
-    public String getUsername(){ return userName; }
-    public void setUsername(String userName){
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUsername(String userName) {
         this.userName = userName;
     }
 
-    public String getGender() { return gender; }
+    public String getGender() {
+        return gender;
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public String getAge() { return age; }
+    public String getAge() {
+        return age;
+    }
+
     public void setAge(String age) {
         this.age = age;
     }
 
-    public String getEthnicity() { return ethnicity; }
+    public String getEthnicity() {
+        return ethnicity;
+    }
+
     public void setEthnicity(String ethnicity) {
         this.ethnicity = ethnicity;
     }
@@ -62,6 +93,7 @@ public class User {
     public int getReRolls() {
         return reRolls;
     }
+
     public void setReRolls(int reRolls) {
         this.reRolls = reRolls;
     }
@@ -69,6 +101,7 @@ public class User {
     public int getWins() {
         return wins;
     }
+
     public void setWins(int wins) {
         this.wins = wins;
     }
@@ -76,6 +109,7 @@ public class User {
     public int getLosses() {
         return losses;
     }
+
     public void setLosses(int losses) {
         this.losses = losses;
     }
@@ -83,6 +117,7 @@ public class User {
     public String getUserId() {
         return userId;
     }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -90,7 +125,9 @@ public class User {
     public int getTotalGamesPlayed() {
         return totalGamesPlayed;
     }
+
     public void setTotalGamesPlayed(int totalGamesPlayed) {
         this.totalGamesPlayed = totalGamesPlayed;
     }
+
 }

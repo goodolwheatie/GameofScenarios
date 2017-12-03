@@ -9,8 +9,13 @@ import android.os.Bundle;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private void actionBarSetup() {
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.setTitle("Profile");
+    }
 
     private void init(){
+        actionBarSetup();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         SimpleFragmentPagerAdapter adapter = new
                 SimpleFragmentPagerAdapter(this, getSupportFragmentManager());
