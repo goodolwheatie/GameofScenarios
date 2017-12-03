@@ -133,7 +133,7 @@ public class Multiplayer extends AppCompatActivity {
     public String quickPlay() {
         chooseScenario();
         chooseRoom();
-        connectPlayers();
+        // connectPlayers();
         return chosenScenario;
     }
 
