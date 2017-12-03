@@ -6,25 +6,22 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.widget.Button;
-import android.widget.ToggleButton;
-import android.widget.TextView;
 import android.view.View;
+import android.widget.TextView;
 
-public class GameActivity extends AppCompatActivity {
-    private static int TIME_OUT = 17000; //Time to launch the another activity
-    private boolean betrayed = false;
-    private View activity_game;
+
+public class ChickenActivity extends AppCompatActivity {
+    private static int TIME_OUT = 7000; //Time to launch the another activity
     private TextView timer;
     private CountDownTimer gTimer;
-    private ToggleButton btnBetray;
-    private ToggleButton btnKeepQuiet;
+    private View activity_chicken;
+    private String swerveChoice;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_chicken);
 
         try
         {
@@ -33,8 +30,8 @@ public class GameActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
 
-        activity_game = (ConstraintLayout) findViewById(R.id.activity_game);
-        timer = (TextView) findViewById(R.id.gameTimer);
+        activity_chicken = (ConstraintLayout) findViewById(R.id.activity_game);
+        timer = (TextView) findViewById(R.id.chickenTimer);
         //creates and starts the timer for the game
         gTimer = new CountDownTimer(TIME_OUT, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -46,40 +43,35 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
             public void onFinish() {
-                lockIn(activity_game);
+                lockIn(activity_chicken);
             }
         };
         gameTimer();
-
-        //have the game initialize with the keeping quiet option
-        btnBetray = (ToggleButton) findViewById(R.id.btnBetray);
-        btnKeepQuiet = (ToggleButton) findViewById(R.id.btnKeepQuiet);
-        keepQuiet(findViewById(R.id.activity_game));
     }
 
     public void gameTimer() {
         gTimer.start();
     }
 
-    public void betray(View view) {
-        betrayed = true;
-        //check this button
-        btnBetray.setChecked(true);
-        //uncheck other button
-        btnKeepQuiet.setChecked(false);
+    public void swerveLeft(View view) {
+        swerveChoice = "Left";
+        lockIn(activity_chicken);
     }
 
-    public void keepQuiet(View view) {
-        betrayed = false;
-        //check this button
-        btnKeepQuiet.setChecked(true);
-        //uncheck other button
-        btnBetray.setChecked(false);
+    public void swerveRight(View view){
+        swerveChoice = "Right";
+        lockIn(activity_chicken);
     }
 
-    public void lockIn(View view) {
-        Intent lockIn = new Intent(GameActivity.this, GameFinishActivity.class);
-        lockIn.putExtra("Betrayal", betrayed); //send the decision made to the next activity
+    public void stayCenter(View view){
+        swerveChoice = "Center";
+        lockIn(activity_chicken);
+    }
+
+    public void lockIn(View view){
+        Intent lockIn = new Intent(ChickenActivity.this, GameFinishActivity.class);
+        lockIn.putExtra("gameName", "chicken"); //send the game name
+        lockIn.putExtra("swerveChoice", swerveChoice); //send the decision made to the next activity
         startActivity(lockIn);
         if (gTimer != null) {
             //close the timer
@@ -92,5 +84,4 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
         //disables the back button in-game
     }
-
 }

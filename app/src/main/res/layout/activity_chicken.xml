@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.memeinnovations.gameofscenarios.ChickenActivity">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glLeftChickenInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glRightChickenInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glCenterChickenInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <Button
+        android:id="@+id/btnStayCenter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="stayCenter"
+        android:text="@string/stayCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
+        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner" />
+
+    <Button
+        android:id="@+id/btnSwerveLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="swerveLeft"
+        android:text="@string/swerveLeft"
+        app:layout_constraintBottom_toTopOf="@+id/btnStayCenter"
+        app:layout_constraintEnd_toStartOf="@+id/glCenterChickenInner"
+        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="swerveRight"
+        android:text="@string/swerveRight"
+        app:layout_constraintBottom_toTopOf="@+id/btnStayCenter"
+        app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
+        app:layout_constraintStart_toStartOf="@+id/glCenterChickenInner" />
+
+    <TextView
+        android:id="@+id/chickenTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
+        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

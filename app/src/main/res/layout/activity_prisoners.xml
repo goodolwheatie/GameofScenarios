@@ -5,7 +5,7 @@
     android:id="@+id/activity_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.memeinnovations.gameofscenarios.GameActivity"
+    tools:context="com.example.memeinnovations.gameofscenarios.PrisonersActivity"
     tools:layout_editor_absoluteY="81dp">
 
 
@@ -84,13 +84,12 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/gameTimer"
+        android:id="@+id/prisonersTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="36sp"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"

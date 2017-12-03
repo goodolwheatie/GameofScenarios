@@ -75,5 +75,8 @@
     <string name="keepQuiet">Keep Quiet</string>
     <string name="playAgain">Play Again?</string>
     <string name="mainMenu">Main Menu</string>
+    <string name="stayCenter">Stay the Course</string>
+    <string name="swerveLeft">Swerve Left</string>
+    <string name="swerveRight">Swerve Right</string>
 
 </resources>

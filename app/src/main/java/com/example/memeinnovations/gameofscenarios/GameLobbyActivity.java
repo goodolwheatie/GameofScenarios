@@ -1,7 +1,6 @@
 package com.example.memeinnovations.gameofscenarios;
 
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,7 +9,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Random;
 
 
 /**
@@ -18,6 +20,9 @@ import android.widget.Toast;
  */
 
 public class GameLobbyActivity extends AppCompatActivity{
+    private String gameName;
+    private int rulesLayout;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,12 @@ public class GameLobbyActivity extends AppCompatActivity{
         catch (NullPointerException e){}
 
         setContentView(R.layout.activity_game_lobby);
+
+        title = (TextView)findViewById(R.id.txtGameTitle);
+
+        //determine which game is being played
+        chooseGame();
+        updateActivity();
     }
 
     @Override
@@ -41,7 +52,7 @@ public class GameLobbyActivity extends AppCompatActivity{
 
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.activity_prisoners_dilemma_rules, null);
+        View popupView = inflater.inflate(rulesLayout, null);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -61,14 +72,57 @@ public class GameLobbyActivity extends AppCompatActivity{
         });
     }
 
+    public void chooseGame(){
+        Random r = new Random();
+        int gameInt = r.nextInt(2);
+        switch(gameInt) {
+            case 0:{
+                gameName = "Prisoner's Dilemma";
+                break;
+            }
+            case 1:{
+                gameName = "Game of Chicken";
+                break;
+            }
+        }
+    }
+
+    public void updateActivity(){
+        switch(gameName){
+            case "Prisoner's Dilemma":
+                rulesLayout = R.layout.activity_prisoners_dilemma_rules;
+                title.setText(gameName);
+                break;
+
+            case "Game of Chicken":
+                rulesLayout = R.layout.activity_chicken_rules;
+                title.setText(gameName);
+                break;
+        }
+    }
+
     public void reroll(View view){
-        Toast.makeText(getApplicationContext(), "No Reroll Functionality Currently", Toast.LENGTH_SHORT).show();
+        String currentGame = gameName;
+        while(currentGame.equals(gameName)){
+            chooseGame();
+        }
+        updateActivity();
     }
 
     public void ready(View view){
-        Intent ready = new Intent(GameLobbyActivity.this, GameActivity.class);
-        startActivity(ready);
-        finish();
-    }
+        Intent ready;
+        switch(gameName){
+            case "Prisoner's Dilemma":
+                ready = new Intent(GameLobbyActivity.this, PrisonersActivity.class);
+                startActivity(ready);
+                finish();
+                break;
 
+            case "Game of Chicken":
+                ready = new Intent(GameLobbyActivity.this, ChickenActivity.class);
+                startActivity(ready);
+                finish();
+                break;
+        }
+    }
 }
