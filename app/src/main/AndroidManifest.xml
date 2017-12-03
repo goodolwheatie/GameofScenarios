@@ -23,11 +23,12 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".GameLobbyActivity" />
-        <activity android:name=".GameActivity" />
+        <activity android:name=".PrisonersActivity" />
         <activity android:name=".GameFinishActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RulesActivity" />
-        <activity android:name=".StatisticsActivity"></activity>
+        <activity android:name=".StatisticsActivity" />
+        <activity android:name=".ChickenActivity"></activity>
     </application>
 
 </manifest>
