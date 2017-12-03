@@ -10,6 +10,7 @@
     <string name="passwordHint">Password (min. 6 char)</string>
     <string name="register">Register</string>
     <string name="username">Username</string>
+    <string name="display_name">Display Name</string>
     <string name="email">Email</string>
     <string name="play">Play</string>
     <string name="rules">Rules</string>
@@ -39,7 +40,9 @@
         <item>American Indian or Alaska Native</item>
         <item>Asian</item>
         <item>Black or African American</item>
+        <item>Decline to State</item>
         <item>Hispanic or Latino</item>
+        <item>Other</item>
         <item>Native Hawaiian or Other Pacific Islander</item>
         <item>White</item>
     </string-array>
@@ -53,6 +56,19 @@
         <item>45–54</item>
         <item>65 or more</item>
     </string-array>
+
+    <string-array name="scenarios">
+        <item>prisoners_dilemma</item>
+    </string-array>
+
+    <string-array name="rooms">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
     <string name="title_activity_game_finish">GameFinishActivity</string>
     <string name="lockIn">Lock In</string>
     <string name="betray">Betray</string>
