@@ -24,6 +24,9 @@ public class GameLobbyActivity extends AppCompatActivity{
     private int rulesLayout;
     private TextView title;
 
+    // Multiplayer class for multiplayer implementation.
+    Multiplayer multiplayerSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,9 @@ public class GameLobbyActivity extends AppCompatActivity{
         setContentView(R.layout.activity_game_lobby);
 
         title = (TextView)findViewById(R.id.txtGameTitle);
+
+        // initialize multiplayer class
+        multiplayerSession = new Multiplayer();
 
         //determine which game is being played
         chooseGame();
@@ -85,6 +91,9 @@ public class GameLobbyActivity extends AppCompatActivity{
                 break;
             }
         }
+
+        // choose game scenario using database
+        gameName = multiplayerSession.quickPlay();
     }
 
     public void updateActivity(){
@@ -104,7 +113,8 @@ public class GameLobbyActivity extends AppCompatActivity{
     public void reroll(View view){
         String currentGame = gameName;
         while(currentGame.equals(gameName)){
-            chooseGame();
+            multiplayerSession.finishGame();
+            currentGame = multiplayerSession.chooseScenario();
         }
         updateActivity();
     }

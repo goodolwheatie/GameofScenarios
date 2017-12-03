@@ -68,7 +68,7 @@ public class Multiplayer extends AppCompatActivity {
         return thisPlayer;
     }
 
-    private String chooseScenario() {
+    public String chooseScenario() {
         String[] array = getResources().getStringArray(R.array.scenarios);
         chosenScenario = array[new Random().nextInt(array.length)];
         return chosenScenario;
@@ -130,10 +130,11 @@ public class Multiplayer extends AppCompatActivity {
         }
     }
 
-    public void quickPlay() {
+    public String quickPlay() {
         chooseScenario();
         chooseRoom();
         connectPlayers();
+        return chosenScenario;
     }
 
     public void makeChoice(String choice) {

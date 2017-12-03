@@ -58,7 +58,8 @@
     </string-array>
 
     <string-array name="scenarios">
-        <item>prisoners_dilemma</item>
+        <item>Prisoner's Dilemma</item>
+        <item>Game of Chicken</item>
     </string-array>
 
     <string-array name="rooms">
