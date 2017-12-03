@@ -55,7 +55,10 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        tools:layout_constraintRight_creator="1"
+        android:background="#ed2e6f"
+        android:textColor="#ffffff"
+    />
 
     <Button
         android:id="@+id/btnAnonymously"
@@ -68,7 +71,9 @@
         app:layout_constraintTop_toBottomOf="@+id/btnRegister"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        tools:layout_constraintRight_creator="1"
+        android:background="#6d70f1"
+        android:textColor="#ffffff"/>
 
     <EditText
         android:id="@+id/etPass"
@@ -86,18 +91,18 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <TextView
+    <ImageView
         android:id="@+id/tvwGoS"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/game_of_scenarios"
-
+        android:layout_height="236dp"
         android:textSize="30sp"
+
         app:layout_constraintBottom_toTopOf="@+id/etEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
+        app:srcCompat="@drawable/gameOfScenariosTitleLogo"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
@@ -120,13 +125,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/gameOfScenariosTitleLogo"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="47dp" />
 
 </android.support.constraint.ConstraintLayout>
