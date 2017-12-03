@@ -13,9 +13,9 @@
         android:layout_centerInParent="true"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="Put the rules for chicken here"
+        android:text='You are driving down a single lane road at high speed. Your opponent is driving down the same road in the opposing direction. Either player can swerve or continue driving down the road at full speed. If you continue driving while your opponent swerves off of the road, you win and shout "chicken!" as you speed past him. If your opponent continues down the road while you swerve, your opponent wins and shouts "chicken!" at you while he races away. If neither player swerves, both players crash and sustain severe injury. Which will you choose?'
         android:textAlignment="center"
         android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
 </RelativeLayout>

@@ -60,7 +60,11 @@
         app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner" />
+        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner"
+        android:background="#6d70f1"
+        android:textColor="#ffffff"
+
+        />
 
     <ToggleButton
         android:id="@+id/btnBetray"
@@ -68,13 +72,18 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:background="#e00010"
         android:onClick="betray"
+        android:textColor="#ffffff"
         android:textOff="@string/betray"
         android:textOn="@string/betray"
         app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner" />
+        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner"
+
+        tools:text="white" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -84,18 +93,24 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/prisonersTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@android:color/black"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:id="@+id/prisonersTimer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:textColor="@android:color/black"
+    android:textSize="36sp"
+    app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
+    app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
+    app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:layout_width="408dp"
+        android:layout_height="492dp"
+        android:src="@drawable/Screenshot"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="-1dp" />
 
 
 

@@ -13,7 +13,7 @@
         android:layout_centerInParent="true"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="Put the rules for prisoner's dilemma here"
+        android:text="Rules: After committing a crime, you and an accomplice are arrested and taken to jail. The police take you and your accomplice into separate rooms and offer each of you deals in exchange for evidence to convict the other. If you and your accomplice stay quiet and do not cooperate with the police, you will both spend only 1 year in prison due to lack of sufficient evidence. If one criminal betrays their partner while their partner stays quiet,  the criminal who has been betrayed will get 25 years in prison and the traitor will go free. If both you and your accomplice betray each other to the police, you will both get 10 years in prison."
         android:textAlignment="center"
         android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"
         android:textSize="18sp" />

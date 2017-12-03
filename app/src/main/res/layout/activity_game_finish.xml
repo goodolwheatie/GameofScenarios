@@ -41,7 +41,10 @@
         android:text="@string/playAgain"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner" />
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
+        android:background="#e00010"
+        android:textColor="#ffffff"
+        tools:text="Next Game" />
 
     <Button
         android:id="@+id/btnMainMenu"
@@ -52,5 +55,8 @@
         android:text="@string/mainMenu"
         app:layout_constraintBottom_toTopOf="@+id/btnPlayAgain"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner" />
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
+        android:background="#6d70f1"
+        android:textColor="#ffffff"
+        />
 </android.support.constraint.ConstraintLayout>

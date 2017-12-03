@@ -91,6 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/game_of_scenarios"
+
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/etEmail"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,5 +120,13 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/gameOfScenariosTitleLogo"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="47dp" />
 
 </android.support.constraint.ConstraintLayout>
