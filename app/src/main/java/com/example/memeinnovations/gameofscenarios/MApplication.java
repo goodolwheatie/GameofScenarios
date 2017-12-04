@@ -14,5 +14,7 @@ public class MApplication extends Application {
         super.onCreate();
         // allows the user data to be cached on user device for faster loading.
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().getReference().child("Prisoner's Dilemma").keepSynced(true);
+        FirebaseDatabase.getInstance().getReference().child("Game of Chicken").keepSynced(true);
     }
 }

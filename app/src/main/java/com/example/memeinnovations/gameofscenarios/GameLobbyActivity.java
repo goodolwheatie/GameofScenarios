@@ -39,10 +39,10 @@ public class GameLobbyActivity extends AppCompatActivity{
 
         setContentView(R.layout.activity_game_lobby);
 
-        title = (TextView)findViewById(R.id.txtGameTitle);
+        // title = (TextView)findViewById(R.id.txtGameTitle);
 
-        // initialize multiplayer class
-        multiplayerSession = new Multiplayer();
+        // initialize multiplayer class integration VT
+        multiplayerSession = new Multiplayer(this);
 
         //determine which game is being played
         chooseGame();
@@ -79,7 +79,10 @@ public class GameLobbyActivity extends AppCompatActivity{
     }
 
     public void chooseGame(){
-        Random r = new Random();
+        // reset game session.
+        multiplayerSession = new Multiplayer(this);
+
+/*        Random r = new Random();
         int gameInt = r.nextInt(2);
         switch(gameInt) {
             case 0:{
@@ -90,7 +93,7 @@ public class GameLobbyActivity extends AppCompatActivity{
                 gameName = "Game of Chicken";
                 break;
             }
-        }
+        }*/
 
         // choose game scenario using database
         gameName = multiplayerSession.quickPlay();
@@ -100,12 +103,12 @@ public class GameLobbyActivity extends AppCompatActivity{
         switch(gameName){
             case "Prisoner's Dilemma":
                 rulesLayout = R.layout.activity_prisoners_dilemma_rules;
-                title.setText(gameName);
+                // title.setText(gameName);
                 break;
 
             case "Game of Chicken":
                 rulesLayout = R.layout.activity_chicken_rules;
-                title.setText(gameName);
+                // title.setText(gameName);
                 break;
         }
     }
@@ -113,8 +116,7 @@ public class GameLobbyActivity extends AppCompatActivity{
     public void reroll(View view){
         String currentGame = gameName;
         while(currentGame.equals(gameName)){
-            multiplayerSession.finishGame();
-            currentGame = multiplayerSession.chooseScenario();
+            chooseGame();
         }
         updateActivity();
     }

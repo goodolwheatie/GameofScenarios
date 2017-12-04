@@ -18,8 +18,6 @@ import static android.content.ContentValues.TAG;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
     private boolean anonymousUser = false;
     Button btnProfileAndReg;
 
@@ -40,8 +38,6 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("prisoners_dilemma").child("Room 1");
-        mAuth = FirebaseAuth.getInstance();
     }
 
     public void play(View view){

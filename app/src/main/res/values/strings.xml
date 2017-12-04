@@ -58,16 +58,16 @@
     </string-array>
 
     <string-array name="scenarios">
-        <item>Prisoner's Dilemma</item>
+        <item>Prisoner\'s Dilemma</item>
         <item>Game of Chicken</item>
     </string-array>
 
     <string-array name="rooms">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
+        <item>Room_1</item>
+        <item>Room_2</item>
+        <item>Room_3</item>
+        <item>Room_4</item>
+        <item>Room_5</item>
     </string-array>
 
     <string name="title_activity_game_finish">GameFinishActivity</string>
