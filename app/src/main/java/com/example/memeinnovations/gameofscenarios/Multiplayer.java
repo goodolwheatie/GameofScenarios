@@ -25,6 +25,10 @@ public class Multiplayer extends Activity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
+    // store room database reference for connectplayer() method
+    private DatabaseReference connectPlayers;
+
+    // store user information in an object to obtain from the database later.
     private User thisPlayer;
 
     // stores if current player is player 1 or player 2
@@ -41,11 +45,10 @@ public class Multiplayer extends Activity {
     private String chosenRoom;
 
     // iterator for chooseRoom() function
-    int i;
+    int roomIterator;
 
-    // boolean for checking if data was acquired from DB
-    private Boolean dataAcquired;
-
+    // store if players are connected
+    private boolean arePlayersConnected;
 
     // set context of application
     private Context context;
@@ -58,7 +61,7 @@ public class Multiplayer extends Activity {
         chosenRoom = "";
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        dataAcquired = false;
+        arePlayersConnected = false;
     }
 
     public Multiplayer(Context c) {
@@ -69,7 +72,7 @@ public class Multiplayer extends Activity {
         chosenRoom = "";
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        dataAcquired = false;
+        arePlayersConnected = false;
         context = c;
     }
 
@@ -117,9 +120,11 @@ public class Multiplayer extends Activity {
                     callBackChooseRoom(array, checkRoom);
 
                     // iterator through list
-                    i = (i + 1) % array.length;
+                    roomIterator = (roomIterator + 1) % array.length;
 
                     if (foundRoom) {
+                        // connect players using another callback.
+                        connectPlayers();
                         // break the foreach loop when a room is found.
                         break;
                     }
@@ -136,8 +141,8 @@ public class Multiplayer extends Activity {
                                     DatabaseReference pCheckRoom) {
         if (!currentRoom.in_use) {
             foundRoom = true;
-            chosenRoom = roomsArray[i];
-            pCheckRoom.child(roomsArray[i]).child("in_use").setValue(true);
+            chosenRoom = roomsArray[roomIterator];
+            pCheckRoom.child(roomsArray[roomIterator]).child("in_use").setValue(true);
         }
     }
 
@@ -161,6 +166,30 @@ public class Multiplayer extends Activity {
                     connectPlayers.child("p2connected").setValue(true);
                     connectPlayers.child("player2").setValue(mAuth.getCurrentUser().getUid());
                 }
+                ValueEventListener listenForPlayersConnected =
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (isPlayer1) {
+                                    currentRoom.player2 =
+                                            dataSnapshot.child("player2").getValue(String.class);
+                                    currentRoom.p2connected =
+                                            (boolean) dataSnapshot.child("p2connected").getValue();
+                                } else {
+                                    currentRoom.player1 =
+                                            dataSnapshot.child("player1").getValue(String.class);
+                                    currentRoom.p1connected =
+                                            (boolean) dataSnapshot.child("p1connected").getValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        };
+                connectPlayers.addValueEventListener(listenForPlayersConnected);
+                while (!currentRoom.p1connected && !currentRoom.p2connected);
             }
 
             @Override
@@ -172,7 +201,6 @@ public class Multiplayer extends Activity {
     public String quickPlay() {
         chooseScenario();
         chooseRoom();
-        // connectPlayers();
         return chosenScenario;
     }
 
@@ -236,9 +264,9 @@ public class Multiplayer extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (isPlayer1) {
-                    currentRoom.setP2locked((boolean) dataSnapshot.getValue());
+                    currentRoom.p2locked = ((boolean) dataSnapshot.getValue());
                 } else {
-                    currentRoom.setP1locked((boolean) dataSnapshot.getValue());
+                    currentRoom.p1locked = ((boolean) dataSnapshot.getValue());
                 }
             }
 
@@ -307,99 +335,4 @@ public class Multiplayer extends Activity {
         setDBRoomDone.setValue(doneRoom);
     }
 
-    public class RoomStatus {
-        private boolean in_use;
-        private String p1choice;
-        private boolean p1connected;
-        private boolean p1locked;
-        private String p2choice;
-        private boolean p2connected;
-        private boolean p2locked;
-        private String player1;
-        private String player2;
-
-        public RoomStatus() {
-            boolean in_use = false;
-            String p1choice = "";
-            boolean p1connected = false;
-            boolean p1locked = false;
-            String p2choice = "";
-            boolean p2connected = false;
-            boolean p2locked = false;
-            String player1 = "";
-            String player2 = "";
-        }
-
-        public boolean isIn_use() {
-            return in_use;
-        }
-
-        public void setIn_use(boolean in_use) {
-            this.in_use = in_use;
-        }
-
-        public String getP1choice() {
-            return p1choice;
-        }
-
-        public void setP1choice(String p1choice) {
-            this.p1choice = p1choice;
-        }
-
-        public boolean isP1connected() {
-            return p1connected;
-        }
-
-        public void setP1connected(boolean p1connected) {
-            this.p1connected = p1connected;
-        }
-
-        public boolean isP1locked() {
-            return p1locked;
-        }
-
-        public void setP1locked(boolean p1locked) {
-            this.p1locked = p1locked;
-        }
-
-        public String getP2choice() {
-            return p2choice;
-        }
-
-        public void setP2choice(String p2choice) {
-            this.p2choice = p2choice;
-        }
-
-        public boolean isP2connected() {
-            return p2connected;
-        }
-
-        public void setP2connected(boolean p2connected) {
-            this.p2connected = p2connected;
-        }
-
-        public boolean isP2locked() {
-            return p2locked;
-        }
-
-        public void setP2locked(boolean p2locked) {
-            this.p2locked = p2locked;
-        }
-
-        public String getPlayer1() {
-            return player1;
-        }
-
-        public void setPlayer1(String player1) {
-            this.player1 = player1;
-        }
-
-        public String getPlayer2() {
-            return player2;
-        }
-
-        public void setPlayer2(String player2) {
-            this.player2 = player2;
-        }
-    }
 }

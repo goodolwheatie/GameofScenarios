@@ -1,14 +1,8 @@
 package com.example.memeinnovations.gameofscenarios;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 /**
  * Created by Vincent xD on 10/11/2017.
+ * For storing users in firebase
  */
 
 public class User {

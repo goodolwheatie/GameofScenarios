@@ -27,6 +27,7 @@
     <string name="total_games">Total Games</string>
     <string name="scenario_profile">Your Game Statistics</string>
     <string name="update">Update Profile</string>
+    <string name="sign_out"><u>Sign Out</u></string>
 
     <string-array name="gender">
         <item>Select Option..</item>
