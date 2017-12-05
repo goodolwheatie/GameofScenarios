@@ -116,7 +116,9 @@ public class Multiplayer extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot inUseSnap : dataSnapshot.getChildren()) {
                     // check if room is in-use
-                    currentRoom.in_use = (Boolean) inUseSnap.child("in_use").getValue();
+                    currentRoom.in_use = (boolean) inUseSnap.child("in_use").getValue();
+                    currentRoom.p1connected = (boolean) inUseSnap.child("p1connected").getValue();
+                    currentRoom.p2connected = (boolean) inUseSnap.child("p2connected").getValue();
                     callBackChooseRoom(array, checkRoom);
 
                     // iterator through list
@@ -139,7 +141,7 @@ public class Multiplayer extends Activity {
 
     private void callBackChooseRoom(String[] roomsArray,
                                     DatabaseReference pCheckRoom) {
-        if (!currentRoom.in_use) {
+        if (!currentRoom.in_use || currentRoom.p1connected || currentRoom.p2connected) {
             foundRoom = true;
             chosenRoom = roomsArray[roomIterator];
             pCheckRoom.child(roomsArray[roomIterator]).child("in_use").setValue(true);
@@ -153,7 +155,6 @@ public class Multiplayer extends Activity {
         connectPlayers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                currentRoom = dataSnapshot.getValue(RoomStatus.class);
                 if (!currentRoom.p1connected) {
                     currentRoom.p1connected = true;
                     currentRoom.player1 = mAuth.getCurrentUser().getUid();
