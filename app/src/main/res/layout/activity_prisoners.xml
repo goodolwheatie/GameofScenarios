@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_game"
+    android:id="@+id/activity_prisoners"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.memeinnovations.gameofscenarios.PrisonersActivity"
@@ -10,7 +10,7 @@
 
 
     <android.support.constraint.Guideline
-        android:id="@+id/glRightGameInner"
+        android:id="@+id/glRightPrisonersInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
@@ -19,22 +19,29 @@
         app:layout_constraintGuide_percent="0.85" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/glLeftGameInner"
+        android:id="@+id/glLeftPrisonersInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.15" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/glBottomGameInner"
+        android:id="@+id/glBottomPrisonersInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.75" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/glCenterPrisonersInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
 
     <Button
-        android:id="@+id/btnLockIn"
+        android:id="@+id/btnLockInPrisoners"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -42,9 +49,9 @@
         android:onClick="lockIn"
         android:text="@string/lockIn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
+        app:layout_constraintEnd_toStartOf="@+id/glRightPrisonersInner"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
         app:layout_constraintVertical_bias="1.0" />
 
 
@@ -57,10 +64,10 @@
         android:onClick="keepQuiet"
         android:textOff="@string/keepQuiet"
         android:textOn="@string/keepQuiet"
-        app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner"
+        app:layout_constraintBottom_toTopOf="@+id/btnLockInPrisoners"
+        app:layout_constraintEnd_toStartOf="@+id/glCenterPrisonersInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
+        app:layout_constraintTop_toTopOf="@+id/glBottomPrisonersInner"
         android:background="#6d70f1"
         android:textColor="#ffffff"
 
@@ -73,37 +80,31 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="#e00010"
+        android:checked="false"
         android:onClick="betray"
         android:textColor="#ffffff"
         android:textOff="@string/betray"
         android:textOn="@string/betray"
-        app:layout_constraintBottom_toTopOf="@+id/btnLockIn"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
+        app:layout_constraintBottom_toTopOf="@+id/btnLockInPrisoners"
+        app:layout_constraintEnd_toStartOf="@+id/glRightPrisonersInner"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner"
+        app:layout_constraintStart_toStartOf="@+id/glCenterPrisonersInner"
 
+        app:layout_constraintTop_toTopOf="@+id/glBottomPrisonersInner"
         tools:text="white" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+    <TextView
+        android:id="@+id/prisonersTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <TextView
-    android:id="@+id/prisonersTimer"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:textColor="@android:color/black"
-    android:textSize="36sp"
-    app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
-    app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-    app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toStartOf="@+id/glRightPrisonersInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="408dp"

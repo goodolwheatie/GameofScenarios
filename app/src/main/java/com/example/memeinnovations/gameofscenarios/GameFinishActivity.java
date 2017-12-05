@@ -42,6 +42,10 @@ public class GameFinishActivity extends AppCompatActivity {
             case "chicken":
                 chicken();
                 break;
+
+            case "travelers":
+                travelers();
+                break;
         }
     }
 
@@ -138,6 +142,26 @@ public class GameFinishActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    public void travelers(){
+        //generate a random price for the computer to choose
+        Random r = new Random();
+        int compPrice = r.nextInt(99) + 2;
+
+        //retrieve your choice from previous activity
+        int playerPrice = bundles.getInt("price");
+
+        int difference = compPrice - playerPrice;
+        if(difference == 0){ //same price
+            results.setText("You both agreed on the price at $" + playerPrice + "You got paid $" + playerPrice);
+        }else if(difference > 0){ //comp's price was greater than the player's
+            int payout = (int) (playerPrice + 2 + difference*0.5 + 0.5);
+            results.setText("You gave a price of $" + playerPrice + " while your oppponent gave a price of $" + compPrice + ". You got paid $" + payout);
+        }else if(difference < 0){ //comp's price was lower than the player's
+            results.setText("You gave a price of $" + playerPrice + " while your oppponent gave a price of $" + compPrice + ". You got paid $" + compPrice);
+        }
+
     }
 
     public void mainMenu(View view){

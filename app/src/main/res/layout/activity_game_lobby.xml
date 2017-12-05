@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <android.support.constraint.Guideline
-        android:id="@+id/glRightGameInner"
+        android:id="@+id/glRightPrisonersInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
@@ -19,14 +19,14 @@
         app:layout_constraintStart_toEndOf="@+id/btnReroll" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/glLeftGameInner"
+        android:id="@+id/glLeftPrisonersInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.15" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/glBottomGameInner"
+        android:id="@+id/glBottomPrisonersInner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -42,9 +42,9 @@
         android:onClick="ready"
         android:text="@string/ready"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
+        app:layout_constraintEnd_toStartOf="@+id/glRightPrisonersInner"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
         app:layout_constraintTop_toBottomOf="@+id/btnReroll"
         app:layout_constraintVertical_bias="1.0"
         android:background="#6d70f1"
@@ -59,10 +59,10 @@
         android:onClick="reroll"
         android:text="@string/reroll"
         app:layout_constraintBottom_toTopOf="@+id/btnReady"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
+        app:layout_constraintEnd_toStartOf="@+id/glRightPrisonersInner"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-        app:layout_constraintTop_toTopOf="@+id/glBottomGameInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
+        app:layout_constraintTop_toTopOf="@+id/glBottomPrisonersInner"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
