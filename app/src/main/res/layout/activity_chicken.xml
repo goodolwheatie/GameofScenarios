@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_chicken"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.memeinnovations.gameofscenarios.ChickenActivity">
@@ -50,7 +51,7 @@
         app:layout_constraintStart_toStartOf="@+id/glRightChickenInner" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnSwerveRight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

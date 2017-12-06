@@ -28,7 +28,8 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RulesActivity" />
         <activity android:name=".StatisticsActivity" />
-        <activity android:name=".ChickenActivity"></activity>
+        <activity android:name=".ChickenActivity" />
+        <activity android:name=".TravelersActivity"></activity>
     </application>
 
 </manifest>

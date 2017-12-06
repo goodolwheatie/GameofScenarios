@@ -66,4 +66,15 @@
         app:layout_constraintEnd_toStartOf="@+id/btnRules"
         app:layout_constraintStart_toStartOf="@+id/btnRules"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvwSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/sign_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnStats"
+        app:layout_constraintTop_toBottomOf="@+id/btnStats" />
 </android.support.constraint.ConstraintLayout>

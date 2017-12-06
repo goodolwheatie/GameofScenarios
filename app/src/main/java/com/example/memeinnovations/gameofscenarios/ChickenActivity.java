@@ -30,7 +30,7 @@ public class ChickenActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
 
-        activity_chicken = (ConstraintLayout) findViewById(R.id.activity_game);
+        activity_chicken = (ConstraintLayout) findViewById(R.id.activity_chicken);
         timer = (TextView) findViewById(R.id.chickenTimer);
         //creates and starts the timer for the game
         gTimer = new CountDownTimer(TIME_OUT, 1000) {

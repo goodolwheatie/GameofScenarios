@@ -13,8 +13,8 @@ import android.view.View;
 public class PrisonersActivity extends AppCompatActivity {
     private static int TIME_OUT = 17000; //Time to launch the another activity
     private boolean betrayed = false;
-    private View activity_game;
-    private TextView timer;
+    private View activity_prisoners;
+    private TextView timerText;
     private CountDownTimer gTimer;
     private ToggleButton btnBetray;
     private ToggleButton btnKeepQuiet;
@@ -32,20 +32,20 @@ public class PrisonersActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
 
-        activity_game = (ConstraintLayout) findViewById(R.id.activity_game);
-        timer = (TextView) findViewById(R.id.prisonersTimer);
+        activity_prisoners = (ConstraintLayout) findViewById(R.id.activity_prisoners);
+        timerText = (TextView) findViewById(R.id.prisonersTimer);
         //creates and starts the timer for the game
         gTimer = new CountDownTimer(TIME_OUT, 1000) {
             public void onTick(long millisUntilFinished) {
                 int seconds = (int) (millisUntilFinished / 1000);
                 seconds--;
-                timer.setText(String.format("%02d", seconds));
+                timerText.setText(String.format("%02d", seconds));
                 if (seconds < 6) {
-                    timer.setTextColor(Color.RED);
+                    timerText.setTextColor(Color.RED);
                 }
             }
             public void onFinish() {
-                lockIn(activity_game);
+                lockIn(activity_prisoners);
             }
         };
         gameTimer();
@@ -53,7 +53,7 @@ public class PrisonersActivity extends AppCompatActivity {
         //have the game initialize with the keeping quiet option
         btnBetray = (ToggleButton) findViewById(R.id.btnBetray);
         btnKeepQuiet = (ToggleButton) findViewById(R.id.btnKeepQuiet);
-        keepQuiet(findViewById(R.id.activity_game));
+        keepQuiet(findViewById(R.id.activity_prisoners));
     }
 
     public void gameTimer() {

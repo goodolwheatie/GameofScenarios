@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,10 +19,9 @@ import static android.content.ContentValues.TAG;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
     private boolean anonymousUser = false;
     Button btnProfileAndReg;
+    TextView tvwSignOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
         // initialize profile button so that the text can be changed for anon
         btnProfileAndReg = findViewById(R.id.btnProfile);
+
+        // set sign out text view to be clickable
+        tvwSignOut = findViewById(R.id.tvwSignOut);
+        tvwSignOut.setClickable(true);
 
         // get if anonymous has logged in or not
         Bundle bundles = getIntent().getExtras();
@@ -40,35 +44,40 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("prisoners_dilemma").child("Room 1");
-        mAuth = FirebaseAuth.getInstance();
     }
 
-    public void play(View view){
+    public void play(View view) {
         Intent openGameLobby = new Intent(MainMenuActivity.this, GameLobbyActivity.class);
         startActivity(openGameLobby);
     }
 
-    public void rules(View view){
+    public void rules(View view) {
         Intent openRules = new Intent(MainMenuActivity.this, RulesActivity.class);
         startActivity(openRules);
     }
 
-    public void profile(View view){
+    public void profile(View view) {
         Intent openActivity;
-        if (anonymousUser){
+        if (anonymousUser) {
             // open register for anonymous users
-            openActivity = new Intent (MainMenuActivity.this, RegisterActivity.class);
-        }
-        else {
+            openActivity = new Intent(MainMenuActivity.this, RegisterActivity.class);
+        } else {
             // open profile for already logged in users
             openActivity = new Intent(MainMenuActivity.this, ProfileActivity.class);
         }
         startActivity(openActivity);
     }
 
-    public void statistics(View view){
+    public void statistics(View view) {
         Intent openStatistics = new Intent(MainMenuActivity.this, StatisticsActivity.class);
         startActivity(openStatistics);
+    }
+
+    public void signOut(View view) {
+        if (FirebaseAuth.getInstance() != null) {
+            FirebaseAuth.getInstance().signOut();
+        }
+        Intent openingGameScreen = new Intent(MainMenuActivity.this, MainActivity.class);
+        startActivity(openingGameScreen);
     }
 }

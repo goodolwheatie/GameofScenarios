@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/activity_travelers_rules"
+    android:background="#FF3F51B5">
+
+    <TextView
+        android:id="@+id/travelersRules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="Insert Traveler's Dilemma Rules here"
+        android:textAlignment="center"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"
+        android:textSize="18sp" />
+</android.support.constraint.ConstraintLayout>

@@ -101,4 +101,15 @@
         tools:layout_editor_absoluteX="48dp"
         tools:layout_editor_absoluteY="114dp" />
 
+    <TextView
+        android:id="@+id/tvwSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/sign_out"
+        android:onClick="signOut"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/glRightMainMenuInner" />
+
 </android.support.constraint.ConstraintLayout>
