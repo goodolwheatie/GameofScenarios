@@ -1,33 +1,27 @@
 package com.example.memeinnovations.gameofscenarios;
 
-import android.app.Activity;
-import android.content.Context;
-import android.provider.ContactsContract;
-import android.renderscript.Sampler;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.os.Handler;
+import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Created by Vincent on 11/19/2017.
  */
 
-public class Multiplayer extends Activity {
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
-
-    // store room database reference for connectplayer() method
-    private DatabaseReference connectPlayers;
-
+public class Multiplayer implements Serializable  {
     // store user information in an object to obtain from the database later.
     private User thisPlayer;
 
@@ -38,6 +32,9 @@ public class Multiplayer extends Activity {
     private boolean foundRoom;
     private RoomStatus currentRoom;
 
+    // set other player's choice
+    private String otherPlayersChoice;
+
     // sets chosen scenario
     private String chosenScenario;
 
@@ -45,13 +42,10 @@ public class Multiplayer extends Activity {
     private String chosenRoom;
 
     // iterator for chooseRoom() function
-    int roomIterator;
+    private int roomIterator;
 
-    // store if players are connected
-    private boolean arePlayersConnected;
+    private boolean leftQueue;
 
-    // set context of application
-    private Context context;
 
     public Multiplayer() {
         currentRoom = new RoomStatus();
@@ -59,31 +53,24 @@ public class Multiplayer extends Activity {
         isPlayer1 = false;
         chosenScenario = "";
         chosenRoom = "";
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        arePlayersConnected = false;
+        otherPlayersChoice = "";
+        roomIterator = 0;
+        leftQueue = false;
     }
 
-    public Multiplayer(Context c) {
-        currentRoom = new RoomStatus();
-        foundRoom = false;
-        isPlayer1 = false;
-        chosenScenario = "";
-        chosenRoom = "";
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        arePlayersConnected = false;
-        context = c;
+    public String getChosenScenario() {
+        return chosenScenario;
     }
+    public String getOtherPlayersChoice() { return otherPlayersChoice; }
 
     public User getPlayer() {
         DatabaseReference currentPlayer;
         if (isPlayer1) {
             currentPlayer =
-                    mDatabase.child("users").child(currentRoom.player1);
+                    FirebaseDB.getConnection().child("users").child(currentRoom.player1);
         } else {
             currentPlayer =
-                    mDatabase.child("users").child(currentRoom.player2);
+                    FirebaseDB.getConnection().child("users").child(currentRoom.player2);
         }
 
         currentPlayer.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -99,23 +86,22 @@ public class Multiplayer extends Activity {
         return thisPlayer;
     }
 
-    public String chooseScenario() {
+    public void chooseScenario() {
         String[] array =
-                context.getResources().getStringArray(R.array.scenarios);
+                MApplication.getAppContext().getResources().getStringArray(R.array.scenarios);
         chosenScenario = array[new Random().nextInt(array.length)];
-        return chosenScenario;
     }
 
-    private void chooseRoom() {
+    private void chooseRoom(final TaskCompletionSource<Void> waitSource) {
         final String[] array =
-                context.getResources().getStringArray(R.array.rooms);
+                MApplication.getAppContext().getResources().getStringArray(R.array.rooms);
         final DatabaseReference checkRoom =
-                mDatabase.child(chosenScenario);
+                FirebaseDB.getConnection().child(chosenScenario);
         checkRoom.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot inUseSnap : dataSnapshot.getChildren()) {
-                    // check if room is in-use
+                    // check if room is in-use and if a player is needed or not
                     currentRoom.in_use = (boolean) inUseSnap.child("in_use").getValue();
                     currentRoom.p1connected = (boolean) inUseSnap.child("p1connected").getValue();
                     currentRoom.p2connected = (boolean) inUseSnap.child("p2connected").getValue();
@@ -126,7 +112,7 @@ public class Multiplayer extends Activity {
 
                     if (foundRoom) {
                         // connect players using another callback.
-                        connectPlayers();
+                        connectPlayers(waitSource);
                         // break the foreach loop when a room is found.
                         break;
                     }
@@ -141,56 +127,55 @@ public class Multiplayer extends Activity {
 
     private void callBackChooseRoom(String[] roomsArray,
                                     DatabaseReference pCheckRoom) {
-        if (!currentRoom.in_use || currentRoom.p1connected || currentRoom.p2connected) {
+        if (!currentRoom.in_use || !(currentRoom.p1connected && currentRoom.p2connected)) {
             foundRoom = true;
             chosenRoom = roomsArray[roomIterator];
             pCheckRoom.child(roomsArray[roomIterator]).child("in_use").setValue(true);
+
+            if (!currentRoom.p1connected) {
+                currentRoom.p1connected = true;
+                currentRoom.player1 = FirebaseDB.getAuthConnection().getCurrentUser().getUid();
+                isPlayer1 = true;
+                pCheckRoom.child(roomsArray[roomIterator]).child("p1connected").setValue(true);
+                pCheckRoom.child(roomsArray[roomIterator]).child("player1")
+                        .setValue(FirebaseDB.getAuthConnection().getCurrentUser().getUid());
+            } else {
+                currentRoom.p2connected = true;
+                currentRoom.player2 = FirebaseDB.getAuthConnection().getCurrentUser().getUid();
+                pCheckRoom.child(roomsArray[roomIterator]).child("p2connected").setValue(true);
+                pCheckRoom.child(roomsArray[roomIterator]).child("player2")
+                        .setValue(FirebaseDB.getAuthConnection().getCurrentUser().getUid());
+            }
+            getPlayer();
         }
     }
 
-    private void connectPlayers() {
+    private void connectPlayers(final TaskCompletionSource<Void> waitSource) {
         final DatabaseReference connectPlayers =
-                mDatabase.child(chosenScenario).child(chosenRoom);
+                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom);
 
-        connectPlayers.addListenerForSingleValueEvent(new ValueEventListener() {
+        connectPlayers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!currentRoom.p1connected) {
-                    currentRoom.p1connected = true;
-                    currentRoom.player1 = mAuth.getCurrentUser().getUid();
-                    isPlayer1 = true;
-                    connectPlayers.child("p1connected").setValue(true);
-                    connectPlayers.child("player1").setValue(mAuth.getCurrentUser().getUid());
+                if (isPlayer1) {
+                    currentRoom.p2connected = (boolean) dataSnapshot.child("p2connected").getValue();
+                    currentRoom.player2 = dataSnapshot.child("player2").getValue(String.class);
                 } else {
-                    currentRoom.p2connected = true;
-                    currentRoom.player2 = mAuth.getCurrentUser().getUid();
-                    connectPlayers.child("p2connected").setValue(true);
-                    connectPlayers.child("player2").setValue(mAuth.getCurrentUser().getUid());
+                    currentRoom.p1connected = (boolean) dataSnapshot.child("p1connected").getValue();
+                    currentRoom.player1 = dataSnapshot.child("player1").getValue(String.class);
                 }
-                ValueEventListener listenForPlayersConnected =
-                        new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (isPlayer1) {
-                                    currentRoom.player2 =
-                                            dataSnapshot.child("player2").getValue(String.class);
-                                    currentRoom.p2connected =
-                                            (boolean) dataSnapshot.child("p2connected").getValue();
-                                } else {
-                                    currentRoom.player1 =
-                                            dataSnapshot.child("player1").getValue(String.class);
-                                    currentRoom.p1connected =
-                                            (boolean) dataSnapshot.child("p1connected").getValue();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        };
-                connectPlayers.addValueEventListener(listenForPlayersConnected);
-                while (!currentRoom.p1connected && !currentRoom.p2connected);
+                if (!currentRoom.p2connected || !currentRoom.p1connected) {
+                    if (!leftQueue) {
+                        Toast.makeText(MApplication.getAppContext(),
+                                "Searching for other player, please wait....",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    connectPlayers.removeEventListener(this);
+                    Toast.makeText(MApplication.getAppContext(), "Player found!",
+                            Toast.LENGTH_LONG).show();
+                    waitSource.trySetResult(null);
+                }
             }
 
             @Override
@@ -199,15 +184,14 @@ public class Multiplayer extends Activity {
         });
     }
 
-    public String quickPlay() {
+    public void quickPlay(final TaskCompletionSource<Void> waitSource) {
         chooseScenario();
-        chooseRoom();
-        return chosenScenario;
+        chooseRoom(waitSource);
     }
 
     public void makeChoice(String choice) {
         String currentPlayer;
-        if (currentRoom.p1connected) {
+        if (isPlayer1) {
             currentRoom.p1choice = choice;
             currentPlayer = "p1choice";
         } else {
@@ -215,86 +199,58 @@ public class Multiplayer extends Activity {
             currentPlayer = "p2choice";
         }
         DatabaseReference thisPlayer =
-                mDatabase.child(chosenScenario).child(chosenRoom).child(currentPlayer);
+                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom).child(currentPlayer);
         thisPlayer.setValue(choice);
     }
 
-    public String getOtherPlayersChoice() {
-        String playerChoice = "";
-        if (isPlayer1) {
-            playerChoice = "p2choice";
-
-        } else {
-            playerChoice = "p1choice";
-        }
-        DatabaseReference getDBResults =
-                mDatabase.child(chosenScenario).
-                        child(chosenRoom).child(playerChoice);
-
-        getDBResults.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void checkOtherPlayersChoiceLocked(final TaskCompletionSource<Void> waitSource) {
+        final DatabaseReference lockPlayers =
+                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom);
+        lockPlayers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (isPlayer1) {
-                    currentRoom.p2choice = (String) dataSnapshot.getValue();
+                    currentRoom.p2locked = ((boolean) dataSnapshot.child("p2locked").getValue());
                 } else {
-                    currentRoom.p1choice = (String) dataSnapshot.getValue();
+                    currentRoom.p1locked = ((boolean) dataSnapshot.child("p1locked").getValue());
+                }
+                if (!currentRoom.p1locked || !currentRoom.p2locked) {
+                    Toast.makeText
+                            (MApplication.getAppContext(),
+                                    "Other player is making choice....",
+                                    Toast.LENGTH_SHORT).show();
+                } else {
+                    if (isPlayer1) {
+                        currentRoom.p2choice =
+                                (String) dataSnapshot.child("p2choice").getValue();
+                        otherPlayersChoice = currentRoom.p2choice;
+                    } else {
+                        currentRoom.p1choice =
+                                (String) dataSnapshot.child("p1choice").getValue();
+                        otherPlayersChoice = currentRoom.p1choice;
+                    }
+                    lockPlayers.removeEventListener(this);
+                    waitSource.trySetResult(null);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
-        if (isPlayer1) {
-            return currentRoom.p2choice;
-        }
-        return currentRoom.p1choice;
-    }
-
-    public boolean isOtherPlayersChoiceLocked() {
-        DatabaseReference getDBChoiceLocked;
-        if (isPlayer1) {
-            getDBChoiceLocked =
-                    mDatabase.child(chosenScenario).child(chosenRoom).child("p2locked");
-        } else {
-            getDBChoiceLocked =
-                    mDatabase.child(chosenScenario).child(chosenRoom).child("p1locked");
-        }
-
-        ValueEventListener playerLockedListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (isPlayer1) {
-                    currentRoom.p2locked = ((boolean) dataSnapshot.getValue());
-                } else {
-                    currentRoom.p1locked = ((boolean) dataSnapshot.getValue());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-
-        getDBChoiceLocked.addValueEventListener(playerLockedListener);
-        if (isPlayer1) {
-            while (!currentRoom.p2locked) ;
-            return currentRoom.p2locked;
-        }
-        while (!currentRoom.p1locked) ;
-        return currentRoom.p1locked;
-
     }
 
     public void lockChoice() {
         String currentPlayer = "";
         if (isPlayer1) {
+            currentRoom.p1locked = true;
             currentPlayer = "p1locked";
         } else {
+            currentRoom.p2locked = true;
             currentPlayer = "p2locked";
         }
         DatabaseReference getDBLockChoice =
-                mDatabase.child(chosenScenario).child(chosenRoom).child(currentPlayer);
+                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom).child(currentPlayer);
         getDBLockChoice.setValue(true);
     }
 
@@ -305,10 +261,10 @@ public class Multiplayer extends Activity {
         DatabaseReference currentPlayer;
         if (isPlayer1) {
             currentPlayer =
-                    mDatabase.child("users").child(currentRoom.player1).child("wins");
+                    FirebaseDB.getConnection().child("users").child(currentRoom.player1).child("wins");
         } else {
             currentPlayer =
-                    mDatabase.child("users").child(currentRoom.player2).child("wins");
+                    FirebaseDB.getConnection().child("users").child(currentRoom.player2).child("wins");
         }
         currentPlayer.setValue(wins);
     }
@@ -320,20 +276,57 @@ public class Multiplayer extends Activity {
         DatabaseReference currentPlayer;
         if (isPlayer1) {
             currentPlayer =
-                    mDatabase.child("users").child(currentRoom.player1).child("losses");
+                    FirebaseDB.getConnection().child("users").child(currentRoom.player1).child("losses");
         } else {
             currentPlayer =
-                    mDatabase.child("users").child(currentRoom.player2).child("losses");
+                    FirebaseDB.getConnection().child("users").child(currentRoom.player2).child("losses");
         }
         currentPlayer.setValue(losses);
     }
 
     public void finishGame() {
-        RoomStatus doneRoom = new RoomStatus();
-        currentRoom = doneRoom;
+        currentRoom.in_use = false;
+        currentRoom.p1choice = "";
+        currentRoom.p1connected = false;
+        currentRoom.p1locked = false;
+        currentRoom.p2choice = "";
+        currentRoom.p2connected = false;
+        currentRoom.p2locked = false;
+        currentRoom.player1 = "";
+        currentRoom.player2 = "";
+
         DatabaseReference setDBRoomDone =
-                mDatabase.child(chosenScenario).child(chosenRoom);
-        setDBRoomDone.setValue(doneRoom);
+                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom);
+        setDBRoomDone.setValue(currentRoom);
     }
 
+    public void onBackPressed() {
+        leftQueue = true;
+        // removes the person out of the game queue
+        final DatabaseReference tempDB = FirebaseDB.
+                getConnection().child(chosenScenario).child(chosenRoom);
+        if (isPlayer1) {
+            tempDB.child("player1").setValue("");
+            tempDB.child("p1connected").setValue(false);
+        } else {
+            tempDB.child("player2").setValue("");
+            tempDB.child("p2connected").setValue(false);
+        }
+
+        // insures that the in_use boolean in the DB is false when both players have left
+        tempDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!(boolean) dataSnapshot.child("p1connected").getValue()
+                        && !(boolean) dataSnapshot.child("p2connected").getValue()
+                        && (boolean) dataSnapshot.child("in_use").getValue()) {
+                    tempDB.child("in_use").setValue(false);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

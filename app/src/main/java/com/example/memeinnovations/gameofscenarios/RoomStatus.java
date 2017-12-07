@@ -1,10 +1,12 @@
 package com.example.memeinnovations.gameofscenarios;
 
+import java.io.Serializable;
+
 /**
  * Created by Vincent on 12/5/2017.
  */
 
-public class RoomStatus {
+public class RoomStatus implements Serializable {
     public boolean in_use;
     public String p1choice;
     public boolean p1connected;

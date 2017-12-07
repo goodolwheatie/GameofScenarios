@@ -47,8 +47,8 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void play(View view) {
-        Intent openGameLobby = new Intent(MainMenuActivity.this, GameLobbyActivity.class);
-        startActivity(openGameLobby);
+        Intent openLoading = new Intent(MainMenuActivity.this, LoadingActivity.class);
+        startActivity(openLoading);
     }
 
     public void rules(View view) {
@@ -74,6 +74,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void signOut(View view) {
+        finish();
         if (FirebaseAuth.getInstance() != null) {
             FirebaseAuth.getInstance().signOut();
         }

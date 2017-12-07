@@ -1,11 +1,13 @@
 package com.example.memeinnovations.gameofscenarios;
 
+import java.io.Serializable;
+
 /**
  * Created by Vincent xD on 10/11/2017.
  * For storing users in firebase
  */
 
-public class User {
+public class User implements Serializable{
     private String userId;
     private String userName;
     private String gender;
