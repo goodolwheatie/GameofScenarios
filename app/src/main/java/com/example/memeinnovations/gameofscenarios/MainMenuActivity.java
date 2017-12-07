@@ -1,6 +1,7 @@
 package com.example.memeinnovations.gameofscenarios;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,10 +44,9 @@ public class MainMenuActivity extends AppCompatActivity {
         if (bundles != null) {
             anonymousUser = bundles.getBoolean("anonymousUser");
             if (anonymousUser) {
-                btnProfileAndReg.setText("Register Now");
+                btnProfileAndReg.setText(R.string.register_now);
             }
         }
-
     }
 
     public void play(View view) {
@@ -69,16 +72,41 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void statistics(View view) {
-        Intent openStatistics = new Intent(MainMenuActivity.this, StatisticsActivity.class);
+        Intent openStatistics =
+                new Intent(MainMenuActivity.this, StatisticsActivity.class);
         startActivity(openStatistics);
     }
 
     public void signOut(View view) {
         finish();
-        if (FirebaseAuth.getInstance() != null) {
-            FirebaseAuth.getInstance().signOut();
+        if (anonymousUser) {
+            final FirebaseUser anonUser = FirebaseDB.mAuth.getCurrentUser();
+            final String uid = anonUser.getUid();
+            FirebaseDB.mDatabase.child("users").child(uid).
+                    removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    anonUser.delete()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("ANONYMOUS", "User account deleted.");
+                                        finish();
+                                    }
+                                }
+                            });
+                }
+            });
         }
-        Intent openingGameScreen = new Intent(MainMenuActivity.this, MainActivity.class);
-        startActivity(openingGameScreen);
+        else {
+            FirebaseAuth.getInstance().signOut();
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing on back pressed
     }
 }

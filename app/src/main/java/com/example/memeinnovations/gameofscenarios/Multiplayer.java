@@ -1,17 +1,12 @@
 package com.example.memeinnovations.gameofscenarios;
 
-import android.os.Handler;
 import android.widget.Toast;
 
 
-import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
@@ -19,6 +14,8 @@ import java.util.Random;
 
 /**
  * Created by Vincent on 11/19/2017.
+ * Class for implementing all the multiplayer features
+ * Talks to the Firebase Realtime Database
  */
 
 public class Multiplayer implements Serializable  {
@@ -63,14 +60,14 @@ public class Multiplayer implements Serializable  {
     }
     public String getOtherPlayersChoice() { return otherPlayersChoice; }
 
-    public User getPlayer() {
+    private void getPlayer() {
         DatabaseReference currentPlayer;
         if (isPlayer1) {
             currentPlayer =
-                    FirebaseDB.getConnection().child("users").child(currentRoom.player1);
+                    FirebaseDB.mDatabase.child("users").child(currentRoom.player1);
         } else {
             currentPlayer =
-                    FirebaseDB.getConnection().child("users").child(currentRoom.player2);
+                    FirebaseDB.mDatabase.child("users").child(currentRoom.player2);
         }
 
         currentPlayer.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,10 +80,9 @@ public class Multiplayer implements Serializable  {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        return thisPlayer;
     }
 
-    public void chooseScenario() {
+    private void chooseScenario() {
         String[] array =
                 MApplication.getAppContext().getResources().getStringArray(R.array.scenarios);
         chosenScenario = array[new Random().nextInt(array.length)];
@@ -96,7 +92,7 @@ public class Multiplayer implements Serializable  {
         final String[] array =
                 MApplication.getAppContext().getResources().getStringArray(R.array.rooms);
         final DatabaseReference checkRoom =
-                FirebaseDB.getConnection().child(chosenScenario);
+                FirebaseDB.mDatabase.child(chosenScenario);
         checkRoom.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -134,25 +130,32 @@ public class Multiplayer implements Serializable  {
 
             if (!currentRoom.p1connected) {
                 currentRoom.p1connected = true;
-                currentRoom.player1 = FirebaseDB.getAuthConnection().getCurrentUser().getUid();
                 isPlayer1 = true;
                 pCheckRoom.child(roomsArray[roomIterator]).child("p1connected").setValue(true);
-                pCheckRoom.child(roomsArray[roomIterator]).child("player1")
-                        .setValue(FirebaseDB.getAuthConnection().getCurrentUser().getUid());
+                if (FirebaseDB.mAuth.getCurrentUser() != null) {
+                    currentRoom.player1 = FirebaseDB.mAuth.getCurrentUser().getUid();
+                    pCheckRoom.child(roomsArray[roomIterator]).child("player1")
+                            .setValue(FirebaseDB.mAuth.getCurrentUser().getUid());
+                }
             } else {
                 currentRoom.p2connected = true;
-                currentRoom.player2 = FirebaseDB.getAuthConnection().getCurrentUser().getUid();
                 pCheckRoom.child(roomsArray[roomIterator]).child("p2connected").setValue(true);
-                pCheckRoom.child(roomsArray[roomIterator]).child("player2")
-                        .setValue(FirebaseDB.getAuthConnection().getCurrentUser().getUid());
+                if (FirebaseDB.mAuth.getCurrentUser() != null) {
+                    currentRoom.player2 = FirebaseDB.mAuth.getCurrentUser().getUid();
+                    pCheckRoom.child(roomsArray[roomIterator]).child("player2")
+                            .setValue(FirebaseDB.mAuth.getCurrentUser().getUid());
+                }
             }
-            getPlayer();
+            if (FirebaseDB.mAuth.getCurrentUser() != null) {
+                // get user data of current user.
+                getPlayer();
+            }
         }
     }
 
     private void connectPlayers(final TaskCompletionSource<Void> waitSource) {
         final DatabaseReference connectPlayers =
-                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom);
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
 
         connectPlayers.addValueEventListener(new ValueEventListener() {
             @Override
@@ -173,7 +176,7 @@ public class Multiplayer implements Serializable  {
                 } else {
                     connectPlayers.removeEventListener(this);
                     Toast.makeText(MApplication.getAppContext(), "Player found!",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                     waitSource.trySetResult(null);
                 }
             }
@@ -199,20 +202,23 @@ public class Multiplayer implements Serializable  {
             currentPlayer = "p2choice";
         }
         DatabaseReference thisPlayer =
-                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom).child(currentPlayer);
+                FirebaseDB.mDatabase.child(chosenScenario)
+                        .child(chosenRoom).child(currentPlayer);
         thisPlayer.setValue(choice);
     }
 
     public void checkOtherPlayersChoiceLocked(final TaskCompletionSource<Void> waitSource) {
         final DatabaseReference lockPlayers =
-                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom);
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
         lockPlayers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (isPlayer1) {
-                    currentRoom.p2locked = ((boolean) dataSnapshot.child("p2locked").getValue());
+                    currentRoom.p2locked =
+                            ((boolean) dataSnapshot.child("p2locked").getValue());
                 } else {
-                    currentRoom.p1locked = ((boolean) dataSnapshot.child("p1locked").getValue());
+                    currentRoom.p1locked =
+                            ((boolean) dataSnapshot.child("p1locked").getValue());
                 }
                 if (!currentRoom.p1locked || !currentRoom.p2locked) {
                     Toast.makeText
@@ -250,7 +256,8 @@ public class Multiplayer implements Serializable  {
             currentPlayer = "p2locked";
         }
         DatabaseReference getDBLockChoice =
-                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom).child(currentPlayer);
+                FirebaseDB.mDatabase
+                        .child(chosenScenario).child(chosenRoom).child(currentPlayer);
         getDBLockChoice.setValue(true);
     }
 
@@ -261,10 +268,12 @@ public class Multiplayer implements Serializable  {
         DatabaseReference currentPlayer;
         if (isPlayer1) {
             currentPlayer =
-                    FirebaseDB.getConnection().child("users").child(currentRoom.player1).child("wins");
+                    FirebaseDB.mDatabase.child("users")
+                            .child(currentRoom.player1).child("wins");
         } else {
             currentPlayer =
-                    FirebaseDB.getConnection().child("users").child(currentRoom.player2).child("wins");
+                    FirebaseDB.mDatabase.child("users")
+                            .child(currentRoom.player2).child("wins");
         }
         currentPlayer.setValue(wins);
     }
@@ -276,10 +285,12 @@ public class Multiplayer implements Serializable  {
         DatabaseReference currentPlayer;
         if (isPlayer1) {
             currentPlayer =
-                    FirebaseDB.getConnection().child("users").child(currentRoom.player1).child("losses");
+                    FirebaseDB.mDatabase.child("users")
+                            .child(currentRoom.player1).child("losses");
         } else {
             currentPlayer =
-                    FirebaseDB.getConnection().child("users").child(currentRoom.player2).child("losses");
+                    FirebaseDB.mDatabase.child("users")
+                            .child(currentRoom.player2).child("losses");
         }
         currentPlayer.setValue(losses);
     }
@@ -296,7 +307,7 @@ public class Multiplayer implements Serializable  {
         currentRoom.player2 = "";
 
         DatabaseReference setDBRoomDone =
-                FirebaseDB.getConnection().child(chosenScenario).child(chosenRoom);
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
         setDBRoomDone.setValue(currentRoom);
     }
 
@@ -304,7 +315,7 @@ public class Multiplayer implements Serializable  {
         leftQueue = true;
         // removes the person out of the game queue
         final DatabaseReference tempDB = FirebaseDB.
-                getConnection().child(chosenScenario).child(chosenRoom);
+                mDatabase.child(chosenScenario).child(chosenRoom);
         if (isPlayer1) {
             tempDB.child("player1").setValue("");
             tempDB.child("p1connected").setValue(false);

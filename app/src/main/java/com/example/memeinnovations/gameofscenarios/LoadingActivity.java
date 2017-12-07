@@ -3,16 +3,19 @@ package com.example.memeinnovations.gameofscenarios;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.database.DataSnapshot;
+import com.wang.avi.AVLoadingIndicatorView;
 
 public class LoadingActivity extends AppCompatActivity {
 
     final Multiplayer multiplayerSession = new Multiplayer();
+    private AVLoadingIndicatorView avLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +32,14 @@ public class LoadingActivity extends AppCompatActivity {
         Task<Void> allTask;
         allTask = Tasks.whenAll(waitTask);
 
+        // set loading bar visible
+        avLoading = findViewById(R.id.aviLoading);
+        avLoading.setVisibility(View.VISIBLE);
+
         allTask.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                avLoading.setVisibility(View.GONE);
                 Intent intent =
                         new Intent(LoadingActivity.this, GameLobbyActivity.class);
                 intent.putExtra("multiplayerSession", multiplayerSession);

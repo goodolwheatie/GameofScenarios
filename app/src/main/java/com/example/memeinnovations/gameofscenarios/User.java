@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable{
+    private boolean isAnonymous;
     private String userId;
     private String userName;
     private String gender;
@@ -40,6 +41,7 @@ public class User implements Serializable{
         this.gender = gender;
         this.age = age;
         this.ethnicity = ethnicity;
+        isAnonymous = false;
     }
 
     public User() {
@@ -52,6 +54,7 @@ public class User implements Serializable{
         gender = "";
         age = "";
         ethnicity = "";
+        isAnonymous = true;
     }
 
     public String getUsername() {
