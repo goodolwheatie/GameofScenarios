@@ -109,7 +109,7 @@
     <ImageView
         android:layout_width="408dp"
         android:layout_height="492dp"
-        android:src="@drawable/screenshot"
+        android:src="@drawable/prisdilgame"
         tools:layout_editor_absoluteX="2dp"
         tools:layout_editor_absoluteY="-1dp" />
 

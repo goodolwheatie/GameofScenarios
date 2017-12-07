@@ -84,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/glTopMainMenu"
-        app:srcCompat="@drawable/gameOfScenariosTitleLogo" />
+        app:srcCompat="@drawable/game_of_scenarios_title_logo" />
 
     <android.support.constraint.Guideline
         android:id="@+id/glTopMainMenu"

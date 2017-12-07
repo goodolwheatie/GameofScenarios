@@ -44,15 +44,9 @@
         android:text="@string/ready"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameInner"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameInner"
-=======
         app:layout_constraintEnd_toStartOf="@+id/glRightPrisonersInner"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
->>>>>>> 85f38f39295124e66db9f3c0f879eae10f8a469c
         app:layout_constraintTop_toBottomOf="@+id/btnReroll"
         app:layout_constraintVertical_bias="1.0" />
 
