@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -132,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mAuth.getCurrentUser() != null) {
             final Intent openMainMenu =
                     new Intent(MainActivity.this, MainMenuActivity.class);
-            FirebaseDB.getConnection()
-                    .child(mAuth.getCurrentUser().getUid()).child("isAnonymous")
+            FirebaseDB.getConnection().child("users")
+                    .child(mAuth.getCurrentUser().getUid()).child("anonymous")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             openMainMenu.putExtra("anonymousUser", anonymousUser);
                         }
                         startActivity(openMainMenu);
-                        finish();
                     }
                 }
                 @Override

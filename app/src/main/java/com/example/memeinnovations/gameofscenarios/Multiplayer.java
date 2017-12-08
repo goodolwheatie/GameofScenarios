@@ -73,7 +73,9 @@ public class Multiplayer implements Serializable  {
         currentPlayer.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                thisPlayer = dataSnapshot.getValue(User.class);
+                if (dataSnapshot.exists()) {
+                    thisPlayer = dataSnapshot.getValue(User.class);
+                }
             }
 
             @Override
@@ -146,10 +148,6 @@ public class Multiplayer implements Serializable  {
                             .setValue(FirebaseDB.mAuth.getCurrentUser().getUid());
                 }
             }
-            if (FirebaseDB.mAuth.getCurrentUser() != null) {
-                // get user data of current user.
-                getPlayer();
-            }
         }
     }
 
@@ -174,6 +172,8 @@ public class Multiplayer implements Serializable  {
                                 Toast.LENGTH_LONG).show();
                     }
                 } else {
+                    // retrieve player from database
+                    getPlayer();
                     connectPlayers.removeEventListener(this);
                     Toast.makeText(MApplication.getAppContext(), "Player found!",
                             Toast.LENGTH_SHORT).show();
@@ -262,37 +262,53 @@ public class Multiplayer implements Serializable  {
     }
 
     public void incrementWin() {
-        int wins = thisPlayer.getWins();
-        ++wins;
-        thisPlayer.setWins(wins);
         DatabaseReference currentPlayer;
-        if (isPlayer1) {
-            currentPlayer =
-                    FirebaseDB.mDatabase.child("users")
-                            .child(currentRoom.player1).child("wins");
-        } else {
-            currentPlayer =
-                    FirebaseDB.mDatabase.child("users")
-                            .child(currentRoom.player2).child("wins");
+        int wins = 0;
+
+        if (thisPlayer != null) {
+            wins = thisPlayer.getWins();
+            ++wins;
         }
-        currentPlayer.setValue(wins);
+        if (isPlayer1) {
+            if (currentRoom.player1 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("wins");
+                currentPlayer.setValue(wins);
+            }
+        } else {
+            if (currentRoom.player2 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player2).child("wins");
+                currentPlayer.setValue(wins);
+            }
+        }
     }
 
     public void incrementLoss() {
-        int losses = thisPlayer.getWins();
-        ++losses;
-        thisPlayer.setLosses(losses);
         DatabaseReference currentPlayer;
-        if (isPlayer1) {
-            currentPlayer =
-                    FirebaseDB.mDatabase.child("users")
-                            .child(currentRoom.player1).child("losses");
-        } else {
-            currentPlayer =
-                    FirebaseDB.mDatabase.child("users")
-                            .child(currentRoom.player2).child("losses");
+        int losses = 0;
+
+        if (thisPlayer != null) {
+            losses = thisPlayer.getLosses();
+            ++losses;
         }
-        currentPlayer.setValue(losses);
+        if (isPlayer1) {
+            if (currentRoom.player1 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("losses");
+                currentPlayer.setValue(losses);
+            }
+        } else {
+            if (currentRoom.player2 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player2).child("losses");
+                currentPlayer.setValue(losses);
+            }
+        }
     }
 
     public void finishGame() {

@@ -78,7 +78,6 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void signOut(View view) {
-        finish();
         if (anonymousUser) {
             final FirebaseUser anonUser = FirebaseDB.mAuth.getCurrentUser();
             final String uid = anonUser.getUid();

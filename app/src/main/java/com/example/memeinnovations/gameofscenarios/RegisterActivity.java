@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -137,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
+        FirebaseUser temp = mAuth.getCurrentUser();
         if (mAuth.getCurrentUser() != null) {
             AuthCredential credential = EmailAuthProvider.getCredential(email, password);
             mAuth.getCurrentUser().linkWithCredential(credential)
@@ -149,11 +151,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "User Registration Successful", Toast.LENGTH_SHORT).show();
                                 Intent mainMenu = new Intent(RegisterActivity.this,
-                                        MainActivity.class);
+                                        MainMenuActivity.class);
                                 mainMenu.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 mainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(new Intent(RegisterActivity.this,
-                                        MainMenuActivity.class));
+                                startActivity(mainMenu);
                                 finish();
                             } else {
                                 if (task.getException() instanceof FirebaseAuthUserCollisionException) {
@@ -177,11 +178,8 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "User Registration Successful", Toast.LENGTH_SHORT).show();
                         Intent mainMenu =
-                                new Intent(RegisterActivity.this, MainActivity.class);
-                        mainMenu.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(new Intent(RegisterActivity.this,
-                                MainMenuActivity.class));
+                                new Intent(RegisterActivity.this, MainMenuActivity.class);
+                        startActivity(mainMenu);
                         finish();
                     } else {
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {

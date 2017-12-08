@@ -7,8 +7,8 @@ import java.io.Serializable;
  * For storing users in firebase
  */
 
-public class User implements Serializable{
-    private boolean isAnonymous;
+public class User implements Serializable {
+    private boolean anonymous;
     private String userId;
     private String userName;
     private String gender;
@@ -19,7 +19,7 @@ public class User implements Serializable{
     private int losses;
     private int totalGamesPlayed;
 
-    public User (User rightUser) {
+    public User(User rightUser) {
         this.userId = rightUser.userId;
         this.userName = rightUser.userName;
         this.gender = rightUser.gender;
@@ -41,7 +41,7 @@ public class User implements Serializable{
         this.gender = gender;
         this.age = age;
         this.ethnicity = ethnicity;
-        isAnonymous = false;
+        anonymous = false;
     }
 
     public User() {
@@ -54,7 +54,7 @@ public class User implements Serializable{
         gender = "";
         age = "";
         ethnicity = "";
-        isAnonymous = true;
+        anonymous = true;
     }
 
     public String getUsername() {
@@ -129,4 +129,11 @@ public class User implements Serializable{
         this.totalGamesPlayed = totalGamesPlayed;
     }
 
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
+    }
 }
