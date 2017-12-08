@@ -5,7 +5,7 @@
     android:id="@+id/activity_travelers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.memeinnovations.gameofscenarios.TravelersActivity">
+    tools:context="com.example.memeinnovations.gameofscenarios.activities.TravelersActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/glLeftTravelersInner"

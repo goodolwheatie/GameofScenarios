@@ -1,7 +1,6 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,7 +10,9 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
+import com.example.memeinnovations.gameofscenarios.R;
 
 import java.util.Random;
 

@@ -13,24 +13,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainMenuActivity" />
-        <activity android:name=".GameLobbyActivity" />
-        <activity android:name=".PrisonersActivity" />
-        <activity android:name=".GameFinishActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".RulesActivity" />
-        <activity android:name=".StatisticsActivity" />
-        <activity android:name=".ChickenActivity" />
-        <activity android:name=".TravelersActivity" />
-        <activity android:name=".LoadingActivity"></activity>
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.MainMenuActivity" />
+        <activity android:name=".activities.GameLobbyActivity" />
+        <activity android:name=".activities.PrisonersActivity" />
+        <activity android:name=".activities.GameFinishActivity" />
+        <activity android:name=".activities.ProfileActivity" />
+        <activity android:name=".activities.RulesActivity" />
+        <activity android:name=".activities.StatisticsActivity" />
+        <activity android:name=".activities.ChickenActivity" />
+        <activity android:name=".activities.TravelersActivity" />
+        <activity android:name=".activities.LoadingActivity"></activity>
     </application>
 
 </manifest>

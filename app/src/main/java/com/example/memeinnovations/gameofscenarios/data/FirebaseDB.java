@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.data;
 
 
 import com.google.firebase.auth.FirebaseAuth;

@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.memeinnovations.gameofscenarios.data.FirebaseDB;
+import com.example.memeinnovations.gameofscenarios.R;
+import com.example.memeinnovations.gameofscenarios.data.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

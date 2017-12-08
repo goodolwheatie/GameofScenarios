@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.multiplayer;
 
 import java.io.Serializable;
 

@@ -7,6 +7,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Vincent xD on 11/11/2017.
+ * Used if the application is required to do something before actually
+ * opening up.
  */
 
 public class MApplication extends Application {

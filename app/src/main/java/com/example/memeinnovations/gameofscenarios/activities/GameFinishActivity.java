@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.Random;
+import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
+import com.example.memeinnovations.gameofscenarios.R;
 
 public class GameFinishActivity extends AppCompatActivity {
 

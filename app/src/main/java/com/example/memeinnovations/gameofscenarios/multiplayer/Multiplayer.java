@@ -1,8 +1,12 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.multiplayer;
 
 import android.widget.Toast;
 
 
+import com.example.memeinnovations.gameofscenarios.MApplication;
+import com.example.memeinnovations.gameofscenarios.R;
+import com.example.memeinnovations.gameofscenarios.data.FirebaseDB;
+import com.example.memeinnovations.gameofscenarios.data.User;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

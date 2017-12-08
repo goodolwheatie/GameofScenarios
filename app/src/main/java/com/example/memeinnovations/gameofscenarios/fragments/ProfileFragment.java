@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.fragments;
 
 
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.memeinnovations.gameofscenarios.R;
+import com.example.memeinnovations.gameofscenarios.data.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
