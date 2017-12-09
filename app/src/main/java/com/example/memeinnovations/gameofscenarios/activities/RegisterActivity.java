@@ -154,8 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         "User Registration Successful", Toast.LENGTH_SHORT).show();
                                 Intent mainMenu = new Intent(RegisterActivity.this,
                                         MainMenuActivity.class);
-                                mainMenu.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                mainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(mainMenu);
                                 finish();
                             } else {

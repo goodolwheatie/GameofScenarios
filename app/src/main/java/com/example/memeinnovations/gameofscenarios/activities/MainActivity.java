@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     .child(mAuth.getCurrentUser().getUid()).setValue(anonUser);
                             Intent openMainMenu = new Intent(MainActivity.this, MainMenuActivity.class);
                             openMainMenu.putExtra("anonymousUser", anonymousUser);
-                            openMainMenu.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(openMainMenu);
                         } else {
                             Toast.makeText(getApplicationContext(),
