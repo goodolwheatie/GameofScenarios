@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,10 +11,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.memeinnovations.gameofscenarios.data.FirebaseDB;
+import com.example.memeinnovations.gameofscenarios.R;
+import com.example.memeinnovations.gameofscenarios.data.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,14 +30,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean anonymousUser;
 
     private void anonLogin() {
+        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInAnonymously().
                 addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            anonymousUser = true;
+                            User anonUser = new User();
+                            FirebaseDB.getConnection().child("users")
+                                    .child(mAuth.getCurrentUser().getUid()).setValue(anonUser);
+                            Intent openMainMenu = new Intent(MainActivity.this, MainMenuActivity.class);
+                            openMainMenu.putExtra("anonymousUser", anonymousUser);
+                            openMainMenu.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(openMainMenu);
                         } else {
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),
+                                    task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -69,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -101,10 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(openRegister);
                 break;
             case R.id.btnAnonymously:
-                anonymousUser = true;
-                Intent openMainMenu = new Intent(MainActivity.this, MainMenuActivity.class);
-                openMainMenu.putExtra("anonymousUser", anonymousUser);
-                startActivity(openMainMenu);
+                anonLogin();
                 break;
             case R.id.btnLogin:
                 userLogin();
@@ -120,9 +132,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
         // check if user already logged in
         if (mAuth.getCurrentUser() != null) {
-            Intent openRegister = new Intent(MainActivity.this, MainMenuActivity.class);
-            startActivity(openRegister);
-            finish();
+            final Intent openMainMenu =
+                    new Intent(MainActivity.this, MainMenuActivity.class);
+            FirebaseDB.getConnection().child("users")
+                    .child(mAuth.getCurrentUser().getUid()).child("anonymous")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        if ((boolean) dataSnapshot.getValue()) {
+                            anonymousUser = true;
+                            openMainMenu.putExtra("anonymousUser", anonymousUser);
+                        }
+                        startActivity(openMainMenu);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
         }
     }
 }

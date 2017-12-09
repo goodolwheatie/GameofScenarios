@@ -5,7 +5,7 @@
     android:id="@+id/activity_prisoners"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.memeinnovations.gameofscenarios.PrisonersActivity"
+    tools:context="com.example.memeinnovations.gameofscenarios.activities.PrisonersActivity"
     tools:layout_editor_absoluteY="81dp">
 
 

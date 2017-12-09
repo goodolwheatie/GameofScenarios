@@ -1,11 +1,14 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.data;
+
+import java.io.Serializable;
 
 /**
  * Created by Vincent xD on 10/11/2017.
  * For storing users in firebase
  */
 
-public class User {
+public class User implements Serializable {
+    private boolean anonymous;
     private String userId;
     private String userName;
     private String gender;
@@ -16,7 +19,7 @@ public class User {
     private int losses;
     private int totalGamesPlayed;
 
-    public User (User rightUser) {
+    public User(User rightUser) {
         this.userId = rightUser.userId;
         this.userName = rightUser.userName;
         this.gender = rightUser.gender;
@@ -38,6 +41,7 @@ public class User {
         this.gender = gender;
         this.age = age;
         this.ethnicity = ethnicity;
+        anonymous = false;
     }
 
     public User() {
@@ -50,6 +54,7 @@ public class User {
         gender = "";
         age = "";
         ethnicity = "";
+        anonymous = true;
     }
 
     public String getUsername() {
@@ -124,4 +129,11 @@ public class User {
         this.totalGamesPlayed = totalGamesPlayed;
     }
 
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
+    }
 }

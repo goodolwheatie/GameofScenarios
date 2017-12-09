@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +10,13 @@ import android.widget.TextView;
 import android.widget.NumberPicker;
 import android.view.View;
 
+import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
+import com.example.memeinnovations.gameofscenarios.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
+
 public class TravelersActivity extends AppCompatActivity {
     private static int TIME_OUT = 17000; //Time to launch the next activity
     private View activity_travelers;
@@ -17,12 +24,19 @@ public class TravelersActivity extends AppCompatActivity {
     private CountDownTimer gTimer;
     private NumberPicker picker;
     private int price = 0;
-
+    private Multiplayer multiplayerSession;
+    private final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
+    private Task waitTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travelers);
+
+        // grab multiplayer session from game lobby
+        multiplayerSession =
+                (Multiplayer) getIntent().getSerializableExtra("multiplayerSession");
+        waitTask = waitSource.getTask();
 
         try
         {
@@ -68,17 +82,35 @@ public class TravelersActivity extends AppCompatActivity {
     }
 
     public void lockIn(View view){
-        Intent lockIn = new Intent( TravelersActivity.this, GameFinishActivity.class);
+
+        final Intent lockIn = new Intent
+                ( TravelersActivity.this, GameFinishActivity.class);
         lockIn.putExtra( "gameName", "travelers"); //send the game name
+
 
         price = picker.getValue();
         lockIn.putExtra( "price", price); //send the price chosen to the next activity
-        startActivity(lockIn);
-        if(gTimer != null){
-            //close the timer
-            gTimer.cancel();
-        }
-        finish();
+
+        // multiplayer features
+        multiplayerSession.makeChoice(Integer.toString(price));
+        multiplayerSession.lockChoice();
+        // make sure opponent makes decision before moving on.
+        multiplayerSession.checkOtherPlayersChoiceLocked(waitSource);
+
+        Task<Void> allTask;
+        allTask = Tasks.whenAll(waitTask);
+        allTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if (gTimer != null) {
+                    //close the timer
+                    gTimer.cancel();
+                }
+                lockIn.putExtra("multiplayerSession", multiplayerSession);
+                startActivity(lockIn);
+                finish();
+            }
+        });
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,11 @@ import android.widget.PopupWindow;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
+import com.example.memeinnovations.gameofscenarios.R;
+
+import java.util.Random;
+
 
 /**
  * Created by Benson Gao on 11/5/2017.
@@ -22,7 +27,7 @@ public class GameLobbyActivity extends AppCompatActivity{
     private TextView title;
 
     // Multiplayer class for multiplayer implementation.
-    Multiplayer multiplayerSession;
+    private Multiplayer multiplayerSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +44,11 @@ public class GameLobbyActivity extends AppCompatActivity{
         // title = (TextView)findViewById(R.id.txtGameTitle);
 
         // initialize multiplayer class integration VT
-        multiplayerSession = new Multiplayer(this);
+        multiplayerSession =
+                (Multiplayer) getIntent().getSerializableExtra("multiplayerSession");
 
         //determine which game is being played
-        chooseGame();
+        gameName = multiplayerSession.getChosenScenario();
         updateActivity();
     }
 
@@ -76,10 +82,7 @@ public class GameLobbyActivity extends AppCompatActivity{
     }
 
     public void chooseGame(){
-        // reset game session.
-        multiplayerSession = new Multiplayer(this);
-
-/*        Random r = new Random();
+        Random r = new Random();
         int gameInt = r.nextInt(2);
         switch(gameInt) {
             case 0:{
@@ -90,10 +93,7 @@ public class GameLobbyActivity extends AppCompatActivity{
                 gameName = "Game of Chicken";
                 break;
             }
-        }*/
-
-        // choose game scenario using database
-        gameName = multiplayerSession.quickPlay();
+        }
     }
 
     public void updateActivity(){
@@ -128,18 +128,21 @@ public class GameLobbyActivity extends AppCompatActivity{
         switch(gameName){
             case "Prisoner's Dilemma":
                 ready = new Intent(GameLobbyActivity.this, PrisonersActivity.class);
+                ready.putExtra("multiplayerSession", multiplayerSession);
                 startActivity(ready);
                 finish();
                 break;
 
             case "Game of Chicken":
                 ready = new Intent(GameLobbyActivity.this, ChickenActivity.class);
+                ready.putExtra("multiplayerSession", multiplayerSession);
                 startActivity(ready);
                 finish();
                 break;
 
             case "Traveler's Dilemma":
                 ready = new Intent(GameLobbyActivity.this, TravelersActivity.class);
+                ready.putExtra("multiplayerSession", multiplayerSession);
                 startActivity(ready);
                 finish();
                 break;

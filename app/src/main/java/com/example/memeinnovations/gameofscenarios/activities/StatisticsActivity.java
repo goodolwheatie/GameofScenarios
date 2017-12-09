@@ -1,7 +1,9 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.memeinnovations.gameofscenarios.R;
 
 public class StatisticsActivity extends AppCompatActivity {
 

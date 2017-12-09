@@ -1,9 +1,13 @@
-package com.example.memeinnovations.gameofscenarios;
+package com.example.memeinnovations.gameofscenarios.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.memeinnovations.gameofscenarios.R;
+import com.example.memeinnovations.gameofscenarios.fragments.ProfileFragment;
+import com.example.memeinnovations.gameofscenarios.fragments.UserScenarioProfileFragment;
 
 /**
  * Created by Vincent xD on 11/11/2017.
