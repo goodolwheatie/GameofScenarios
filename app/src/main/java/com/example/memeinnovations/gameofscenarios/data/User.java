@@ -18,6 +18,7 @@ public class User implements Serializable {
     private int wins;
     private int losses;
     private int totalGamesPlayed;
+    private int rewardPoints;
 
     public User(User rightUser) {
         this.userId = rightUser.userId;
@@ -36,6 +37,7 @@ public class User implements Serializable {
         wins = 0;
         losses = 0;
         totalGamesPlayed = 0;
+        rewardPoints = 0;
         this.userId = userId;
         this.userName = userName;
         this.gender = gender;
@@ -49,6 +51,7 @@ public class User implements Serializable {
         wins = 0;
         losses = 0;
         totalGamesPlayed = 0;
+        rewardPoints = 0;
         userId = "";
         userName = "";
         gender = "";
