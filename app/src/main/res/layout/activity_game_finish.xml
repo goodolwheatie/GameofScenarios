@@ -37,13 +37,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#e00010"
         android:onClick="playAgain"
         android:text="@string/playAgain"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
         app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
-        android:background="#e00010"
-        android:textColor="#ffffff"
         tools:text="Next Game" />
 
     <Button
@@ -51,14 +51,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#6d70f1"
         android:onClick="mainMenu"
         android:text="@string/mainMenu"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/btnPlayAgain"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
-        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
-        android:background="#6d70f1"
-        android:textColor="#ffffff"
-        />
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner" />
 
     <ImageView
         android:id="@+id/imageView4"

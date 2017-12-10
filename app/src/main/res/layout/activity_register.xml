@@ -111,8 +111,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/register"
+        android:backgroundTint="#6d70f1"
         android:onClick="registerUser"
+        android:text="@string/register"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/spnEthn"
         app:layout_constraintHorizontal_bias="0.5"
@@ -121,9 +123,7 @@
         app:layout_constraintVertical_bias="0.287"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:background="#6d70f1"
-        android:textColor="#ffffff"/>
+        tools:layout_constraintRight_creator="1" />
 
     <TextView
         android:id="@+id/tvwOptional"

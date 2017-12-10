@@ -46,14 +46,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
         android:onClick="lockIn"
         android:text="@string/lockIn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glRightPrisonersInner"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner" />
 
 
     <ToggleButton
@@ -69,8 +67,6 @@
         app:layout_constraintEnd_toStartOf="@+id/glCenterPrisonersInner"
         app:layout_constraintStart_toStartOf="@+id/glLeftPrisonersInner"
         app:layout_constraintTop_toTopOf="@+id/glBottomPrisonersInner"
-        android:background="#6d70f1"
-        android:textColor="#ffffff"
 
         />
 
@@ -80,8 +76,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:background="#e00010"
-        android:textColor="#ffffff"
         android:checked="false"
         android:onClick="betray"
 

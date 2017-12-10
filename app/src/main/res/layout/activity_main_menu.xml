@@ -32,7 +32,7 @@
             android:id="@+id/btnPlay"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#ed2e6f"
+            android:backgroundTint="#ed2e6f"
             android:onClick="play"
             android:text="@string/play"
             android:textColor="#ffffff"

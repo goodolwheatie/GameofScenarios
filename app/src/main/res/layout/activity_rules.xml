@@ -28,51 +28,40 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.85" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/buttonPrisonerRules"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:onClick="prisonerRules"
+        android:text="@string/buttonPrisonerRules"
+        app:layout_constraintEnd_toEndOf="@+id/buttonTravelerRules"
+        app:layout_constraintStart_toStartOf="@+id/buttonTravelerRules"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTravelerRules" />
+
+    <Button
+        android:id="@+id/buttonChickenRules"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="chickenRules"
+        android:text="@string/buttonChickenRules"
         app:layout_constraintEnd_toStartOf="@+id/glRightRulesInner"
         app:layout_constraintStart_toStartOf="@+id/glLeftRulesInner"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonPrisonerRules"
-        android:layout_width="361dp"
-        android:layout_height="wrap_content"
-        android:text="@string/buttonPrisonerRules"
-        android:onClick="prisonerRules"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/glTopMainMenu"
-        />
-
-    <Button
-        android:id="@+id/buttonChickenRules"
-        android:layout_width="361dp"
-        android:layout_height="wrap_content"
-        android:text="@string/buttonChickenRules"
-        android:onClick="chickenRules"
-        app:layout_constraintBottom_toTopOf="@+id/buttonTravelerRules"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/glRightMainMenuInner"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <Button
         android:id="@+id/buttonTravelerRules"
-        android:layout_width="361dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/buttonTravelerRules"
+        android:layout_marginTop="8dp"
         android:onClick="travelerRules"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/buttonTravelerRules"
         app:layout_constraintEnd_toEndOf="@+id/buttonChickenRules"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/buttonChickenRules"
-        app:layout_constraintTop_toBottomOf="@+id/buttonChickenRules"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/buttonChickenRules" />
 
 
 

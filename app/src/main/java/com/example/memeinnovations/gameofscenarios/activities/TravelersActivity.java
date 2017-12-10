@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.NumberPicker;
 import android.view.View;
@@ -27,11 +28,15 @@ public class TravelersActivity extends AppCompatActivity {
     private Multiplayer multiplayerSession;
     private final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
     private Task waitTask;
+    private Button btnLockIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travelers);
+
+        // initialize lock in button
+        btnLockIn = (Button) findViewById(R.id.btnLockInTravelers);
 
         // grab multiplayer session from game lobby
         multiplayerSession =
@@ -83,6 +88,7 @@ public class TravelersActivity extends AppCompatActivity {
 
     public void lockIn(View view){
 
+        btnLockIn.setEnabled(false);
         final Intent lockIn = new Intent
                 ( TravelersActivity.this, GameFinishActivity.class);
         lockIn.putExtra( "gameName", "travelers"); //send the game name

@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.widget.Button;
 import android.widget.ToggleButton;
 import android.widget.TextView;
 import android.view.View;
@@ -27,6 +28,8 @@ public class PrisonersActivity extends AppCompatActivity {
     private ToggleButton btnBetray;
     private ToggleButton btnKeepQuiet;
     private Multiplayer multiplayerSession;
+    private Button btnLockIn;
+
     // initialize wait source task.
     private final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
     private Task waitTask;
@@ -68,6 +71,7 @@ public class PrisonersActivity extends AppCompatActivity {
         gameTimer();
 
         //have the game initialize with the keeping quiet option
+        btnLockIn = (Button) findViewById(R.id.btnLockInPrisoners);
         btnBetray = (ToggleButton) findViewById(R.id.btnBetray);
         btnKeepQuiet = (ToggleButton) findViewById(R.id.btnKeepQuiet);
         keepQuiet(findViewById(R.id.activity_prisoners));
@@ -104,6 +108,8 @@ public class PrisonersActivity extends AppCompatActivity {
     }
 
     public void lockIn(View view) {
+        btnLockIn.setEnabled(false);
+
         // lock in DB
         multiplayerSession.lockChoice();
 

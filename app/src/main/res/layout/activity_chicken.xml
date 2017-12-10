@@ -33,39 +33,39 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#e00010"
         android:onClick="stayCenter"
         android:text="@string/stayCenter"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
-        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner"
-        android:background="#e00010"
-        android:textColor="#ffffff"/>
+        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner" />
 
     <Button
         android:id="@+id/btnSwerveLeft"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#6d70f1"
         android:onClick="swerveLeft"
         android:text="@string/swerveLeft"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/btnStayCenter"
         app:layout_constraintEnd_toStartOf="@+id/glCenterChickenInner"
-        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner"
-        android:background="#6d70f1"
-        android:textColor="#ffffff"/>
+        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner" />
 
     <Button
         android:id="@+id/btnSwerveRight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="#6d70f1"
         android:onClick="swerveRight"
         android:text="@string/swerveRight"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/btnStayCenter"
         app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
-        app:layout_constraintStart_toStartOf="@+id/glCenterChickenInner"
-        android:background="#6d70f1"
-        android:textColor="#ffffff"/>
+        app:layout_constraintStart_toStartOf="@+id/glCenterChickenInner" />
 
     <TextView
         android:id="@+id/chickenTimer"
