@@ -37,7 +37,9 @@
         android:text="@string/stayCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
-        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner" />
+        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner"
+        android:background="#e00010"
+        android:textColor="#ffffff"/>
 
     <Button
         android:id="@+id/btnSwerveLeft"
@@ -48,7 +50,9 @@
         android:text="@string/swerveLeft"
         app:layout_constraintBottom_toTopOf="@+id/btnStayCenter"
         app:layout_constraintEnd_toStartOf="@+id/glCenterChickenInner"
-        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner" />
+        app:layout_constraintStart_toStartOf="@+id/glRightChickenInner"
+        android:background="#6d70f1"
+        android:textColor="#ffffff"/>
 
     <Button
         android:id="@+id/btnSwerveRight"
@@ -59,7 +63,9 @@
         android:text="@string/swerveRight"
         app:layout_constraintBottom_toTopOf="@+id/btnStayCenter"
         app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
-        app:layout_constraintStart_toStartOf="@+id/glCenterChickenInner" />
+        app:layout_constraintStart_toStartOf="@+id/glCenterChickenInner"
+        android:background="#6d70f1"
+        android:textColor="#ffffff"/>
 
     <TextView
         android:id="@+id/chickenTimer"
@@ -73,6 +79,16 @@
         app:layout_constraintEnd_toStartOf="@+id/glLeftChickenInner"
         app:layout_constraintStart_toStartOf="@+id/glRightChickenInner"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSwerveLeft"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/drivingchicken" />
 
 
 </android.support.constraint.ConstraintLayout>
