@@ -15,11 +15,12 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    final Multiplayer multiplayerSession = new Multiplayer();
+    Multiplayer multiplayerSession;
     private AVLoadingIndicatorView avLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        multiplayerSession = new Multiplayer();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 

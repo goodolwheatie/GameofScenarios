@@ -64,7 +64,7 @@ public class Multiplayer implements Serializable  {
     }
     public String getOtherPlayersChoice() { return otherPlayersChoice; }
 
-    private void getPlayer() {
+    private void getPlayer(final TaskCompletionSource<Void> waitSource) {
         DatabaseReference currentPlayer;
         if (isPlayer1) {
             currentPlayer =
@@ -78,6 +78,7 @@ public class Multiplayer implements Serializable  {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    waitSource.trySetResult(null);
                     thisPlayer = dataSnapshot.getValue(User.class);
                 }
             }
@@ -109,15 +110,14 @@ public class Multiplayer implements Serializable  {
                     currentRoom.p2connected = (boolean) inUseSnap.child("p2connected").getValue();
                     callBackChooseRoom(array, checkRoom);
 
-                    // iterator through list
-                    roomIterator = (roomIterator + 1) % array.length;
-
                     if (foundRoom) {
                         // connect players using another callback.
                         connectPlayers(waitSource);
                         // break the foreach loop when a room is found.
                         break;
                     }
+                    // iterator through list
+                    roomIterator = (roomIterator + 1) % array.length;
                 }
             }
 
@@ -173,15 +173,14 @@ public class Multiplayer implements Serializable  {
                     if (!leftQueue) {
                         Toast.makeText(MApplication.getAppContext(),
                                 "Searching for other player, please wait....",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     // retrieve player from database
-                    getPlayer();
+                    getPlayer(waitSource);
                     connectPlayers.removeEventListener(this);
                     Toast.makeText(MApplication.getAppContext(), "Player found!",
                             Toast.LENGTH_SHORT).show();
-                    waitSource.trySetResult(null);
                 }
             }
 
@@ -315,7 +314,33 @@ public class Multiplayer implements Serializable  {
         }
     }
 
+    public void incrementTotalGames() {
+        DatabaseReference currentPlayer;
+        int totalGames = 0;
+
+        if (thisPlayer != null) {
+            totalGames = thisPlayer.getTotalGamesPlayed();
+            ++totalGames;
+        }
+        if (isPlayer1) {
+            if (currentRoom.player1 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("totalGamesPlayed");
+                currentPlayer.setValue(totalGames);
+            }
+        } else {
+            if (currentRoom.player2 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player2).child("totalGamesPlayed");
+                currentPlayer.setValue(totalGames);
+            }
+        }
+    }
+
     public void finishGame() {
+        incrementTotalGames();
         currentRoom.in_use = false;
         currentRoom.p1choice = "";
         currentRoom.p1connected = false;
@@ -337,9 +362,13 @@ public class Multiplayer implements Serializable  {
         final DatabaseReference tempDB = FirebaseDB.
                 mDatabase.child(chosenScenario).child(chosenRoom);
         if (isPlayer1) {
+            currentRoom.player1 = "";
+            currentRoom.p1connected = false;
             tempDB.child("player1").setValue("");
             tempDB.child("p1connected").setValue(false);
         } else {
+            currentRoom.player2 = "";
+            currentRoom.p2connected = false;
             tempDB.child("player2").setValue("");
             tempDB.child("p2connected").setValue(false);
         }

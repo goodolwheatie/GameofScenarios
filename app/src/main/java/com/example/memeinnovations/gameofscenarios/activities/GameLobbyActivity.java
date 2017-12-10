@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
 import com.example.memeinnovations.gameofscenarios.R;
@@ -116,11 +117,15 @@ public class GameLobbyActivity extends AppCompatActivity{
     }
 
     public void reroll(View view){
-        String currentGame = gameName;
+        Toast.makeText(getApplicationContext(),
+                "Re-roll not implemented for multiplayer yet! Sorry.",
+                Toast.LENGTH_SHORT).show();
+
+/*        String currentGame = gameName;
         while(currentGame.equals(gameName)){
             chooseGame();
         }
-        updateActivity();
+        updateActivity();*/
     }
 
     public void ready(View view){
