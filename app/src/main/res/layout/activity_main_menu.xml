@@ -49,10 +49,9 @@
             android:layout_marginBottom="8dp"
             android:onClick="rules"
             android:text="@string/rules"
-            app:layout_constraintBottom_toTopOf="@+id/btnProfile"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btnPlay"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/btnPlay"
             app:layout_constraintStart_toStartOf="@+id/btnPlay" />
 
 
