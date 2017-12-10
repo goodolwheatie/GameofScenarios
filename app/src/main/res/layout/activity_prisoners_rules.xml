@@ -11,27 +11,27 @@
     <TextView
         android:id="@+id/Rules_Title_Prisoners"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="12dp"
         android:text="Prisoners Dilemma:"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="42sp" />
 
     <TextView
         android:id="@+id/prisonersRules"
         android:layout_width="wrap_content"
-        android:layout_height="423dp"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/Rules_Title_Prisoners"
         android:gravity="center"
         android:text="@string/prisonerRules"
         android:textAlignment="center"
         android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"
-        android:textSize="22sp"
-        tools:layout_editor_absoluteY="56dp" />
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="88dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/glBottomPrisInner"
@@ -50,7 +50,10 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prisonersRules"
-        app:srcCompat="@drawable/chickenrules" />
+        app:layout_constraintTop_toBottomOf="@+id/glBottomPrisInner"
+        app:srcCompat="@drawable/cuffs"
+        />
+
+
 
 </android.support.constraint.ConstraintLayout>
