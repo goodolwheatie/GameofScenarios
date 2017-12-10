@@ -107,12 +107,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="408dp"
+        android:layout_width="0dp"
         android:layout_height="492dp"
         android:src="@drawable/prisdilgame"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="-1dp" />
-
-
+        app:layout_constraintBottom_toBottomOf="@+id/glBottomPrisonersInner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

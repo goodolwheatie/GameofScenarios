@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/activity_prisoners_rules"
     android:background="#FF3F51B5">
 
@@ -21,14 +23,34 @@
     <TextView
         android:id="@+id/prisonersRules"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="423dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/Rules_Title_Chicken"
         android:gravity="center"
         android:text="After committing a crime, you and an accomplice are arrested and taken to jail. The police take you and your accomplice into separate rooms and offer each of you deals in exchange for evidence to convict the other. If you and your accomplice stay quiet and do not cooperate with the police, you will both spend only 1 year in prison due to lack of sufficient evidence. If one criminal betrays their partner while their partner stays quiet,  the criminal who has been betrayed will get 25 years in prison and the traitor will go free. If both you and your accomplice betray each other to the police, you will both get 10 years in prison."
         android:textAlignment="center"
         android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        tools:layout_editor_absoluteY="56dp" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/glBottomPrisInner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/prisonersRules"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prisonersRules"
+        app:srcCompat="@drawable/chickenrules" />
+
+</android.support.constraint.ConstraintLayout>
