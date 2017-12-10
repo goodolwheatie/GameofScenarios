@@ -82,5 +82,8 @@
     <string name="stayCenter">Stay the Course</string>
     <string name="swerveLeft">Swerve Left</string>
     <string name="swerveRight">Swerve Right</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
 
 </resources>
