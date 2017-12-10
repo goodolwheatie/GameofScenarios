@@ -83,4 +83,15 @@
     <string name="swerveLeft">Swerve Left</string>
     <string name="swerveRight">Swerve Right</string>
 
+
+
+    <string name="prisonerRules">After committing a crime, you and an accomplice are arrested and taken to jail. The police take you and your accomplice into separate rooms and offer each of you deals in exchange for evidence to convict the other. If you and your accomplice stay quiet and do not cooperate with the police, you will both spend only 1 year in prison due to lack of sufficient evidence. If one criminal betrays their partner while their partner stays quiet,  the criminal who has been betrayed will get 25 years in prison and the traitor will go free. If both you and your accomplice betray each other to the police, you will both get 10 years in prison."</string>
+    <string name="travelersRules">The airline is liable for a maximum of $100 per suitcase. The travelers have no communication with each other. Both travelers must value their suitcases between $2 and $100. If they choose the same value, then that is what the airline will honor. If different values, then the lower of the two will be paid. The traveler who chose the lower value will be awarded $2 more and the other traveler will have $2 less.</string>
+    <string name="chickenRules">You are driving down a single lane road at high speed. Your opponent is driving down the same road in the opposing direction. Either player can swerve or continue driving down the road at full speed. If you continue driving while your opponent swerves off of the road, you win and shout "chicken!" as you speed past him. If your opponent continues down the road while you swerve, your opponent wins and shouts "chicken!" at you while he races away. If neither player swerves, both players crash and sustain severe injury. Which will you choose?</string>
+
+    <string name="buttonPrisonerRules">Prisoners\' Dilemma Rules</string>
+    <string name="buttonChickenRules">Chicken Rules</string>
+    <string name="buttonTravelerRules">Travelers\' Dilemma Rules</string>
+
+
 </resources>
