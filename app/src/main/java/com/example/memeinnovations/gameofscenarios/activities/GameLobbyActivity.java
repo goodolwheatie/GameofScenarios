@@ -25,7 +25,6 @@ import java.util.Random;
 public class GameLobbyActivity extends AppCompatActivity{
     private String gameName;
     private int rulesLayout;
-    private TextView title;
 
     // Multiplayer class for multiplayer implementation.
     private Multiplayer multiplayerSession;

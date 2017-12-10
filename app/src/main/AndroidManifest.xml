@@ -27,7 +27,6 @@
         <activity android:name=".activities.GameFinishActivity" />
         <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.RulesActivity" />
-        <activity android:name=".activities.StatisticsActivity" />
         <activity android:name=".activities.ChickenActivity" />
         <activity android:name=".activities.TravelersActivity" />
         <activity android:name=".activities.LoadingActivity"></activity>

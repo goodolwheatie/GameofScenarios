@@ -28,8 +28,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainMenuActivity extends AppCompatActivity {
 
     private boolean anonymousUser = false;
-    private Button btnProfileAndReg;
-    private TextView tvwSignOut;
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -126,8 +124,6 @@ public class MainMenuActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
         // Activate the navigation drawer toggle
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -156,12 +152,6 @@ public class MainMenuActivity extends AppCompatActivity {
             openActivity = new Intent(MainMenuActivity.this, ProfileActivity.class);
         }
         startActivity(openActivity);
-    }
-
-    public void statistics(View view) {
-        Intent openStatistics =
-                new Intent(MainMenuActivity.this, StatisticsActivity.class);
-        startActivity(openStatistics);
     }
 
     public void signOut(View view) {
