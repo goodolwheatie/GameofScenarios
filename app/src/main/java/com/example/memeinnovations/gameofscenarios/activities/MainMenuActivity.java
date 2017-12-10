@@ -41,20 +41,10 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        // initialize profile button so that the text can be changed for anon
-        btnProfileAndReg = findViewById(R.id.btnProfile);
-
-        // set sign out text view to be clickable
-        tvwSignOut = findViewById(R.id.tvwSignOut);
-        tvwSignOut.setClickable(true);
-
         // get if anonymous has logged in or not
         Bundle bundles = getIntent().getExtras();
         if (bundles != null) {
             anonymousUser = bundles.getBoolean("anonymousUser");
-            if (anonymousUser) {
-                btnProfileAndReg.setText(R.string.register_now);
-            }
         }
 
         // initialize sidebar list

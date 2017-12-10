@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_prisoners"
@@ -80,9 +81,10 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="#e00010"
+        android:textColor="#ffffff"
         android:checked="false"
         android:onClick="betray"
-        android:textColor="#ffffff"
+
         android:textOff="@string/betray"
         android:textOn="@string/betray"
         app:layout_constraintBottom_toTopOf="@+id/btnLockInPrisoners"
@@ -107,12 +109,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="408dp"
-        android:layout_height="492dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/prisdilgame"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="-1dp" />
-
-
+        app:layout_constraintBottom_toBottomOf="@+id/glBottomPrisonersInner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

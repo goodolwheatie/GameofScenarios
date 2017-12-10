@@ -101,8 +101,6 @@ public class GameFinishActivity extends AppCompatActivity {
                 results.setText("You both chose to keep quiet.");
             }
         }
-        multiplayerSession.finishGame();
-
     }
 
     public void chicken() {
@@ -174,7 +172,6 @@ public class GameFinishActivity extends AppCompatActivity {
                 break;
             }
         }
-        multiplayerSession.finishGame();
     }
 
     public void travelers() {
@@ -205,10 +202,10 @@ public class GameFinishActivity extends AppCompatActivity {
                     ". You got paid $" + otherPlayersPrice);
             multiplayerSession.incrementLoss();
         }
-        multiplayerSession.finishGame();
     }
 
     public void mainMenu(View view) {
+        multiplayerSession.finishGame();
         //return to the main menu
         Intent mainMenu = new Intent(GameFinishActivity.this, MainMenuActivity.class);
         mainMenu.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -217,6 +214,7 @@ public class GameFinishActivity extends AppCompatActivity {
     }
 
     public void playAgain(View view) {
+        multiplayerSession.finishGame();
         //returns to the game lobby page
         Intent playAgain = new Intent(GameFinishActivity.this, LoadingActivity.class);
         startActivity(playAgain);
