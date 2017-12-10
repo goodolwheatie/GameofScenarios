@@ -16,6 +16,7 @@ public class User implements Serializable {
     private String ethnicity;
     private int reRolls;
     private int wins;
+    private int draws;
     private int losses;
     private int totalGamesPlayed;
     private int rewardPoints;
@@ -28,13 +29,16 @@ public class User implements Serializable {
         this.ethnicity = rightUser.ethnicity;
         this.reRolls = rightUser.reRolls;
         this.wins = rightUser.wins;
+        this.draws = rightUser.draws;
         this.losses = rightUser.losses;
+        this.rewardPoints = rightUser.rewardPoints;
         this.totalGamesPlayed = rightUser.totalGamesPlayed;
     }
 
     public User(String userId, String userName, String gender, String age, String ethnicity) {
         reRolls = 0;
         wins = 0;
+        draws = 0;
         losses = 0;
         totalGamesPlayed = 0;
         rewardPoints = 0;
@@ -49,6 +53,7 @@ public class User implements Serializable {
     public User() {
         reRolls = 0;
         wins = 0;
+        draws = 0;
         losses = 0;
         totalGamesPlayed = 0;
         rewardPoints = 0;
@@ -108,12 +113,22 @@ public class User implements Serializable {
         this.wins = wins;
     }
 
+    public int getDraws() { return draws; }
+
+    public void setDraws() { this.draws = draws; }
+
     public int getLosses() {
         return losses;
     }
 
     public void setLosses(int losses) {
         this.losses = losses;
+    }
+
+    public int getRewardPoints() { return rewardPoints; }
+
+    public void setRewardPoints(int rewardPoints) {
+        this.losses = rewardPoints;
     }
 
     public String getUserId() {

@@ -264,13 +264,14 @@ public class Multiplayer implements Serializable  {
         getDBLockChoice.setValue(true);
     }
 
-    public void incrementWin() {
+    public void incrementWin(int rewardPoints) {
         DatabaseReference currentPlayer;
         int wins = 0;
 
         if (thisPlayer != null) {
             wins = thisPlayer.getWins();
             ++wins;
+            rewardPoints = thisPlayer.getRewardPoints() + rewardPoints;
         }
         if (isPlayer1) {
             if (currentRoom.player1 != null) {
@@ -278,6 +279,10 @@ public class Multiplayer implements Serializable  {
                         FirebaseDB.mDatabase.child("users")
                                 .child(currentRoom.player1).child("wins");
                 currentPlayer.setValue(wins);
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("rewardPoints");
+                currentPlayer.setValue(rewardPoints);
             }
         } else {
             if (currentRoom.player2 != null) {
@@ -285,17 +290,58 @@ public class Multiplayer implements Serializable  {
                         FirebaseDB.mDatabase.child("users")
                                 .child(currentRoom.player2).child("wins");
                 currentPlayer.setValue(wins);
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("rewardPoints");
+                currentPlayer.setValue(rewardPoints);
             }
         }
     }
 
-    public void incrementLoss() {
+    public void incrementDraws(int rewardPoints) {
+        DatabaseReference currentPlayer;
+        int draws = 0;
+
+        if (thisPlayer != null){
+            draws = thisPlayer.getDraws();
+            ++draws;
+            rewardPoints = thisPlayer.getRewardPoints() + rewardPoints;
+        }
+        if (isPlayer1) {
+            if (currentRoom.player1 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("drawss");
+                currentPlayer.setValue(draws);
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("rewardPoints");
+                currentPlayer.setValue(rewardPoints);
+            }
+        } else {
+            if (currentRoom.player2 != null) {
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player2).child("draws");
+                currentPlayer.setValue(draws);
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("rewardPoints");
+                currentPlayer.setValue(rewardPoints);
+
+            }
+        }
+
+    }
+
+    public void incrementLoss(int rewardPoints) {
         DatabaseReference currentPlayer;
         int losses = 0;
 
         if (thisPlayer != null) {
             losses = thisPlayer.getLosses();
             ++losses;
+            rewardPoints = thisPlayer.getRewardPoints() + rewardPoints;
         }
         if (isPlayer1) {
             if (currentRoom.player1 != null) {
@@ -303,6 +349,10 @@ public class Multiplayer implements Serializable  {
                         FirebaseDB.mDatabase.child("users")
                                 .child(currentRoom.player1).child("losses");
                 currentPlayer.setValue(losses);
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("rewardPoints");
+                currentPlayer.setValue(rewardPoints);
             }
         } else {
             if (currentRoom.player2 != null) {
@@ -310,6 +360,11 @@ public class Multiplayer implements Serializable  {
                         FirebaseDB.mDatabase.child("users")
                                 .child(currentRoom.player2).child("losses");
                 currentPlayer.setValue(losses);
+                currentPlayer =
+                        FirebaseDB.mDatabase.child("users")
+                                .child(currentRoom.player1).child("rewardPoints");
+                currentPlayer.setValue(rewardPoints);
+
             }
         }
     }

@@ -90,15 +90,17 @@ public class GameFinishActivity extends AppCompatActivity {
         //determine the results of the match
         if (betrayed && otherBetrayed) {
             results.setText("You both chose to betray your partner");
+            multiplayerSession.incrementDraws(30);
         } else {
             if (betrayed) {
                 results.setText("You chose to betray your partner but your partner chose to keep quiet.");
-                multiplayerSession.incrementWin();
+                multiplayerSession.incrementWin(50);
             } else if (otherBetrayed) {
                 results.setText("You chose to keep quiet but your partner chose to betray you.");
-                multiplayerSession.incrementLoss();
+                multiplayerSession.incrementLoss(20);
             } else if (!betrayed && !otherBetrayed) {
                 results.setText("You both chose to keep quiet.");
+                multiplayerSession.incrementDraws(40);
             }
         }
     }
@@ -124,15 +126,15 @@ public class GameFinishActivity extends AppCompatActivity {
                 switch (otherPlayersChoice) {
                     case "Left":
                         results.setText("You both swerved but didn't hit each other");
-                        multiplayerSession.incrementLoss();
+                        multiplayerSession.incrementDraws(30);
                         break;
                     case "Center":
                         results.setText("You swerved but your opponent stayed the course");
-                        multiplayerSession.incrementLoss();
+                        multiplayerSession.incrementLoss(30);
                         break;
                     case "Right":
                         results.setText("You swerved into each other and crashed");
-                        multiplayerSession.incrementLoss();
+                        multiplayerSession.incrementLoss(20);
                         break;
                 }
                 break;
@@ -141,15 +143,15 @@ public class GameFinishActivity extends AppCompatActivity {
                 switch (otherPlayersChoice) {
                     case "Left":
                         results.setText("You stayed the course and your opponent had to swerve");
-                        multiplayerSession.incrementWin();
+                        multiplayerSession.incrementWin(50);
                         break;
                     case "Center":
                         results.setText("You both stayed the course and crashed");
-                        multiplayerSession.incrementLoss();
+                        multiplayerSession.incrementLoss(20);
                         break;
                     case "Right":
                         results.setText("You stayed the course and your opponent had to swerve");
-                        multiplayerSession.incrementWin();
+                        multiplayerSession.incrementWin(50);
                         break;
                 }
                 break;
@@ -158,15 +160,15 @@ public class GameFinishActivity extends AppCompatActivity {
                 switch (otherPlayersChoice) {
                     case "Left":
                         results.setText("You swerved into each other and crashed");
-                        multiplayerSession.incrementLoss();
+                        multiplayerSession.incrementLoss(20);
                         break;
                     case "Center":
                         results.setText("You swerved but your opponent stayed the course");
-                        multiplayerSession.incrementLoss();
+                        multiplayerSession.incrementLoss(30);
                         break;
                     case "Right":
                         results.setText("You both swerved but didn't hit each other");
-                        multiplayerSession.incrementLoss();
+                        multiplayerSession.incrementDraws(30);
                         break;
                 }
                 break;
@@ -190,17 +192,18 @@ public class GameFinishActivity extends AppCompatActivity {
         int difference = otherPlayersPrice - playerPrice;
         if (difference == 0) { //same price
             results.setText("You both agreed on the price at $" + playerPrice + "You got paid $" + playerPrice);
+            multiplayerSession.incrementDraws((playerPrice/2));
         } else if (difference > 0) { //comp's price was greater than the player's
             int payout = (int) (playerPrice + 2 + difference * 0.5 + 0.5);
             results.setText("You gave a price of $" + playerPrice +
                     " while your oppponent gave a price of $" +
                     otherPlayersPrice + ". You got paid $" + payout);
-            multiplayerSession.incrementWin();
+            multiplayerSession.incrementWin((payout/2));
         } else if (difference < 0) { //comp's price was lower than the player's
             results.setText("You gave a price of $" + playerPrice +
                     " while your oppponent gave a price of $" + otherPlayersPrice +
                     ". You got paid $" + otherPlayersPrice);
-            multiplayerSession.incrementLoss();
+            multiplayerSession.incrementLoss((otherPlayersPrice/2));
         }
     }
 
