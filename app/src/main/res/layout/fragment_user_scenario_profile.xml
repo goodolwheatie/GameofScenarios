@@ -7,6 +7,16 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
+        android:id="@+id/tvwRewardPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/rewardPoints"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvwCurrRewardPoints"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/tvwWins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,6 +24,16 @@
         android:text="@string/wins"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvwCurrWins"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvwDraws"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/draws"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvwCurrDraws"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -27,7 +47,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tvwCurrWins"
+        android:id="@+id/tvwTotalGames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/total_games"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvwCurrTotalGames"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvwCurrRewardPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -37,7 +67,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvwCurrLosses"
+        android:id="@+id/tvwCurrWins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvwCurrRewardPoints" />
+
+    <TextView
+        android:id="@+id/tvwCurrDraws"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -47,14 +87,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tvwCurrWins" />
 
     <TextView
-        android:id="@+id/tvwTotalGames"
+        android:id="@+id/tvwCurrLosses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="@string/total_games"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
         android:textSize="24sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvwCurrTotalGames"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvwCurrDraws" />
 
     <TextView
         android:id="@+id/tvwCurrTotalGames"

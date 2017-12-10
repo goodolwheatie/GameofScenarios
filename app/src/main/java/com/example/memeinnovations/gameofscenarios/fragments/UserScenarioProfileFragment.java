@@ -27,7 +27,7 @@ import static android.content.ContentValues.TAG;
 public class UserScenarioProfileFragment extends Fragment {
 
 
-    private TextView tvwWins, tvwLosses, tvwTotalGames;
+    private TextView tvwWins, tvwLosses, tvwTotalGames, tvwRewardPoints, tvwDraws;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -48,7 +48,9 @@ public class UserScenarioProfileFragment extends Fragment {
                 .child(mAuth.getInstance().getCurrentUser().getUid());
 
         // initialize TextView
+        tvwRewardPoints = (TextView) v.findViewById(R.id.tvwCurrRewardPoints);
         tvwWins = (TextView) v.findViewById(R.id.tvwCurrWins);
+        tvwDraws = (TextView) v.findViewById(R.id.tvwCurrDraws);
         tvwLosses = (TextView) v.findViewById(R.id.tvwCurrLosses);
         tvwTotalGames = (TextView) v.findViewById(R.id.tvwCurrTotalGames);
 
@@ -56,7 +58,9 @@ public class UserScenarioProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
+                tvwRewardPoints.setText(String.valueOf(currentUser.getRewardPoints()));
                 tvwWins.setText(String.valueOf(currentUser.getWins()));
+                tvwDraws.setText(String.valueOf(currentUser.getDraws()));
                 tvwLosses.setText(String.valueOf(currentUser.getLosses()));
                 tvwTotalGames.setText(String.valueOf(currentUser.getTotalGamesPlayed()));
             }

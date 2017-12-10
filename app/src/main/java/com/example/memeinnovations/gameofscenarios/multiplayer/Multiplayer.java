@@ -311,7 +311,7 @@ public class Multiplayer implements Serializable  {
             if (currentRoom.player1 != null) {
                 currentPlayer =
                         FirebaseDB.mDatabase.child("users")
-                                .child(currentRoom.player1).child("drawss");
+                                .child(currentRoom.player1).child("draws");
                 currentPlayer.setValue(draws);
                 currentPlayer =
                         FirebaseDB.mDatabase.child("users")

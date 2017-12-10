@@ -22,7 +22,9 @@
     <string name="prisoners">Prisoner\'s Dilemma</string>
     <string name="login">Login</string>
     <string name="anonymously">Anonymously</string>
+    <string name="rewardPoints">Points</string>
     <string name="wins">Wins</string>
+    <string name="draws">Draws</string>
     <string name="losses">Losses</string>
     <string name="total_games">Total Games</string>
     <string name="scenario_profile">Your Game Statistics</string>
