@@ -13,7 +13,7 @@
     <string name="display_name">Display Name</string>
     <string name="email">Email</string>
     <string name="play">Play</string>
-    <string name="rules">Rules</string>
+    <string name="rules">Rules/Info</string>
     <string name="profile">Profile</string>
     <string name="statistics">Statistics</string>
     <string name="game_of_scenarios">GAME OF SCENARIOS</string>
@@ -96,10 +96,14 @@
     <string name="prisonersRules">After committing a crime, you and an accomplice are arrested and taken to jail. The police take you and your accomplice into separate rooms and offer each of you deals in exchange for evidence to convict the other. \n\nIf you and your accomplice stay quiet and do not cooperate with the police, you will both spend only 1 year in prison due to lack of sufficient evidence. If one criminal betrays their partner while their partner stays quiet,  the criminal who has been betrayed will get 25 years in prison and the traitor will go free. If both you and your accomplice betray each other to the police, you will both get 10 years in prison."</string>
     <string name="travelersRules">You and a fellow traveler have lost your identical suitcases which have identical contents. The airline is liable for a maximum of $100 per suitcase. You have no communication with the other traveler. You each must value your suitcases between $2 and $100. \n\n If you choose the same value, then that is what the airline will honor. If you provide different values, then the lower of the two will be paid. The traveler who gave the lower value will be awarded a bonus equal to $2 plus half the difference between the values.</string>
     <string name="chickenRules">You are driving down a single lane road at high speed. Your opponent is driving down the same road in the opposing direction. Either player can swerve or continue driving down the road at full speed. \n\nIf you continue driving while your opponent swerves off of the road, you win and shout \"chicken!\" as you speed past him. If neither player swerves, both players crash and sustain severe injury. Which will you choose?</string>
+
     <string name="aboutGameTheory">Game of Scenarios was inspired by the science of Game Theory. Game Theory studies systems in which intelligent and rational players make decisions. Game Theory concepts are mostly presented in the format of \“Games.\” By setting up a hypothetical game with a specific ruleset, Game Theorists have been able to make discoveries which have advanced a variety disciplines including political science, economics, computer science, and logic. The most iconic of these games include such games as the Prisoner\’s Dilemma and Chicken.</string>
     <string name="aboutNash">John Nash \(June 13, 1928 \– May 23, 2015\) was an American mathematician who made major contributions to Game Theory. One of his biggest contributions to Game Theory was the concept of the Nash Equilibrium. The Nash Equilibrium is a state in a multiplayer, non\-cooperative game, in which no player will get a better outcome by changing his own strategy. Nash was awarded the Nobel Prize in Economic Sciences in 1994 for his work on the Nash Equilibrium.</string>
     <string name="aboutPareto">Vilfredo Pareto \(July 15, 1848 \– August 19, 1923\) was an Italian engineer, sociologist, political scientist, and philosopher. Though Pareto did not live to see the birth of Game Theory, his conception of Pareto\-Optimality ended up having a major impact on Game Theory nonetheless. Pareto optimality is a state of in which it is impossible to achieve an outcome so as to make any one player better off without making at least one other player worse off. Pareto\-Optimality can be applied to many Game Theory games for the purposes of bringing about favorable outcomes.</string>
 
+    <string name="buttonInfo">About Game Theory</string>
+    <string name="buttonNash">About Nash</string>
+    <string name="buttonPareto">About Pareto</string>
     <string name="buttonPrisonerRules">Prisoners\' Dilemma Rules</string>
     <string name="buttonChickenRules">Chicken Rules</string>
     <string name="buttonTravelerRules">Travelers\' Dilemma Rules</string>

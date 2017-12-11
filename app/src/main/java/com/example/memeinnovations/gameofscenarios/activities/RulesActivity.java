@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -33,19 +34,6 @@ public class RulesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rules);
         rulesLayout = (ScrollView) findViewById(R.id.activity_rules);
     }
-    public void aboutGameTheory(View v) {
-        CardView cardView = findViewById(R.id.cardViewInfo);
-        TextView rules = findViewById(R.id.cardViewInfoContent);
-
-        if(rules.getVisibility() == View.GONE){
-            TransitionManager.beginDelayedTransition(cardView);
-            rules.setVisibility(View.VISIBLE);
-        }else{
-            TransitionManager.beginDelayedTransition(cardView);
-            rules.setVisibility(View.GONE);
-        }
-    }
-
 
     public void chickenRules(View v) {
         CardView cardView = findViewById(R.id.cardViewChicken);
@@ -76,6 +64,46 @@ public class RulesActivity extends AppCompatActivity {
     public void travelersRules(View v) {
         CardView cardView = findViewById(R.id.cardViewTravelers);
         TextView rules = findViewById(R.id.cardViewTravelersRules);
+
+        if(rules.getVisibility() == View.GONE){
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.VISIBLE);
+        }else{
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.GONE);
+        }
+    }
+
+    public void aboutGameTheory(View v) {
+        CardView cardView = findViewById(R.id.cardViewInfo);
+        TextView rules = findViewById(R.id.cardViewInfoContent);
+
+        if(rules.getVisibility() == View.GONE){
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.VISIBLE);
+        }else{
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.GONE);
+        }
+    }
+
+    public void aboutNash(View v) {
+        CardView cardView = findViewById(R.id.cardViewNash);
+        TextView rules = findViewById(R.id.cardViewNashContent);
+
+        if(rules.getVisibility() == View.GONE){
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.VISIBLE);
+        }else{
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.GONE);
+        }
+    }
+
+    public void aboutPareto(View v) {
+        CardView cardView = findViewById(R.id.cardViewPareto);
+        TextView rules = findViewById(R.id.cardViewParetoContent);
+
 
         if(rules.getVisibility() == View.GONE){
             TransitionManager.beginDelayedTransition(cardView);
