@@ -30,7 +30,7 @@ import java.util.Random;
  * Created by Benson Gao on 11/5/2017.
  */
 
-public class GameLobbyActivity extends AppCompatActivity{
+public class GameLobbyActivity extends AppCompatActivity {
     private String gameName;
     private int rulesLayout;
     private ImageView ImageViewer;
@@ -44,12 +44,11 @@ public class GameLobbyActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try
-        {
+        try {
             //disables the actionBar
             this.getSupportActionBar().hide();
+        } catch (NullPointerException e) {
         }
-        catch (NullPointerException e){}
         setContentView(R.layout.activity_game_lobby);
         btnReroll = (Button) findViewById(R.id.btnReroll);
         btnReady = (Button) findViewById(R.id.btnReady);
@@ -66,8 +65,6 @@ public class GameLobbyActivity extends AppCompatActivity{
 
         final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
         final Task waitTask = waitSource.getTask();
-        final TaskCompletionSource<Void> delaySource = new TaskCompletionSource<>();
-        final Task delayTask = delaySource.getTask();
 
         // begin a reroll phase
         multiplayerSession.checkRerolled(waitSource);
@@ -95,14 +92,6 @@ public class GameLobbyActivity extends AppCompatActivity{
             public void onComplete(@NonNull Task<Void> task) {
                 gameName = multiplayerSession.getChosenScenario();
                 updateActivity();
-/*              multiplayerSession.checkRerolled(delaySource);
-                Tasks.whenAll(delayTask).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        gameName = multiplayerSession.getChosenScenario();
-                        updateActivity();
-                    }
-                });*/
             }
         });
     }
@@ -132,27 +121,28 @@ public class GameLobbyActivity extends AppCompatActivity{
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 popupRules.dismiss();
-                return true;            }
+                return true;
+            }
         });
     }
 
-    public void chooseGame(){
+    public void chooseGame() {
         Random r = new Random();
         int gameInt = r.nextInt(2);
-        switch(gameInt) {
-            case 0:{
+        switch (gameInt) {
+            case 0: {
                 gameName = "Prisoner's Dilemma";
                 break;
             }
-            case 1:{
+            case 1: {
                 gameName = "Game of Chicken";
                 break;
             }
         }
     }
 
-    public void updateActivity(){
-        switch(gameName){
+    public void updateActivity() {
+        switch (gameName) {
             case "Prisoner's Dilemma":
                 rulesLayout = R.layout.activity_prisoners_rules;
                 theOtherImageView.setImageResource(R.drawable.pdilemmatitle);
@@ -173,7 +163,7 @@ public class GameLobbyActivity extends AppCompatActivity{
         }
     }
 
-    public void reroll(View view){
+    public void reroll(View view) {
         // wait tasks for loading DB data.
         final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
         Task waitTask = waitSource.getTask();
@@ -195,7 +185,7 @@ public class GameLobbyActivity extends AppCompatActivity{
         });
     }
 
-    public void ready(View view){
+    public void ready(View view) {
         btnReady.setEnabled(false);
         multiplayerSession.setReady();
 
@@ -207,7 +197,7 @@ public class GameLobbyActivity extends AppCompatActivity{
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Intent ready;
-                switch(gameName){
+                switch (gameName) {
                     case "Prisoner's Dilemma":
                         ready = new Intent
                                 (GameLobbyActivity.this, PrisonersActivity.class);
