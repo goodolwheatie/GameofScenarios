@@ -50,7 +50,9 @@
         android:text="@string/lockIn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glLeftTravelersInner"
-        app:layout_constraintStart_toStartOf="@+id/glRightTravelersInner" />
+        app:layout_constraintStart_toStartOf="@+id/glRightTravelersInner"
+        android:backgroundTint="#e00010"
+        android:textColor="#ffffff"/>
 
     <TextView
         android:id="@+id/travelersTimer"
