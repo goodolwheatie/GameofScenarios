@@ -44,8 +44,36 @@
         android:text=""
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
+        app:layout_constraintEnd_toStartOf="@+id/txtRewardsCounter"
         app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
+        app:layout_constraintTop_toBottomOf="@id/txtOpponentChoice" />
+
+    <TextView
+        android:id="@+id/txtRewardsCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtRewardsInstance"
+        app:layout_constraintStart_toEndOf="@+id/txtRewards"
+        app:layout_constraintTop_toBottomOf="@id/txtOpponentChoice" />
+
+    <TextView
+        android:id="@+id/txtRewardsInstance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
+        app:layout_constraintStart_toEndOf="@+id/txtRewardsCounter"
         app:layout_constraintTop_toBottomOf="@id/txtOpponentChoice" />
 
     <android.support.constraint.Guideline

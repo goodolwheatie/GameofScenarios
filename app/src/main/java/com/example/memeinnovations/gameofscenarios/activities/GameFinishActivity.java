@@ -1,5 +1,6 @@
 package com.example.memeinnovations.gameofscenarios.activities;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
 import com.example.memeinnovations.gameofscenarios.R;
+
+import org.w3c.dom.Text;
 
 public class GameFinishActivity extends AppCompatActivity {
 
@@ -19,6 +22,8 @@ public class GameFinishActivity extends AppCompatActivity {
     private TextView playerChoice;
     private TextView opponentChoice;
     private TextView rewards;
+    private TextView rewardsCounter;
+    private TextView rewardsInstance;
     private Multiplayer multiplayerSession;
 
     // store other players choice from DB
@@ -43,6 +48,8 @@ public class GameFinishActivity extends AppCompatActivity {
         playerChoice = (TextView) findViewById(R.id.txtPlayerChoice);
         opponentChoice = (TextView) findViewById(R.id.txtOpponentChoice);
         rewards = (TextView) findViewById(R.id.txtRewards);
+        rewardsCounter = (TextView) findViewById(R.id.txtRewardsCounter);
+        rewardsInstance = (TextView) findViewById(R.id.txtRewardsInstance);
 
         bundles = getIntent().getExtras();
 
@@ -120,7 +127,7 @@ public class GameFinishActivity extends AppCompatActivity {
                 multiplayerSession.incrementDraws(points);
             }
         }
-        rewards.setText(String.format(getString(R.string.rewards), points));
+        rewards.setText(getString(R.string.rewards));
     }
 
     public void chicken() {
@@ -196,7 +203,7 @@ public class GameFinishActivity extends AppCompatActivity {
                 break;
             }
         }
-        rewards.setText(String.format(getString(R.string.rewards), points));
+        rewards.setText(getString(R.string.rewards));
     }
 
     public void travelers() {
@@ -228,8 +235,22 @@ public class GameFinishActivity extends AppCompatActivity {
             payout = otherPlayersPrice;
             multiplayerSession.incrementLoss((int) (otherPlayersPrice/2));
         }
-        rewards.setText(String.format(getString(R.string.rewards), (int) payout/2));
+        rewards.setText(getString(R.string.rewards));
     }
+
+/*
+    private void startCountAnimation(){
+        ValueAnimator animator = ValueAnimator.ofInt(rewardsStart, rewardsStart + rewards);
+        animator.setDuration(3000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                textView.setText(animation.getAnimatedValue().toString());
+            }
+        });
+        animator.start();
+    }
+*/
+
 
     public void mainMenu(View view) {
         multiplayerSession.incrementTotalGames();

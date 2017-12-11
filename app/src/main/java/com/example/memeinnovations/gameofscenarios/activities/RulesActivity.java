@@ -2,12 +2,15 @@ package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.transition.TransitionManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
@@ -16,7 +19,7 @@ import com.example.memeinnovations.gameofscenarios.R;
 
 
 public class RulesActivity extends AppCompatActivity {
-    private int rulesLayout;
+    private ScrollView rulesLayout;
 
 
 
@@ -24,84 +27,47 @@ public class RulesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getString(R.string.rules));
-
         setContentView(R.layout.activity_rules);
-
+        rulesLayout = (ScrollView) findViewById(R.id.activity_rules);
     }
 
 
-    public void prisonerRules(View view) {
+    public void chickenRules(View v) {
+        CardView cardView = findViewById(R.id.cardViewChicken);
+        TextView rules = findViewById(R.id.cardViewChickenRules);
 
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.activity_prisoners_rules, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow prisonerRules = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        prisonerRules.showAtLocation(findViewById(R.id.activity_rules).getRootView(), Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                prisonerRules.dismiss();
-                return true;            }
-        });
+        if(rules.getVisibility() == View.GONE){
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.VISIBLE);
+        }else{
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.GONE);
+        }
     }
 
-    public void chickenRules(View view) {
+    public void prisonersRules(View v) {
+        CardView cardView = findViewById(R.id.cardViewPrisoners);
+        TextView rules = findViewById(R.id.cardViewPrisonersRules);
 
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.activity_chicken_rules, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow chickenRules = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        chickenRules.showAtLocation(findViewById(R.id.activity_rules).getRootView(), Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                chickenRules.dismiss();
-                return true;            }
-        });
+        if(rules.getVisibility() == View.GONE){
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.VISIBLE);
+        }else{
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.GONE);
+        }
     }
 
-    public void travelerRules(View view) {
+    public void travelersRules(View v) {
+        CardView cardView = findViewById(R.id.cardViewTravelers);
+        TextView rules = findViewById(R.id.cardViewTravelersRules);
 
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.activity_travelers_rules, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow travelerRules = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        travelerRules.showAtLocation(findViewById(R.id.activity_rules).getRootView(), Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                travelerRules.dismiss();
-                return true;            }
-        });
+        if(rules.getVisibility() == View.GONE){
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.VISIBLE);
+        }else{
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.GONE);
+        }
     }
-
-
-
 }

@@ -105,6 +105,7 @@
     <string name="opponentChoice">Opponent\'s choice: %1$s</string>
     <string name="yourPrice">Your price: %1$d</string>
     <string name="opponentPrice">Opponent\'s price: %1$d</string>
-    <string name="rewards">You earned: %1$d points</string>
+    <string name="rewards">Points: </string>
+    <string name="newRewards"> + $1$d</string>
 
 </resources>
