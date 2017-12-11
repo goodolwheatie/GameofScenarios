@@ -31,7 +31,7 @@
     <string name="update">Update Profile</string>
     <string name="sign_out">Sign Out</string>
     <string name="register_now">Register Now</string>
-    <string name="delete_temp_profile">Delete Temporary Profile</string>
+    <string name="sign_in">Sign In</string>
     <string name="reroll_phase">Reroll Phase</string>
 
     <string-array name="gender">
@@ -106,6 +106,6 @@
     <string name="yourPrice">Your price: %1$d</string>
     <string name="opponentPrice">Opponent\'s price: %1$d</string>
     <string name="rewards">Points: </string>
-    <string name="newRewards"> + $1$d</string>
+    <string name="newRewards"> + %1$d</string>
 
 </resources>

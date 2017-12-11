@@ -24,6 +24,8 @@ public class GameFinishActivity extends AppCompatActivity {
     private TextView rewards;
     private TextView rewardsCounter;
     private TextView rewardsInstance;
+    private int initialRewards;
+    private int points;
     private Multiplayer multiplayerSession;
 
     // store other players choice from DB
@@ -52,10 +54,12 @@ public class GameFinishActivity extends AppCompatActivity {
         rewardsInstance = (TextView) findViewById(R.id.txtRewardsInstance);
 
         bundles = getIntent().getExtras();
-
         if (bundles != null) {
             gameName = bundles.getString("gameName");
         }
+
+        //replace with method of getting user's rewards
+        initialRewards = 0;
 
         switch (gameName) {
             case "prisoners":
@@ -110,7 +114,7 @@ public class GameFinishActivity extends AppCompatActivity {
             opponentChoice.setText(String.format(getString(R.string.opponentChoice), getString(R.string.keepQuiet)));
         }
 
-        int points = 0;
+        points = 0;
         //determine the results of the match
         if (betrayed && otherBetrayed) {
             points = 30;
@@ -128,6 +132,8 @@ public class GameFinishActivity extends AppCompatActivity {
             }
         }
         rewards.setText(getString(R.string.rewards));
+        rewardsCounter.setText("");
+        rewardsInstance.setText(String.format(getString(R.string.newRewards),points));
     }
 
     public void chicken() {
@@ -149,7 +155,7 @@ public class GameFinishActivity extends AppCompatActivity {
         opponentChoice.setText(String.format(getString(R.string.opponentChoice), otherPlayersChoice));
 
 
-        int points = 0;
+        points = 0;
         switch (swerveChoice) { //results logic
             case "Left": {
                 switch (otherPlayersChoice) {
@@ -204,6 +210,8 @@ public class GameFinishActivity extends AppCompatActivity {
             }
         }
         rewards.setText(getString(R.string.rewards));
+        rewardsCounter.setText("");
+        rewardsInstance.setText(String.format(getString(R.string.newRewards),points));
     }
 
     public void travelers() {
@@ -235,21 +243,25 @@ public class GameFinishActivity extends AppCompatActivity {
             payout = otherPlayersPrice;
             multiplayerSession.incrementLoss((int) (otherPlayersPrice/2));
         }
+        points = payout/2;
         rewards.setText(getString(R.string.rewards));
+        rewardsCounter.setText("");
+        rewardsInstance.setText(String.format(getString(R.string.newRewards),points));
     }
 
-/*
+
     private void startCountAnimation(){
-        ValueAnimator animator = ValueAnimator.ofInt(rewardsStart, rewardsStart + rewards);
+        int endRewards = initialRewards + points;
+        ValueAnimator animator = ValueAnimator.ofInt(initialRewards, endRewards);
         animator.setDuration(3000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
-                textView.setText(animation.getAnimatedValue().toString());
+                rewardsCounter.setText(animation.getAnimatedValue().toString());
             }
         });
         animator.start();
     }
-*/
+
 
 
     public void mainMenu(View view) {
