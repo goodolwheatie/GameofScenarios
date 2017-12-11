@@ -33,6 +33,18 @@ public class RulesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rules);
         rulesLayout = (ScrollView) findViewById(R.id.activity_rules);
     }
+    public void aboutGameTheory(View v) {
+        CardView cardView = findViewById(R.id.cardViewInfo);
+        TextView rules = findViewById(R.id.cardViewInfoContent);
+
+        if(rules.getVisibility() == View.GONE){
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.VISIBLE);
+        }else{
+            TransitionManager.beginDelayedTransition(cardView);
+            rules.setVisibility(View.GONE);
+        }
+    }
 
 
     public void chickenRules(View v) {
