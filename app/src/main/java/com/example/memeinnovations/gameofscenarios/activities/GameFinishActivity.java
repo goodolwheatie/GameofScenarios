@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
@@ -27,6 +28,7 @@ public class GameFinishActivity extends AppCompatActivity {
     private int initialRewards;
     private int points;
     private Multiplayer multiplayerSession;
+    private ImageView outcomeViewer;
 
     // store other players choice from DB
     private String otherPlayersChoice;
@@ -52,6 +54,7 @@ public class GameFinishActivity extends AppCompatActivity {
         rewards = (TextView) findViewById(R.id.txtRewards);
         rewardsCounter = (TextView) findViewById(R.id.txtRewardsCounter);
         rewardsInstance = (TextView) findViewById(R.id.txtRewardsInstance);
+        outcomeViewer = (ImageView) findViewById(R.id.imageViewResult);
 
         bundles = getIntent().getExtras();
         if (bundles != null) {
@@ -119,16 +122,20 @@ public class GameFinishActivity extends AppCompatActivity {
         if (betrayed && otherBetrayed) {
             points = 30;
             multiplayerSession.incrementDraws(points);
+            outcomeViewer.setImageResource(R.drawable.draw);
         } else {
             if (betrayed) {
                 points = 50;
                 multiplayerSession.incrementWin(points);
+                outcomeViewer.setImageResource(R.drawable.victorytitle);
             } else if (otherBetrayed) {
                 points = 20;
                 multiplayerSession.incrementLoss(points);
+                outcomeViewer.setImageResource(R.drawable.defeatbanner);
             } else {
                 points = 40;
                 multiplayerSession.incrementDraws(points);
+                outcomeViewer.setImageResource(R.drawable.draw);
             }
         }
         rewards.setText(getString(R.string.rewards));
@@ -162,14 +169,17 @@ public class GameFinishActivity extends AppCompatActivity {
                     case "Left":
                         points = 30;
                         multiplayerSession.incrementDraws(points);
+                        outcomeViewer.setImageResource(R.drawable.draw);
                         break;
                     case "Center":
                         points = 30;
                         multiplayerSession.incrementLoss(points);
+                        outcomeViewer.setImageResource(R.drawable.defeatbanner);
                         break;
                     case "Right":
                         points = 20;
                         multiplayerSession.incrementLoss(points);
+                        outcomeViewer.setImageResource(R.drawable.defeatbanner);
                         break;
                 }
                 break;
@@ -179,14 +189,17 @@ public class GameFinishActivity extends AppCompatActivity {
                     case "Left":
                         points = 50;
                         multiplayerSession.incrementWin(points);
+                        outcomeViewer.setImageResource(R.drawable.victorytitle);
                         break;
                     case "Center":
                         points = 20;
                         multiplayerSession.incrementLoss(points);
+                        outcomeViewer.setImageResource(R.drawable.defeatbanner);
                         break;
                     case "Right":
                         points = 50;
                         multiplayerSession.incrementWin(points);
+                        outcomeViewer.setImageResource(R.drawable.victorytitle);
                         break;
                 }
                 break;
@@ -196,14 +209,17 @@ public class GameFinishActivity extends AppCompatActivity {
                     case "Left":
                         points = 20;
                         multiplayerSession.incrementLoss(points);
+                        outcomeViewer.setImageResource(R.drawable.defeatbanner);
                         break;
                     case "Center":
                         points = 30;
                         multiplayerSession.incrementLoss(points);
+                        outcomeViewer.setImageResource(R.drawable.defeatbanner);
                         break;
                     case "Right":
                         points = 30;
                         multiplayerSession.incrementDraws(points);
+                        outcomeViewer.setImageResource(R.drawable.draw);
                         break;
                 }
                 break;
@@ -236,12 +252,15 @@ public class GameFinishActivity extends AppCompatActivity {
         if (difference == 0) { //same price
             payout = playerPrice;
             multiplayerSession.incrementDraws((int) (playerPrice/2));
+            outcomeViewer.setImageResource(R.drawable.draw);
         } else if (difference > 0) { //comp's price was greater than the player's
             payout = (int) (playerPrice + 2 + difference * 0.5 + 0.5);
             multiplayerSession.incrementWin((int) (payout/2));
+            outcomeViewer.setImageResource(R.drawable.victorytitle);
         } else if (difference < 0) { //comp's price was lower than the player's
             payout = otherPlayersPrice;
             multiplayerSession.incrementLoss((int) (otherPlayersPrice/2));
+            outcomeViewer.setImageResource(R.drawable.defeatbanner);
         }
         points = payout/2;
         rewards.setText(getString(R.string.rewards));
