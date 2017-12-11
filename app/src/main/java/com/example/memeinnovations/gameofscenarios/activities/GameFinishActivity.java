@@ -232,6 +232,7 @@ public class GameFinishActivity extends AppCompatActivity {
     }
 
     public void mainMenu(View view) {
+        multiplayerSession.incrementTotalGames();
         multiplayerSession.finishGame();
         //return to the main menu
         Intent mainMenu = new Intent(GameFinishActivity.this, MainMenuActivity.class);
@@ -241,6 +242,7 @@ public class GameFinishActivity extends AppCompatActivity {
     }
 
     public void playAgain(View view) {
+        multiplayerSession.incrementTotalGames();
         multiplayerSession.finishGame();
         //returns to the game lobby page
         Intent playAgain = new Intent(GameFinishActivity.this, LoadingActivity.class);

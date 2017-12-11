@@ -7,6 +7,7 @@ import com.example.memeinnovations.gameofscenarios.MApplication;
 import com.example.memeinnovations.gameofscenarios.R;
 import com.example.memeinnovations.gameofscenarios.data.FirebaseDB;
 import com.example.memeinnovations.gameofscenarios.data.User;
+import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +47,7 @@ public class Multiplayer implements Serializable  {
     private int roomIterator;
 
     private boolean leftQueue;
+    private boolean thisPlayerRerolled;
 
 
     public Multiplayer() {
@@ -57,6 +59,7 @@ public class Multiplayer implements Serializable  {
         otherPlayersChoice = "";
         roomIterator = 0;
         leftQueue = false;
+        thisPlayerRerolled = false;
     }
 
     public String getChosenScenario() {
@@ -130,6 +133,7 @@ public class Multiplayer implements Serializable  {
     private void callBackChooseRoom(String[] roomsArray,
                                     DatabaseReference pCheckRoom) {
         if (!currentRoom.in_use || !(currentRoom.p1connected && currentRoom.p2connected)) {
+            currentRoom.in_use = true;
             foundRoom = true;
             chosenRoom = roomsArray[roomIterator];
             pCheckRoom.child(roomsArray[roomIterator]).child("in_use").setValue(true);
@@ -395,20 +399,158 @@ public class Multiplayer implements Serializable  {
     }
 
     public void finishGame() {
-        incrementTotalGames();
         currentRoom.in_use = false;
         currentRoom.p1choice = "";
         currentRoom.p1connected = false;
         currentRoom.p1locked = false;
+        currentRoom.p1ready = false;
         currentRoom.p2choice = "";
         currentRoom.p2connected = false;
         currentRoom.p2locked = false;
+        currentRoom.p2ready = false;
         currentRoom.player1 = "";
         currentRoom.player2 = "";
+        currentRoom.rerolledRoom = "";
+        currentRoom.rerolledScenario = "";
 
         DatabaseReference setDBRoomDone =
                 FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
         setDBRoomDone.setValue(currentRoom);
+    }
+
+    public void rerollScenario(final TaskCompletionSource<Void> waitSource) {
+        foundRoom = false;
+        roomIterator = 0;
+        chooseRerolledRoom(waitSource);
+    }
+
+    private void chooseRerolledRoom(final TaskCompletionSource<Void> waitSource) {
+        // reroll old scenario and store old scenario to let other user know in DB
+        final String oldScenario = chosenScenario;
+        while (oldScenario.equals(chosenScenario)) {
+            chooseScenario();
+        }
+
+        // reroll old room and store old room to let other user know in DB
+        final String oldRoomNumber = chosenRoom;
+
+        // store old room to set new room values to old room's values
+        final RoomStatus oldRoomStatus = new RoomStatus(currentRoom);
+
+        // store database reference to the old room
+        final DatabaseReference oldRoomDB = FirebaseDB.mDatabase.child(oldScenario).
+                child(oldRoomNumber);
+
+        final String[] roomArray =
+                MApplication.getAppContext().getResources().getStringArray(R.array.rooms);
+        final DatabaseReference checkRoom =
+                FirebaseDB.mDatabase.child(chosenScenario);
+        checkRoom.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot inUseSnap : dataSnapshot.getChildren()) {
+                    // check if room is in-use and if a player is needed or not
+                    currentRoom.in_use = (boolean) inUseSnap.child("in_use").getValue();
+                    currentRoom.p1connected = (boolean) inUseSnap.child("p1connected").getValue();
+                    currentRoom.p2connected = (boolean) inUseSnap.child("p2connected").getValue();
+
+                    if (!currentRoom.in_use && (!currentRoom.p1connected &&
+                            !currentRoom.p2connected)) {
+                        thisPlayerRerolled = true;
+                        chosenRoom = roomArray[roomIterator];
+                        checkRoom.child(chosenRoom).setValue(oldRoomStatus);
+
+                        // let the other user know what the other room is.
+                        oldRoomDB.child("rerolled").setValue(true);
+                        oldRoomDB.child("rerolledRoom").setValue(chosenRoom);
+                        oldRoomDB.child("rerolledScenario").setValue(chosenScenario);
+                        waitSource.setResult(null);
+                        break;
+                    }
+
+                    // iterator through list
+                    roomIterator = (roomIterator + 1) % roomArray.length;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public void checkRerolled(final TaskCompletionSource<Void> waitSource) {
+        final DatabaseReference checkRerolledDB =
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
+        checkRerolledDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentRoom.rerolled = (boolean) dataSnapshot.child("rerolled").getValue();
+                currentRoom.p1ready = (boolean) dataSnapshot.child("p1ready").getValue();
+                currentRoom.p2ready = (boolean) dataSnapshot.child("p2ready").getValue();
+                if (currentRoom.rerolled || (currentRoom.p1ready && currentRoom.p2ready)) {
+                    // no need for this event listener if finished
+                    checkRerolledDB.removeEventListener(this);
+                    waitSource.trySetResult(null);
+                    if (currentRoom.rerolled && !thisPlayerRerolled) {
+                        Toast.makeText(MApplication.getAppContext(),"Other player rerolled!",
+                                Toast.LENGTH_SHORT).show();
+                        openRoomAfterReroll();
+                        chosenScenario = dataSnapshot.child("rerolledScenario").getValue(String.class);
+                        chosenRoom = dataSnapshot.child("rerolledRoom").getValue(String.class);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void openRoomAfterReroll() {
+        RoomStatus openRoom = new RoomStatus();
+        DatabaseReference setDBRoomDone =
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
+        setDBRoomDone.setValue(openRoom);
+    }
+
+    public void setReady() {
+        if (isPlayer1) {
+            currentRoom.p1ready = true;
+            FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom).
+                    child("p1ready").setValue(true);
+        } else {
+            currentRoom.p2ready = true;
+            FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom).
+                    child("p2ready").setValue(true);
+        }
+    }
+
+    public void checkReady(final TaskCompletionSource<Void> waitSource) {
+        final DatabaseReference checkReadyDB =
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
+        checkReadyDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (isPlayer1) {
+                    currentRoom.p2ready =
+                            ((boolean) dataSnapshot.child("p2ready").getValue());
+                } else {
+                    currentRoom.p1ready =
+                            ((boolean) dataSnapshot.child("p1ready").getValue());
+                }
+                if (!currentRoom.p1ready || !currentRoom.p2ready) {
+                    Toast.makeText
+                            (MApplication.getAppContext(),
+                                    "Other player isn't ready....",
+                                    Toast.LENGTH_SHORT).show();
+                } else {
+                    checkReadyDB.removeEventListener(this);
+                    waitSource.trySetResult(null);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     public void onBackPressed() {

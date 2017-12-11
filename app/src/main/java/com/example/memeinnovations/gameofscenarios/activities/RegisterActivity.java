@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         ab.setSubtitle("Create your profile");
     }
 
-    private void writeOptionalProfile(String username) {
+    private void writeOptionalProfile(String username, boolean anonymous) {
         String textGender = spinnerGender.getSelectedItem().toString();
         String textAge = spinnerAge.getSelectedItem().toString();
         String textEthnicity = spinnerEthnicity.getSelectedItem().toString();
@@ -104,8 +104,17 @@ public class RegisterActivity extends AppCompatActivity {
             textEthnicity = "";
         }
 
-        User currentUser = new User(userId, username, textGender, textAge, textEthnicity);
-        mDatabase.child("users").child(userId).setValue(currentUser);
+        DatabaseReference profileDB = mDatabase.child("users").child(userId);
+        if (anonymous) {
+            profileDB.child("userId").setValue(userId);
+            profileDB.child("username").setValue(username);
+            profileDB.child("gender").setValue(textGender);
+            profileDB.child("age").setValue(textAge);
+            profileDB.child("ethnicity").setValue(textEthnicity);
+        } else {
+            User currentUser = new User(userId, username, textGender, textAge, textEthnicity);
+            profileDB.setValue(currentUser);
+        }
     }
 
     public void registerUser(View v) {
@@ -149,7 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBar.setVisibility(View.GONE);
                             if (task.isSuccessful()) {
-                                writeOptionalProfile(username);
+                                writeOptionalProfile(username, true);
                                 Toast.makeText(getApplicationContext(),
                                         "User Registration Successful", Toast.LENGTH_SHORT).show();
                                 Intent mainMenu = new Intent(RegisterActivity.this,
@@ -175,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        writeOptionalProfile(username);
+                        writeOptionalProfile(username, false);
                         Toast.makeText(getApplicationContext(),
                                 "User Registration Successful", Toast.LENGTH_SHORT).show();
                         Intent mainMenu =

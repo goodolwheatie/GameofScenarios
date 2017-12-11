@@ -1,20 +1,26 @@
 package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
 import com.example.memeinnovations.gameofscenarios.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 
 import java.util.Random;
 
@@ -27,8 +33,10 @@ public class GameLobbyActivity extends AppCompatActivity{
     private String gameName;
     private int rulesLayout;
     private String imgV2;
-    private ImageView theImageViewer;
+    private ImageView ImageViewer;
     private ImageView theOtherImageView;
+    private Button btnReroll;
+    private Button btnReady;
 
     // Multiplayer class for multiplayer implementation.
     private Multiplayer multiplayerSession;
@@ -42,8 +50,10 @@ public class GameLobbyActivity extends AppCompatActivity{
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
-
         setContentView(R.layout.activity_game_lobby);
+        btnReroll = (Button) findViewById(R.id.btnReroll);
+        btnReady = (Button) findViewById(R.id.btnReady);
+
 
         // title = (TextView)findViewById(R.id.txtGameTitle);
 
@@ -101,8 +111,8 @@ public class GameLobbyActivity extends AppCompatActivity{
     }
 
     public void updateActivity(){
-        ImageView ImageViewer = (ImageView) findViewById(R.id.imageViewLobby2);
-        ImageView theOtherImageView = (ImageView) findViewById(R.id.imageViewLobby);
+        ImageViewer = (ImageView) findViewById(R.id.imageViewLobby2);
+        theOtherImageView = (ImageView) findViewById(R.id.imageViewLobby);
         switch(gameName){
             case "Prisoner's Dilemma":
                 rulesLayout = R.layout.activity_prisoners_rules;
@@ -128,40 +138,80 @@ public class GameLobbyActivity extends AppCompatActivity{
     }
 
     public void reroll(View view){
-        Toast.makeText(getApplicationContext(),
-                "Re-roll not implemented for multiplayer yet! Sorry.",
-                Toast.LENGTH_SHORT).show();
+        // wait tasks for loading DB data.
+        final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
+        Task waitTask = waitSource.getTask();
 
-/*        String currentGame = gameName;
-        while(currentGame.equals(gameName)){
-            chooseGame();
-        }
-        updateActivity();*/
+        // disable ready button until new scenario is found and activity is updated.
+        btnReady.setEnabled(false);
+
+        // only one reroll is allowed.
+        btnReroll.setEnabled(false);
+        btnReroll.setBackgroundTintList
+                (ColorStateList.valueOf(getResources().getColor(R.color.colorButtonPressed)));
+
+        multiplayerSession.rerollScenario(waitSource);
+        Toast.makeText(getApplicationContext(), "Rerolling Scenario...",
+                Toast.LENGTH_SHORT).show();
+        Tasks.whenAll(waitTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                // enable ready button when scenario is found.
+                btnReady.setEnabled(true);
+                gameName = multiplayerSession.getChosenScenario();
+                updateActivity();
+            }
+        });
+
     }
 
     public void ready(View view){
-        Intent ready;
-        switch(gameName){
-            case "Prisoner's Dilemma":
-                ready = new Intent(GameLobbyActivity.this, PrisonersActivity.class);
-                ready.putExtra("multiplayerSession", multiplayerSession);
-                startActivity(ready);
-                finish();
-                break;
+        btnReady.setEnabled(false);
+        multiplayerSession.setReady();
+        final TaskCompletionSource<Void> waitSourceTwo = new TaskCompletionSource<>();
+        final Task waitTaskTwo = waitSourceTwo.getTask();
+        multiplayerSession.checkRerolled(waitSourceTwo);
+        Tasks.whenAll(waitTaskTwo).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+            }
+        });
 
-            case "Game of Chicken":
-                ready = new Intent(GameLobbyActivity.this, ChickenActivity.class);
-                ready.putExtra("multiplayerSession", multiplayerSession);
-                startActivity(ready);
-                finish();
-                break;
+        // wait tasks for loading DB data.
+        final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
+        final Task waitTask = waitSource.getTask();
+        multiplayerSession.checkReady(waitSource);
+        btnReady.setEnabled(true);
+        Tasks.whenAll(waitTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Intent ready;
+                switch(gameName){
+                    case "Prisoner's Dilemma":
+                        ready = new Intent
+                                (GameLobbyActivity.this, PrisonersActivity.class);
+                        ready.putExtra("multiplayerSession", multiplayerSession);
+                        startActivity(ready);
+                        finish();
+                        break;
 
-            case "Traveler's Dilemma":
-                ready = new Intent(GameLobbyActivity.this, TravelersActivity.class);
-                ready.putExtra("multiplayerSession", multiplayerSession);
-                startActivity(ready);
-                finish();
-                break;
-        }
+                    case "Game of Chicken":
+                        ready = new Intent
+                                (GameLobbyActivity.this, ChickenActivity.class);
+                        ready.putExtra("multiplayerSession", multiplayerSession);
+                        startActivity(ready);
+                        finish();
+                        break;
+
+                    case "Traveler's Dilemma":
+                        ready = new Intent
+                                (GameLobbyActivity.this, TravelersActivity.class);
+                        ready.putExtra("multiplayerSession", multiplayerSession);
+                        startActivity(ready);
+                        finish();
+                        break;
+                }
+            }
+        });
     }
 }
