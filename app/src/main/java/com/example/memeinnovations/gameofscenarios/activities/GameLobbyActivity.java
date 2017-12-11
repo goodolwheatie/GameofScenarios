@@ -95,9 +95,7 @@ public class GameLobbyActivity extends AppCompatActivity{
             public void onComplete(@NonNull Task<Void> task) {
                 gameName = multiplayerSession.getChosenScenario();
                 updateActivity();
-
-             /*   // incase other player re-rolls after a re-roll.
-                multiplayerSession.checkRerolled(delaySource);
+/*              multiplayerSession.checkRerolled(delaySource);
                 Tasks.whenAll(delayTask).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
