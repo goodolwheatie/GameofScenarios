@@ -7,10 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.memeinnovations.gameofscenarios.data.FirebaseDB;
 import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
 import com.example.memeinnovations.gameofscenarios.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
+
+import static java.lang.Integer.parseInt;
 
 public class GameFinishActivity extends AppCompatActivity {
 
@@ -27,6 +34,9 @@ public class GameFinishActivity extends AppCompatActivity {
     private int initialRewards;
     private int points;
     private Multiplayer multiplayerSession;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private DatabaseReference mDatabase;
 
     // store other players choice from DB
     private String otherPlayersChoice;
@@ -58,8 +68,16 @@ public class GameFinishActivity extends AppCompatActivity {
             gameName = bundles.getString("gameName");
         }
 
-        //replace with method of getting user's rewards
-        initialRewards = 0;
+        // initialize database and authentication
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(mAuth.getCurrentUser().getUid());
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        //get the initial points
+        initialRewards = parseInt(FirebaseDB.mDatabase.child("users").child(mUser.getUid()).child("rewardPoints").toString());
+        startCountAnimation();
 
         switch (gameName) {
             case "prisoners":
@@ -216,7 +234,7 @@ public class GameFinishActivity extends AppCompatActivity {
 
     public void travelers() {
 
-        int otherPlayersPrice = Integer.parseInt(otherPlayersChoice);
+        int otherPlayersPrice = parseInt(otherPlayersChoice);
 /*
         //generate a random price for the computer to choose
         Random r = new Random();
