@@ -5,8 +5,8 @@
     <string name="gender">Gender</string>
     <string name="optional">Optional</string>
     <string name="password">Password</string>
-    <string name="old_password">Old\nPassword</string>
-    <string name="new_password">New\nPassword</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
     <string name="passwordHint">Password (min. 6 char)</string>
     <string name="register">Register</string>
     <string name="username">Username</string>
@@ -21,7 +21,7 @@
     <string name="reroll">Reroll</string>
     <string name="prisoners">Prisoner\'s Dilemma</string>
     <string name="login">Login</string>
-    <string name="anonymously">Anonymously</string>
+    <string name="anonymously">Play Anonymously</string>
     <string name="rewardPoints">Points</string>
     <string name="wins">Wins</string>
     <string name="draws">Draws</string>
@@ -29,8 +29,9 @@
     <string name="total_games">Total Games</string>
     <string name="scenario_profile">Your Game Statistics</string>
     <string name="update">Update Profile</string>
-    <string name="sign_out"><u>Sign Out</u></string>
+    <string name="sign_out">Sign Out</string>
     <string name="register_now">Register Now</string>
+    <string name="delete_temp_profile">Delete Temporary Profile</string>
 
     <string-array name="gender">
         <item>Select Option..</item>
@@ -77,13 +78,13 @@
 
     <string name="title_activity_game_finish">GameFinishActivity</string>
     <string name="lockIn">Lock In</string>
-    <string name="betray">Betray</string>
-    <string name="keepQuiet">Keep Quiet</string>
+    <string name="betray">BETRAY</string>
+    <string name="keepQuiet">KEEP QUIET</string>
     <string name="playAgain">Play Again?</string>
     <string name="mainMenu">Main Menu</string>
-    <string name="stayCenter">Stay the Course</string>
-    <string name="swerveLeft">Swerve Left</string>
-    <string name="swerveRight">Swerve Right</string>
+    <string name="stayCenter">STAY THE COURSE</string>
+    <string name="swerveLeft">SWERVE LEFT</string>
+    <string name="swerveRight">SWERVE RIGHT</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
@@ -98,5 +99,11 @@
     <string name="buttonChickenRules">Chicken Rules</string>
     <string name="buttonTravelerRules">Travelers\' Dilemma Rules</string>
 
+
+    <string name="yourChoice">Your choice: %1$s</string>
+    <string name="opponentChoice">Opponent\'s choice: %1$s</string>
+    <string name="yourPrice">Your price: %1$d</string>
+    <string name="opponentPrice">Opponent\'s price: %1$d</string>
+    <string name="rewards">You earned: %1$d points</string>
 
 </resources>

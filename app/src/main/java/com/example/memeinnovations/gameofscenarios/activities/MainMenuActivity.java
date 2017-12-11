@@ -52,17 +52,17 @@ public class MainMenuActivity extends AppCompatActivity {
         setupDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle("Main Menu");
+        getSupportActionBar().setTitle(getString(R.string.mainMenu));
     }
 
     private void addDrawerItems() {
         String[] osArray = {"",""};
         if(anonymousUser){
-            osArray[0] = "Register";
-            osArray[1] = "Delete Temp Profile";
+            osArray[0] = getString(R.string.register_now);
+            osArray[1] = getString(R.string.delete_temp_profile);
         }else{
-            osArray[0] = "Profile";
-            osArray[1] = "Sign Out";
+            osArray[0] = getString(R.string.profile);
+            osArray[1] = getString(R.string.sign_out);
         }
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);

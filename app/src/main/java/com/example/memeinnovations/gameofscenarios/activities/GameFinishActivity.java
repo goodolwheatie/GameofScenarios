@@ -16,7 +16,9 @@ public class GameFinishActivity extends AppCompatActivity {
     private static double PROBABILITY_OF_CENTER = 70;
     private String gameName = "";
     private Bundle bundles;
-    private TextView results;
+    private TextView playerChoice;
+    private TextView opponentChoice;
+    private TextView rewards;
     private Multiplayer multiplayerSession;
 
     // store other players choice from DB
@@ -38,7 +40,10 @@ public class GameFinishActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
         }
 
-        results = (TextView) findViewById(R.id.txtResults);
+        playerChoice = (TextView) findViewById(R.id.txtPlayerChoice);
+        opponentChoice = (TextView) findViewById(R.id.txtOpponentChoice);
+        rewards = (TextView) findViewById(R.id.txtRewards);
+
         bundles = getIntent().getExtras();
 
         if (bundles != null) {
@@ -86,23 +91,36 @@ public class GameFinishActivity extends AppCompatActivity {
             betrayed = bundles.getBoolean("Betrayal");
         }
 
+        if(betrayed){
+            playerChoice.setText(String.format(getString(R.string.yourChoice), getString(R.string.betray)));
+        }else{
+            playerChoice.setText(String.format(getString(R.string.yourChoice), getString(R.string.keepQuiet)));
+        }
 
+        if(otherBetrayed){
+            opponentChoice.setText(String.format(getString(R.string.opponentChoice), getString(R.string.betray)));
+        }else{
+            opponentChoice.setText(String.format(getString(R.string.opponentChoice), getString(R.string.keepQuiet)));
+        }
+
+        int points = 0;
         //determine the results of the match
         if (betrayed && otherBetrayed) {
-            results.setText("You both chose to betray your partner");
-            multiplayerSession.incrementDraws(30);
+            points = 30;
+            multiplayerSession.incrementDraws(points);
         } else {
             if (betrayed) {
-                results.setText("You chose to betray your partner but your partner chose to keep quiet.");
-                multiplayerSession.incrementWin(50);
+                points = 50;
+                multiplayerSession.incrementWin(points);
             } else if (otherBetrayed) {
-                results.setText("You chose to keep quiet but your partner chose to betray you.");
-                multiplayerSession.incrementLoss(20);
-            } else if (!betrayed && !otherBetrayed) {
-                results.setText("You both chose to keep quiet.");
-                multiplayerSession.incrementDraws(40);
+                points = 20;
+                multiplayerSession.incrementLoss(points);
+            } else {
+                points = 40;
+                multiplayerSession.incrementDraws(points);
             }
         }
+        rewards.setText(String.format(getString(R.string.rewards), points));
     }
 
     public void chicken() {
@@ -120,21 +138,25 @@ public class GameFinishActivity extends AppCompatActivity {
 
         //retrieve your choice from previous activity
         String swerveChoice = bundles.getString("swerveChoice");
+        playerChoice.setText(String.format(getString(R.string.yourChoice), swerveChoice));
+        opponentChoice.setText(String.format(getString(R.string.opponentChoice), opponentChoice));
 
+
+        int points = 0;
         switch (swerveChoice) { //results logic
             case "Left": {
                 switch (otherPlayersChoice) {
                     case "Left":
-                        results.setText("You both swerved but didn't hit each other");
-                        multiplayerSession.incrementDraws(30);
+                        points = 30;
+                        multiplayerSession.incrementDraws(points);
                         break;
                     case "Center":
-                        results.setText("You swerved but your opponent stayed the course");
-                        multiplayerSession.incrementLoss(30);
+                        points = 30;
+                        multiplayerSession.incrementLoss(points);
                         break;
                     case "Right":
-                        results.setText("You swerved into each other and crashed");
-                        multiplayerSession.incrementLoss(20);
+                        points = 20;
+                        multiplayerSession.incrementLoss(points);
                         break;
                 }
                 break;
@@ -142,16 +164,16 @@ public class GameFinishActivity extends AppCompatActivity {
             case "Center": {
                 switch (otherPlayersChoice) {
                     case "Left":
-                        results.setText("You stayed the course and your opponent had to swerve");
-                        multiplayerSession.incrementWin(50);
+                        points = 50;
+                        multiplayerSession.incrementWin(points);
                         break;
                     case "Center":
-                        results.setText("You both stayed the course and crashed");
-                        multiplayerSession.incrementLoss(20);
+                        points = 20;
+                        multiplayerSession.incrementLoss(points);
                         break;
                     case "Right":
-                        results.setText("You stayed the course and your opponent had to swerve");
-                        multiplayerSession.incrementWin(50);
+                        points = 50;
+                        multiplayerSession.incrementWin(points);
                         break;
                 }
                 break;
@@ -159,21 +181,22 @@ public class GameFinishActivity extends AppCompatActivity {
             case "Right": {
                 switch (otherPlayersChoice) {
                     case "Left":
-                        results.setText("You swerved into each other and crashed");
-                        multiplayerSession.incrementLoss(20);
+                        points = 20;
+                        multiplayerSession.incrementLoss(points);
                         break;
                     case "Center":
-                        results.setText("You swerved but your opponent stayed the course");
-                        multiplayerSession.incrementLoss(30);
+                        points = 30;
+                        multiplayerSession.incrementLoss(points);
                         break;
                     case "Right":
-                        results.setText("You both swerved but didn't hit each other");
-                        multiplayerSession.incrementDraws(30);
+                        points = 30;
+                        multiplayerSession.incrementDraws(points);
                         break;
                 }
                 break;
             }
         }
+        rewards.setText(String.format(getString(R.string.rewards), points));
     }
 
     public void travelers() {
@@ -188,23 +211,24 @@ public class GameFinishActivity extends AppCompatActivity {
         //retrieve your choice from previous activity
         int playerPrice = bundles.getInt("price");
 
+        playerChoice.setText(String.format(getString(R.string.yourPrice), playerPrice));
+        opponentChoice.setText(String.format(getString(R.string.opponentPrice), otherPlayersPrice));
+
+
         // changed from compPrice VT
         int difference = otherPlayersPrice - playerPrice;
+        int payout = 0;
         if (difference == 0) { //same price
-            results.setText("You both agreed on the price at $" + playerPrice + "You got paid $" + playerPrice);
-            multiplayerSession.incrementDraws((playerPrice/2));
+            payout = playerPrice;
+            multiplayerSession.incrementDraws((int) (playerPrice/2));
         } else if (difference > 0) { //comp's price was greater than the player's
-            int payout = (int) (playerPrice + 2 + difference * 0.5 + 0.5);
-            results.setText("You gave a price of $" + playerPrice +
-                    " while your oppponent gave a price of $" +
-                    otherPlayersPrice + ". You got paid $" + payout);
-            multiplayerSession.incrementWin((payout/2));
+            payout = (int) (playerPrice + 2 + difference * 0.5 + 0.5);
+            multiplayerSession.incrementWin((int) (payout/2));
         } else if (difference < 0) { //comp's price was lower than the player's
-            results.setText("You gave a price of $" + playerPrice +
-                    " while your oppponent gave a price of $" + otherPlayersPrice +
-                    ". You got paid $" + otherPlayersPrice);
-            multiplayerSession.incrementLoss((otherPlayersPrice/2));
+            payout = otherPlayersPrice;
+            multiplayerSession.incrementLoss((int) (otherPlayersPrice/2));
         }
+        rewards.setText(String.format(getString(R.string.rewards), (int) payout/2));
     }
 
     public void mainMenu(View view) {

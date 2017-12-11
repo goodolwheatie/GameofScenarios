@@ -7,16 +7,46 @@
     tools:context="com.example.memeinnovations.gameofscenarios.activities.GameFinishActivity">
 
     <TextView
-        android:id="@+id/txtResults"
+        android:id="@+id/txtPlayerChoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
         app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtOpponentChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
+        app:layout_constraintTop_toBottomOf="@id/txtPlayerChoice" />
+
+    <TextView
+        android:id="@+id/txtRewards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/glRightGameFinishInner"
+        app:layout_constraintStart_toStartOf="@+id/glLeftGameFinishInner"
+        app:layout_constraintTop_toBottomOf="@id/txtOpponentChoice" />
 
     <android.support.constraint.Guideline
         android:id="@+id/glRightGameFinishInner"
@@ -66,6 +96,6 @@
         app:layout_constraintBottom_toTopOf="@+id/btnMainMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtResults"
+        app:layout_constraintTop_toBottomOf="@+id/txtRewards"
         app:srcCompat="@drawable/draw" />
 </android.support.constraint.ConstraintLayout>
