@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,9 @@ import java.util.Random;
 public class GameLobbyActivity extends AppCompatActivity{
     private String gameName;
     private int rulesLayout;
+    private String imgV2;
+    private ImageView theImageViewer;
+    private ImageView theOtherImageView;
 
     // Multiplayer class for multiplayer implementation.
     private Multiplayer multiplayerSession;
@@ -97,20 +101,28 @@ public class GameLobbyActivity extends AppCompatActivity{
     }
 
     public void updateActivity(){
+        ImageView ImageViewer = (ImageView) findViewById(R.id.imageViewLobby2);
+        ImageView theOtherImageView = (ImageView) findViewById(R.id.imageViewLobby);
         switch(gameName){
             case "Prisoner's Dilemma":
                 rulesLayout = R.layout.activity_prisoners_rules;
                 // title.setText(gameName);
+                theOtherImageView.setImageResource(R.drawable.pdilemmatitle);
+                ImageViewer.setImageResource(R.drawable.prisdil);
                 break;
 
             case "Game of Chicken":
                 rulesLayout = R.layout.activity_chicken_rules;
                 // title.setText(gameName);
+                theOtherImageView.setImageResource(R.drawable.chickentitle);
+                ImageViewer.setImageResource(R.drawable.swerve);
                 break;
 
             case "Traveler's Dilemma":
                 rulesLayout = R.layout.activity_travelers_rules;
                 // title.setText(gameName);
+                theOtherImageView.setImageResource(R.drawable.travelertitle);
+                ImageViewer.setImageResource(R.drawable.moneyineyes);
                 break;
         }
     }
