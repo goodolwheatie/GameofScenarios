@@ -2,6 +2,7 @@ package com.example.memeinnovations.gameofscenarios.activities;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,7 +33,6 @@ import java.util.Random;
 public class GameLobbyActivity extends AppCompatActivity{
     private String gameName;
     private int rulesLayout;
-    private String imgV2;
     private ImageView ImageViewer;
     private ImageView theOtherImageView;
     private Button btnReroll;
@@ -53,9 +53,8 @@ public class GameLobbyActivity extends AppCompatActivity{
         setContentView(R.layout.activity_game_lobby);
         btnReroll = (Button) findViewById(R.id.btnReroll);
         btnReady = (Button) findViewById(R.id.btnReady);
-
-
-        // title = (TextView)findViewById(R.id.txtGameTitle);
+        ImageViewer = (ImageView) findViewById(R.id.imageViewLobby2);
+        theOtherImageView = (ImageView) findViewById(R.id.imageViewLobby);
 
         // initialize multiplayer class integration VT
         multiplayerSession =
@@ -64,6 +63,50 @@ public class GameLobbyActivity extends AppCompatActivity{
         //determine which game is being played
         gameName = multiplayerSession.getChosenScenario();
         updateActivity();
+
+        final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
+        final Task waitTask = waitSource.getTask();
+        final TaskCompletionSource<Void> delaySource = new TaskCompletionSource<>();
+        final Task delayTask = delaySource.getTask();
+
+        // begin a reroll phase
+        multiplayerSession.checkRerolled(waitSource);
+        btnReady.setEnabled(false);
+        btnReady.setText(R.string.reroll_phase);
+        Toast.makeText(getApplicationContext(), "Begin Re-roll phase....",
+                Toast.LENGTH_SHORT).show();
+
+        // set delay for reroll phase.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "Re-roll phase has ended.",
+                        Toast.LENGTH_SHORT).show();
+                waitSource.trySetResult(null);
+                btnReady.setText(R.string.ready);
+                btnReady.setEnabled(true);
+                btnReroll.setEnabled(false);
+            }
+        }, 10000);
+
+        Tasks.whenAll(waitTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                gameName = multiplayerSession.getChosenScenario();
+                updateActivity();
+
+             /*   // incase other player re-rolls after a re-roll.
+                multiplayerSession.checkRerolled(delaySource);
+                Tasks.whenAll(delayTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        gameName = multiplayerSession.getChosenScenario();
+                        updateActivity();
+                    }
+                });*/
+            }
+        });
     }
 
     @Override
@@ -111,26 +154,21 @@ public class GameLobbyActivity extends AppCompatActivity{
     }
 
     public void updateActivity(){
-        ImageViewer = (ImageView) findViewById(R.id.imageViewLobby2);
-        theOtherImageView = (ImageView) findViewById(R.id.imageViewLobby);
         switch(gameName){
             case "Prisoner's Dilemma":
                 rulesLayout = R.layout.activity_prisoners_rules;
-                // title.setText(gameName);
                 theOtherImageView.setImageResource(R.drawable.pdilemmatitle);
                 ImageViewer.setImageResource(R.drawable.prisdil);
                 break;
 
             case "Game of Chicken":
                 rulesLayout = R.layout.activity_chicken_rules;
-                // title.setText(gameName);
                 theOtherImageView.setImageResource(R.drawable.chickentitle);
                 ImageViewer.setImageResource(R.drawable.swerve);
                 break;
 
             case "Traveler's Dilemma":
                 rulesLayout = R.layout.activity_travelers_rules;
-                // title.setText(gameName);
                 theOtherImageView.setImageResource(R.drawable.travelertitle);
                 ImageViewer.setImageResource(R.drawable.moneyineyes);
                 break;
@@ -141,9 +179,6 @@ public class GameLobbyActivity extends AppCompatActivity{
         // wait tasks for loading DB data.
         final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
         Task waitTask = waitSource.getTask();
-
-        // disable ready button until new scenario is found and activity is updated.
-        btnReady.setEnabled(false);
 
         // only one reroll is allowed.
         btnReroll.setEnabled(false);
@@ -156,32 +191,20 @@ public class GameLobbyActivity extends AppCompatActivity{
         Tasks.whenAll(waitTask).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                // enable ready button when scenario is found.
-                btnReady.setEnabled(true);
                 gameName = multiplayerSession.getChosenScenario();
                 updateActivity();
             }
         });
-
     }
 
     public void ready(View view){
         btnReady.setEnabled(false);
         multiplayerSession.setReady();
-        final TaskCompletionSource<Void> waitSourceTwo = new TaskCompletionSource<>();
-        final Task waitTaskTwo = waitSourceTwo.getTask();
-        multiplayerSession.checkRerolled(waitSourceTwo);
-        Tasks.whenAll(waitTaskTwo).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-            }
-        });
 
-        // wait tasks for loading DB data.
+        // check if other person is ready....
         final TaskCompletionSource<Void> waitSource = new TaskCompletionSource<>();
         final Task waitTask = waitSource.getTask();
         multiplayerSession.checkReady(waitSource);
-        btnReady.setEnabled(true);
         Tasks.whenAll(waitTask).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

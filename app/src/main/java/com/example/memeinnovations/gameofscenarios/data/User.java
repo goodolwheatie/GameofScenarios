@@ -128,7 +128,7 @@ public class User implements Serializable {
     public int getRewardPoints() { return rewardPoints; }
 
     public void setRewardPoints(int rewardPoints) {
-        this.losses = rewardPoints;
+        this.rewardPoints = rewardPoints;
     }
 
     public String getUserId() {

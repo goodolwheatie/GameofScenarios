@@ -139,7 +139,7 @@ public class GameFinishActivity extends AppCompatActivity {
         //retrieve your choice from previous activity
         String swerveChoice = bundles.getString("swerveChoice");
         playerChoice.setText(String.format(getString(R.string.yourChoice), swerveChoice));
-        opponentChoice.setText(String.format(getString(R.string.opponentChoice), opponentChoice));
+        opponentChoice.setText(String.format(getString(R.string.opponentChoice), otherPlayersChoice));
 
 
         int points = 0;

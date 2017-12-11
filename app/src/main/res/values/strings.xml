@@ -32,6 +32,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="register_now">Register Now</string>
     <string name="delete_temp_profile">Delete Temporary Profile</string>
+    <string name="reroll_phase">Reroll Phase</string>
 
     <string-array name="gender">
         <item>Select Option..</item>

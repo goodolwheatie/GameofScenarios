@@ -66,6 +66,8 @@ public class Multiplayer implements Serializable  {
         return chosenScenario;
     }
     public String getOtherPlayersChoice() { return otherPlayersChoice; }
+    public void setThisPlayerRerolled(boolean thisPlayerRerolled)
+    {this.thisPlayerRerolled = thisPlayerRerolled;}
 
     private void getPlayer(final TaskCompletionSource<Void> waitSource) {
         DatabaseReference currentPlayer;
@@ -296,7 +298,7 @@ public class Multiplayer implements Serializable  {
                 currentPlayer.setValue(wins);
                 currentPlayer =
                         FirebaseDB.mDatabase.child("users")
-                                .child(currentRoom.player1).child("rewardPoints");
+                                .child(currentRoom.player2).child("rewardPoints");
                 currentPlayer.setValue(rewardPoints);
             }
         }
@@ -330,7 +332,7 @@ public class Multiplayer implements Serializable  {
                 currentPlayer.setValue(draws);
                 currentPlayer =
                         FirebaseDB.mDatabase.child("users")
-                                .child(currentRoom.player1).child("rewardPoints");
+                                .child(currentRoom.player2).child("rewardPoints");
                 currentPlayer.setValue(rewardPoints);
 
             }
@@ -366,7 +368,7 @@ public class Multiplayer implements Serializable  {
                 currentPlayer.setValue(losses);
                 currentPlayer =
                         FirebaseDB.mDatabase.child("users")
-                                .child(currentRoom.player1).child("rewardPoints");
+                                .child(currentRoom.player2).child("rewardPoints");
                 currentPlayer.setValue(rewardPoints);
 
             }
@@ -410,6 +412,7 @@ public class Multiplayer implements Serializable  {
         currentRoom.p2ready = false;
         currentRoom.player1 = "";
         currentRoom.player2 = "";
+        currentRoom.rerolled = false;
         currentRoom.rerolledRoom = "";
         currentRoom.rerolledScenario = "";
 
@@ -456,6 +459,7 @@ public class Multiplayer implements Serializable  {
 
                     if (!currentRoom.in_use && (!currentRoom.p1connected &&
                             !currentRoom.p2connected)) {
+                        foundRoom = true;
                         thisPlayerRerolled = true;
                         chosenRoom = roomArray[roomIterator];
                         checkRoom.child(chosenRoom).setValue(oldRoomStatus);
@@ -481,25 +485,36 @@ public class Multiplayer implements Serializable  {
 
     public void checkRerolled(final TaskCompletionSource<Void> waitSource) {
         final DatabaseReference checkRerolledDB =
-                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom).child("rerolled");
         checkRerolledDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                currentRoom.rerolled = (boolean) dataSnapshot.child("rerolled").getValue();
-                currentRoom.p1ready = (boolean) dataSnapshot.child("p1ready").getValue();
-                currentRoom.p2ready = (boolean) dataSnapshot.child("p2ready").getValue();
-                if (currentRoom.rerolled || (currentRoom.p1ready && currentRoom.p2ready)) {
+                currentRoom.rerolled = (boolean) dataSnapshot.getValue();
+                if (currentRoom.rerolled) {
                     // no need for this event listener if finished
                     checkRerolledDB.removeEventListener(this);
-                    waitSource.trySetResult(null);
                     if (currentRoom.rerolled && !thisPlayerRerolled) {
+                        updateRoomScenario(waitSource);
                         Toast.makeText(MApplication.getAppContext(),"Other player rerolled!",
                                 Toast.LENGTH_SHORT).show();
-                        openRoomAfterReroll();
-                        chosenScenario = dataSnapshot.child("rerolledScenario").getValue(String.class);
-                        chosenRoom = dataSnapshot.child("rerolledRoom").getValue(String.class);
                     }
                 }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void updateRoomScenario(final TaskCompletionSource<Void> waitSource) {
+        final DatabaseReference checkRerolledDB =
+                FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
+        checkRerolledDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                waitSource.trySetResult(null);
+                openRoomAfterReroll();
+                chosenScenario = dataSnapshot.child("rerolledScenario").getValue(String.class);
+                chosenRoom = dataSnapshot.child("rerolledRoom").getValue(String.class);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
@@ -525,6 +540,18 @@ public class Multiplayer implements Serializable  {
         }
     }
 
+    public void setUnready() {
+        if (isPlayer1) {
+            currentRoom.p1ready = false;
+            FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom).
+                    child("p1ready").setValue(false);
+        } else {
+            currentRoom.p2ready = false;
+            FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom).
+                    child("p2ready").setValue(false);
+        }
+    }
+
     public void checkReady(final TaskCompletionSource<Void> waitSource) {
         final DatabaseReference checkReadyDB =
                 FirebaseDB.mDatabase.child(chosenScenario).child(chosenRoom);
@@ -533,10 +560,10 @@ public class Multiplayer implements Serializable  {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (isPlayer1) {
                     currentRoom.p2ready =
-                            ((boolean) dataSnapshot.child("p2ready").getValue());
+                            (boolean) dataSnapshot.child("p2ready").getValue();
                 } else {
                     currentRoom.p1ready =
-                            ((boolean) dataSnapshot.child("p1ready").getValue());
+                            (boolean) dataSnapshot.child("p1ready").getValue();
                 }
                 if (!currentRoom.p1ready || !currentRoom.p2ready) {
                     Toast.makeText
