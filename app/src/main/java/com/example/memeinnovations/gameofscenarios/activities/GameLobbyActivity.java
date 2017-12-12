@@ -80,12 +80,12 @@ public class GameLobbyActivity extends AppCompatActivity {
             public void run() {
                 Toast.makeText(getApplicationContext(), "Re-roll phase has ended.",
                         Toast.LENGTH_SHORT).show();
-                waitSource.trySetResult(null);
+                // waitSource.trySetResult(null);
                 btnReady.setText(R.string.ready);
                 btnReady.setEnabled(true);
                 btnReroll.setEnabled(false);
             }
-        }, 10000);
+        }, 5000);
 
         Tasks.whenAll(waitTask).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
