@@ -56,7 +56,9 @@ public class ChickenActivity extends AppCompatActivity {
                 }
             }
 
-            public void onFinish() {
+            public void onFinish()
+            {
+                swerveChoice = "Center";
                 lockIn(activity_chicken);
             }
         };
