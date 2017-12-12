@@ -1,22 +1,14 @@
 package com.example.memeinnovations.gameofscenarios.activities;
 
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.transition.TransitionManager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.memeinnovations.gameofscenarios.multiplayer.Multiplayer;
 import com.example.memeinnovations.gameofscenarios.R;
 
 
@@ -29,7 +21,7 @@ public class RulesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle(getString(R.string.rules));
+        getSupportActionBar().setTitle(getString(R.string.rules_and_info));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_rules);
         rulesLayout = (ScrollView) findViewById(R.id.activity_rules);

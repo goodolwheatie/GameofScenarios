@@ -25,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="112dp"
-        android:text="@string/rules"
+        android:text="@string/rules_and_info"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnPlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnPlay" />
