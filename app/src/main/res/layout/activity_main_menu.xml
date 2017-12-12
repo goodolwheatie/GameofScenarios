@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:onClick="rules"
-            android:text="@string/rules"
+            android:text="@string/rules_and_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btnPlay"
             app:layout_constraintHorizontal_bias="0.0"
